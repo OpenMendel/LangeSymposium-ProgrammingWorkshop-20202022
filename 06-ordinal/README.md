@@ -1,0 +1,1 @@
+Tutorial for OrdinalGWAS.jl.
