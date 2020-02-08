@@ -15,11 +15,11 @@ This repo contains the OpenMendel tutorials presented in the programming worksho
 | Time | Topic | Presenter |  
 |:-----------|:------------|:------------|  
 | 8:30-8:50 | Import genotype data by SnpArrays.jl \[[ipynb](./01-snparrays/SnpArraysTutorial.ipynb)\] and VCFTools.jl | Hua Zhou |  
-| 8:50-10:10 | Variance component models | Juhyun Kim |  
+| 8:50-9:10 | Variance component models | Juhyun Kim |  
 | 9:10-9:30 | Haplotyping and imputation by MendelImpute.jl | Ben Chu |  
 | 9:30-9:50 | GWAS by IHT | Ben Chu |  
 | 9:50-10:10 | GWAS for ordinal trait | Chris German |  
-| 10:10-10:30 | trait simulation | Sarah Ji |  
+| 10:10-10:30 | Trait simulation | Sarah Ji |  
 
 ## Binder
 
