@@ -4,7 +4,7 @@ This repo contains the OpenMendel tutorials presented in the programming worksho
 
 ## Presenters
 
-* Ben Chu, doctoral student, Computational Medicine, UCLA  
+* Ben Chu, doctoral student, Computational Medicine (Biomathematics), UCLA  
 * Chris German, doctoral student, Biostatistics, UCLA  
 * Sarah Ji, doctoral student, Biostatistics, UCLA  
 * Juhyun Kim, doctoral student, Biostatistics, UCLA  
@@ -16,8 +16,8 @@ This repo contains the OpenMendel tutorials presented in the programming worksho
 |:-----------|:------------|:------------|  
 | 8:30-8:50 | Import genotype data by SnpArrays.jl \[[ipynb](./01-snparrays/SnpArraysTutorial.ipynb)\] and VCFTools.jl | Hua Zhou |  
 | 8:50-9:10 | Variance component models | Juhyun Kim |  
-| 9:10-9:30 | Haplotyping and imputation by MendelImpute.jl | Ben Chu |  
-| 9:30-9:50 | GWAS by IHT | Ben Chu |  
+| 9:10-9:30 | Haplotyping and imputation by MendelImpute.jl \[[ipynb](./04-impute/MendelImpute_Tutorial.ipynb)\]| Ben Chu |  
+| 9:30-9:50 | GWAS by IHT \[[ipynb](./05-gwas/MendelIHT_tutorial.ipynb)\] | Ben Chu |  
 | 9:50-10:10 | GWAS for ordinal trait | Chris German |  
 | 10:10-10:30 | Trait simulation | Sarah Ji |  
 
