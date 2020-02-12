@@ -14,7 +14,7 @@ This repo contains the OpenMendel tutorials presented in the programming worksho
 
 | Time | Topic | Presenter |  
 |:-----------|:------------|:------------|  
-| 8:30-8:50 | Import genotype data by SnpArrays.jl \[[ipynb](./01-snparrays/SnpArraysTutorial.ipynb)\] and VCFTools.jl | Hua Zhou |  
+| 8:30-8:50 | Import genotype data by SnpArrays.jl \[[ipynb](./01-snparrays/SnpArraysTutorial.ipynb)\] \[[html](https://openmendel.github.io/LangeSymposium-ProgrammingWorkshop-20202022/01-snparrays/SnpArraysTutorial.html)\] and VCFTools.jl | Hua Zhou |  
 | 8:50-9:10 | Variance component models | Juhyun Kim |  
 | 9:10-9:30 | Haplotyping and imputation by MendelImpute.jl \[[ipynb](./04-impute/MendelImpute_Tutorial.ipynb)\]| Ben Chu |  
 | 9:30-9:50 | GWAS by IHT \[[ipynb](./05-gwas/MendelIHT_tutorial.ipynb)\] | Ben Chu |  
@@ -24,7 +24,7 @@ This repo contains the OpenMendel tutorials presented in the programming worksho
 ## Binder
 
 To try the Jupyter notebook in cloud, click the Binder icon below:  
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/OpenMendel/LangeSymposium-ProgrammingWorkshop-20202022.git/master)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/OpenMendel/LangeSymposium-ProgrammingWorkshop-20202022/master)
 
 ## Run Jupyter notebooks on your own laptop
 
