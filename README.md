@@ -24,7 +24,7 @@ This repo contains the OpenMendel tutorials presented in the programming worksho
 ## Binder
 
 To try the Jupyter notebook in cloud, click the Binder icon below:  
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/OpenMendel/LangeSymposium-ProgrammingWorkshop-20202022.git/master)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/OpenMendel/LangeSymposium-ProgrammingWorkshop-20202022/master)
 
 ## Run Jupyter notebooks on your own laptop
 
