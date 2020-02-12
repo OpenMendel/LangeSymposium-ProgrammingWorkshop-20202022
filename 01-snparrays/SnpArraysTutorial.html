@@ -13187,7 +13187,7 @@ Start julia and use the <code>]</code> key to switch to the package manager REPL
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="prompt input_prompt">In&nbsp;[60]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">versioninfo</span><span class="p">()</span>
@@ -13227,34 +13227,13 @@ Environment:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[61]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="k">using</span> <span class="n">SnpArrays</span><span class="p">,</span> <span class="n">BenchmarkTools</span>
+<div class=" highlight hl-julia"><pre><span></span><span class="k">using</span> <span class="n">SnpArrays</span>
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>┌ Info: Recompiling stale cache file /Users/huazhou/.julia/compiled/v1.2/SnpArrays/iEYce.ji for SnpArrays [4e780e97-f5bf-4111-9dc4-b70aaf691b06]
-└ @ Base loading.jl:1240
-┌ Info: Recompiling stale cache file /Users/huazhou/.julia/compiled/v1.2/BenchmarkTools/ZXPQo.ji for BenchmarkTools [6e4b80f9-dd63-53aa-95a3-0cdb28fa8baf]
-└ @ Base loading.jl:1240
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -13270,7 +13249,7 @@ Environment:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[62]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">filename</span> <span class="o">=</span> <span class="n">SnpArrays</span><span class="o">.</span><span class="n">datadir</span><span class="p">(</span><span class="s">&quot;mouse&quot;</span><span class="p">)</span>
@@ -13286,7 +13265,7 @@ Environment:
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[3]:</div>
+    <div class="prompt output_prompt">Out[62]:</div>
 
 
 
@@ -13303,7 +13282,7 @@ Environment:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[63]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">run</span><span class="p">(</span><span class="sb">`ls -l </span><span class="si">$filename</span><span class="sb">.bed </span><span class="si">$filename</span><span class="sb">.bim </span><span class="si">$filename</span><span class="sb">.fam`</span><span class="p">)</span>
@@ -13332,7 +13311,7 @@ Environment:
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[4]:</div>
+    <div class="prompt output_prompt">Out[63]:</div>
 
 
 
@@ -13350,7 +13329,7 @@ Environment:
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Constructor">Constructor<a class="anchor-link" href="#Constructor">&#182;</a></h2><p>There are various ways to initialize a SnpArray.</p>
+<h2 id="Constructor">Constructor<a class="anchor-link" href="#Constructor">&#182;</a></h2><p>There are various ways to initialize a SnpArray. The easiest is to initilize from Plink files.</p>
 <h3 id="Intitialize-from-Plink-files">Intitialize from Plink files<a class="anchor-link" href="#Intitialize-from-Plink-files">&#182;</a></h3><p>All three files (<code>.bed</code>, <code>.fam</code>, <code>.bim</code>) need to be present.</p>
 
 </div>
@@ -13358,7 +13337,7 @@ Environment:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[64]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="kd">const</span> <span class="n">mouse</span> <span class="o">=</span> <span class="n">SnpArray</span><span class="p">(</span><span class="n">SnpArrays</span><span class="o">.</span><span class="n">datadir</span><span class="p">(</span><span class="s">&quot;mouse.bed&quot;</span><span class="p">))</span>
@@ -13374,7 +13353,18 @@ Environment:
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[5]:</div>
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>WARNING: redefining constant mouse
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[64]:</div>
 
 
 
@@ -13425,7 +13415,7 @@ Environment:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[65]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">size</span><span class="p">(</span><span class="n">mouse</span><span class="p">)</span>
@@ -13441,7 +13431,7 @@ Environment:
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[6]:</div>
+    <div class="prompt output_prompt">Out[65]:</div>
 
 
 
@@ -13463,380 +13453,6 @@ Environment:
 
 </div>
 </div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="nd">@btime</span><span class="p">(</span><span class="n">SnpArray</span><span class="p">(</span><span class="n">SnpArrays</span><span class="o">.</span><span class="n">datadir</span><span class="p">(</span><span class="s">&quot;mouse.bed&quot;</span><span class="p">)));</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>  110.153 μs (83 allocations: 391.31 KiB)
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>By default, the memory-mapped file is read only, changing entries is not allowed.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="n">mouse</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mh">0x00</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_text output_error">
-<pre>
-ReadOnlyMemoryError()
-
-Stacktrace:
- [1] | at ./int.jl:316 [inlined]
- [2] setindex!(::SnpArray, ::UInt8, ::Int64, ::Int64) at /Users/huazhou/.julia/packages/SnpArrays/pe0oE/src/snparray.jl:131
- [3] top-level scope at In[8]:1</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>To possibly change genoytpes in a bed file, open with write permission</p>
-<div class="highlight"><pre><span></span><span class="n">mouse</span> <span class="o">=</span> <span class="n">SnpArray</span><span class="p">(</span><span class="n">SnpArrays</span><span class="o">.</span><span class="n">datadir</span><span class="p">(</span><span class="s">&quot;mouse.bed&quot;</span><span class="p">),</span> <span class="s">&quot;w&quot;</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Initialize-and-create-bed-file">Initialize and create bed file<a class="anchor-link" href="#Initialize-and-create-bed-file">&#182;</a></h3><p>Initialize 5 rows and 3 columns with all (A1, A1) genotype (0x00) and memory-map to a bed file <code>tmp.bed</code></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="n">tmpbf</span> <span class="o">=</span> <span class="n">SnpArray</span><span class="p">(</span><span class="s">&quot;tmp.bed&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[9]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>5×3 SnpArray:
- 0x00  0x00  0x00
- 0x00  0x00  0x00
- 0x00  0x00  0x00
- 0x00  0x00  0x00
- 0x00  0x00  0x00</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Change entries</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="n">tmpbf</span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="o">:</span><span class="mi">2</span><span class="p">]</span> <span class="o">.=</span> <span class="mh">0x03</span>
-<span class="n">tmpbf</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[10]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>5×3 SnpArray:
- 0x03  0x03  0x00
- 0x03  0x03  0x00
- 0x00  0x00  0x00
- 0x00  0x00  0x00
- 0x00  0x00  0x00</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="n">fill!</span><span class="p">(</span><span class="n">tmpbf</span><span class="p">,</span> <span class="mh">0x02</span><span class="p">)</span>
-<span class="n">tmpbf</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[11]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>5×3 SnpArray:
- 0x02  0x02  0x02
- 0x02  0x02  0x02
- 0x02  0x02  0x02
- 0x02  0x02  0x02
- 0x02  0x02  0x02</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="n">rm</span><span class="p">(</span><span class="s">&quot;tmp.bed&quot;</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Initialize 5 rows and 3 columns with undefined genotypes without memory-mapping to any file</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="n">tmpbf</span> <span class="o">=</span> <span class="n">SnpArray</span><span class="p">(</span><span class="n">undef</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[13]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>5×3 SnpArray:
- 0x01  0x00  0x00
- 0x00  0x00  0x00
- 0x00  0x00  0x00
- 0x00  0x00  0x00
- 0x00  0x00  0x00</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Create a bed file corresponding to an existing SnpArray and memory-map it.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="n">tmpbf</span> <span class="o">=</span> <span class="n">SnpArray</span><span class="p">(</span><span class="s">&quot;tmp.bed&quot;</span><span class="p">,</span> <span class="n">tmpbf</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[14]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>5×3 SnpArray:
- 0x01  0x00  0x00
- 0x00  0x00  0x00
- 0x00  0x00  0x00
- 0x00  0x00  0x00
- 0x00  0x00  0x00</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="n">tmpbf</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mh">0x02</span>
-<span class="n">tmpbf</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[15]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>5×3 SnpArray:
- 0x02  0x00  0x00
- 0x00  0x00  0x00
- 0x00  0x00  0x00
- 0x00  0x00  0x00
- 0x00  0x00  0x00</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="n">rm</span><span class="p">(</span><span class="s">&quot;tmp.bed&quot;</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
@@ -13901,7 +13517,7 @@ Stacktrace:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[66]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">convert</span><span class="p">(</span><span class="kt">Matrix</span><span class="p">{</span><span class="kt">Float64</span><span class="p">},</span> <span class="n">mouse</span><span class="p">)</span>
@@ -13917,7 +13533,7 @@ Stacktrace:
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[17]:</div>
+    <div class="prompt output_prompt">Out[66]:</div>
 
 
 
@@ -13963,7 +13579,7 @@ Stacktrace:
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>!!! note</p>
 
-<pre><code>When `convert` or `copyto!` is used a slice or subarray of SnpArray, using `view`, `@view` or `views` is necessary for both correctness and efficiency. Without view, it's simply converting the UInt8 coding in original bed file.
+<pre><code>When `convert` or `copyto!` is used on a slice or subarray of SnpArray, using `view`, `@view` or `views` is necessary for both correctness and efficiency. Without view, it's simply converting the UInt8 coding in original bed file.
 
 </code></pre>
 <p>!!!</p>
@@ -13974,7 +13590,7 @@ Stacktrace:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="prompt input_prompt">In&nbsp;[67]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c"># convert(Vector{Float64}, view(mouse, :, 1)) # alternative syntax</span>
@@ -13992,7 +13608,7 @@ Stacktrace:
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[18]:</div>
+    <div class="prompt output_prompt">Out[67]:</div>
 
 
 
@@ -14043,7 +13659,7 @@ Stacktrace:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="prompt input_prompt">In&nbsp;[68]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">convert</span><span class="p">(</span><span class="kt">Matrix</span><span class="p">{</span><span class="kt">Float64</span><span class="p">},</span> <span class="nd">@view</span><span class="p">(</span><span class="n">mouse</span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="mi">2</span><span class="o">:</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="o">:</span><span class="mi">2</span><span class="o">:</span><span class="mi">10</span><span class="p">]))</span>
@@ -14059,7 +13675,7 @@ Stacktrace:
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[19]:</div>
+    <div class="prompt output_prompt">Out[68]:</div>
 
 
 
@@ -14089,7 +13705,7 @@ Stacktrace:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="prompt input_prompt">In&nbsp;[69]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="nd">@views</span> <span class="p">[</span><span class="n">convert</span><span class="p">(</span><span class="kt">Vector</span><span class="p">{</span><span class="kt">Float64</span><span class="p">},</span> <span class="n">mouse</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="n">ADDITIVE_MODEL</span><span class="p">)</span> <span class="n">convert</span><span class="p">(</span><span class="kt">Vector</span><span class="p">{</span><span class="kt">Float64</span><span class="p">},</span> <span class="n">mouse</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="n">DOMINANT_MODEL</span><span class="p">)</span> <span class="n">convert</span><span class="p">(</span><span class="kt">Vector</span><span class="p">{</span><span class="kt">Float64</span><span class="p">},</span> <span class="n">mouse</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="n">RECESSIVE_MODEL</span><span class="p">)]</span>
@@ -14105,7 +13721,7 @@ Stacktrace:
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[20]:</div>
+    <div class="prompt output_prompt">Out[69]:</div>
 
 
 
@@ -14149,14 +13765,14 @@ Stacktrace:
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Center and scale (last column) while uaing <code>convert</code></p>
+<p>Center and scale (last column) while using <code>convert</code></p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="prompt input_prompt">In&nbsp;[70]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">convert</span><span class="p">(</span><span class="kt">Vector</span><span class="p">{</span><span class="kt">Float64</span><span class="p">},</span> <span class="nd">@view</span><span class="p">(</span><span class="n">mouse</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="k">end</span><span class="p">]),</span> <span class="n">center</span><span class="o">=</span><span class="kc">true</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">true</span><span class="p">)</span>
@@ -14172,7 +13788,7 @@ Stacktrace:
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[21]:</div>
+    <div class="prompt output_prompt">Out[70]:</div>
 
 
 
@@ -14223,7 +13839,7 @@ Stacktrace:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[22]:</div>
+<div class="prompt input_prompt">In&nbsp;[71]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">convert</span><span class="p">(</span><span class="kt">Vector</span><span class="p">{</span><span class="kt">Float64</span><span class="p">},</span> <span class="nd">@view</span><span class="p">(</span><span class="n">mouse</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="k">end</span><span class="p">]),</span> <span class="n">center</span><span class="o">=</span><span class="kc">true</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">true</span><span class="p">,</span> <span class="n">impute</span><span class="o">=</span><span class="kc">true</span><span class="p">)</span>
@@ -14239,7 +13855,7 @@ Stacktrace:
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[22]:</div>
+    <div class="prompt output_prompt">Out[71]:</div>
 
 
 
@@ -14298,7 +13914,7 @@ Stacktrace:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[23]:</div>
+<div class="prompt input_prompt">In&nbsp;[72]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">v</span> <span class="o">=</span> <span class="n">zeros</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">mouse</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
@@ -14315,7 +13931,7 @@ Stacktrace:
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[23]:</div>
+    <div class="prompt output_prompt">Out[72]:</div>
 
 
 
@@ -14356,37 +13972,6 @@ Stacktrace:
 </div>
 
 </div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[24]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="nd">@btime</span><span class="p">(</span><span class="n">copyto!</span><span class="p">(</span><span class="o">$</span><span class="n">v</span><span class="p">,</span> <span class="o">$</span><span class="nd">@view</span><span class="p">(</span><span class="n">mouse</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="mi">1</span><span class="p">])));</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>  3.837 μs (0 allocations: 0 bytes)
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -14397,7 +13982,7 @@ Stacktrace:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[25]:</div>
+<div class="prompt input_prompt">In&nbsp;[73]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">v2</span> <span class="o">=</span> <span class="n">zeros</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">mouse</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
@@ -14414,7 +13999,7 @@ Stacktrace:
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[25]:</div>
+    <div class="prompt output_prompt">Out[73]:</div>
 
 
 
@@ -14455,38 +14040,6 @@ Stacktrace:
 </div>
 
 </div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[26]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="c"># roughly double the cost of copying 1 column</span>
-<span class="nd">@btime</span><span class="p">(</span><span class="n">copyto!</span><span class="p">(</span><span class="o">$</span><span class="n">v2</span><span class="p">,</span> <span class="o">$</span><span class="nd">@view</span><span class="p">(</span><span class="n">mouse</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="mi">1</span><span class="o">:</span><span class="mi">2</span><span class="p">])));</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>  7.245 μs (0 allocations: 0 bytes)
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -14497,7 +14050,7 @@ Stacktrace:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[27]:</div>
+<div class="prompt input_prompt">In&nbsp;[74]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">copyto!</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nd">@view</span><span class="p">(</span><span class="n">mouse</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span> <span class="n">center</span><span class="o">=</span><span class="kc">true</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">true</span><span class="p">)</span>
@@ -14513,7 +14066,7 @@ Stacktrace:
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[27]:</div>
+    <div class="prompt output_prompt">Out[74]:</div>
 
 
 
@@ -14554,38 +14107,6 @@ Stacktrace:
 </div>
 
 </div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[28]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="c"># more cost becoz of extra pass for center, scale, and/or impute</span>
-<span class="nd">@btime</span><span class="p">(</span><span class="n">copyto!</span><span class="p">(</span><span class="o">$</span><span class="n">v</span><span class="p">,</span> <span class="o">$</span><span class="p">(</span><span class="nd">@view</span><span class="p">(</span><span class="n">mouse</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="mi">1</span><span class="p">])),</span> <span class="n">center</span><span class="o">=</span><span class="kc">true</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">true</span><span class="p">));</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>  5.796 μs (0 allocations: 0 bytes)
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -14596,7 +14117,7 @@ Stacktrace:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[29]:</div>
+<div class="prompt input_prompt">In&nbsp;[75]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">v</span> <span class="o">=</span> <span class="kt">Vector</span><span class="p">{</span><span class="kt">Float64</span><span class="p">}(</span><span class="n">undef</span><span class="p">,</span> <span class="n">size</span><span class="p">(</span><span class="n">mouse</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
@@ -14605,7 +14126,7 @@ Stacktrace:
         <span class="n">copyto!</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nd">@view</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="o">:</span><span class="p">,</span> <span class="n">j</span><span class="p">]))</span>
     <span class="k">end</span>
 <span class="k">end</span>
-<span class="nd">@btime</span><span class="p">(</span><span class="n">loop_test</span><span class="p">(</span><span class="o">$</span><span class="n">v</span><span class="p">,</span> <span class="o">$</span><span class="n">mouse</span><span class="p">))</span>
+<span class="nd">@time</span> <span class="n">loop_test</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">mouse</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14622,7 +14143,7 @@ Stacktrace:
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>  50.196 ms (10150 allocations: 475.78 KiB)
+<pre>  0.067969 seconds (36.28 k allocations: 1.875 MiB)
 </pre>
 </div>
 </div>
@@ -14641,11 +14162,11 @@ Stacktrace:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[30]:</div>
+<div class="prompt input_prompt">In&nbsp;[76]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">M</span> <span class="o">=</span> <span class="n">similar</span><span class="p">(</span><span class="n">mouse</span><span class="p">,</span> <span class="kt">Float64</span><span class="p">)</span>
-<span class="nd">@btime</span><span class="p">(</span><span class="n">copyto!</span><span class="p">(</span><span class="o">$</span><span class="n">M</span><span class="p">,</span> <span class="o">$</span><span class="n">mouse</span><span class="p">));</span>
+<span class="nd">@time</span> <span class="n">copyto!</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">mouse</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14662,9 +14183,48 @@ Stacktrace:
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>  45.607 ms (0 allocations: 0 bytes)
+<pre>  0.109236 seconds (4 allocations: 160 bytes)
 </pre>
 </div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[76]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>1940×10150 Array{Float64,2}:
+ 1.0  1.0  1.0  1.0  2.0  1.0  2.0  1.0  …    2.0    2.0    2.0    2.0    2.0
+ 1.0  1.0  2.0  1.0  1.0  1.0  1.0  2.0       2.0    2.0    2.0    2.0    2.0
+ 2.0  2.0  2.0  2.0  2.0  2.0  2.0  2.0       2.0    2.0    2.0    2.0    2.0
+ 1.0  1.0  1.0  1.0  1.0  1.0  1.0  2.0       2.0    2.0    2.0    2.0    2.0
+ 2.0  2.0  2.0  2.0  2.0  2.0  2.0  2.0       1.0    1.0    1.0    1.0    1.0
+ 1.0  1.0  1.0  1.0  2.0  1.0  2.0  1.0  …    2.0    2.0    2.0    2.0    2.0
+ 1.0  1.0  1.0  1.0  2.0  1.0  2.0  1.0       2.0    2.0    2.0    2.0    2.0
+ 1.0  1.0  2.0  1.0  1.0  1.0  1.0  2.0       2.0    2.0    2.0    2.0    2.0
+ 1.0  1.0  2.0  1.0  1.0  1.0  1.0  2.0       2.0    2.0    2.0    2.0    2.0
+ 2.0  2.0  2.0  2.0  2.0  2.0  2.0  2.0       1.0    1.0    1.0    1.0    1.0
+ 2.0  2.0  2.0  2.0  2.0  2.0  2.0  2.0  …    0.0    0.0    0.0    0.0    0.0
+ 1.0  1.0  1.0  1.0  2.0  1.0  2.0  1.0       2.0    2.0    2.0    2.0    2.0
+ 2.0  2.0  2.0  2.0  2.0  2.0  2.0  2.0       0.0    0.0    0.0    0.0    0.0
+ ⋮                        ⋮              ⋱    ⋮                              
+ 2.0  2.0  2.0  2.0  2.0  2.0  2.0  2.0       2.0    2.0    2.0    2.0    2.0
+ 2.0  2.0  2.0  2.0  2.0  2.0  2.0  2.0       2.0    2.0    2.0    2.0    2.0
+ 1.0  1.0  1.0  1.0  1.0  1.0  1.0  2.0  …    2.0    2.0    2.0    2.0    2.0
+ 1.0  1.0  1.0  1.0  2.0  1.0  2.0  1.0       2.0    2.0    2.0    2.0    2.0
+ 2.0  2.0  2.0  2.0  2.0  2.0  2.0  2.0       2.0    2.0    2.0    2.0    2.0
+ 1.0  1.0  1.0  1.0  2.0  1.0  2.0  1.0       2.0    2.0    2.0    2.0    2.0
+ 2.0  2.0  2.0  2.0  2.0  2.0  2.0  2.0       2.0    2.0    2.0    2.0    2.0
+ 1.0  1.0  1.0  1.0  2.0  1.0  2.0  1.0  …    2.0    2.0    2.0    2.0    2.0
+ 1.0  1.0  2.0  1.0  1.0  1.0  1.0  2.0       2.0    2.0    2.0    2.0    2.0
+ 1.0  1.0  2.0  1.0  1.0  1.0  1.0  2.0       2.0    2.0    2.0    2.0    2.0
+ 1.0  1.0  1.0  1.0  1.0  1.0  1.0  2.0     NaN    NaN    NaN    NaN    NaN  
+ 0.0  0.0  0.0  0.0  2.0  0.0  2.0  0.0       2.0    2.0    2.0    2.0    2.0</pre>
+</div>
+
 </div>
 
 </div>
@@ -14681,10 +14241,10 @@ Stacktrace:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[31]:</div>
+<div class="prompt input_prompt">In&nbsp;[77]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="n">counts</span><span class="p">(</span><span class="n">mouse</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<div class=" highlight hl-julia"><pre><span></span><span class="nd">@time</span> <span class="n">counts</span><span class="p">(</span><span class="n">mouse</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14697,7 +14257,18 @@ Stacktrace:
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[31]:</div>
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>  0.046836 seconds (10 allocations: 384 bytes)
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[77]:</div>
 
 
 
@@ -14726,37 +14297,6 @@ In that SNP position for this sample, 359 individuals are homozygous allele 1 (<
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[32]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="nd">@btime</span><span class="p">(</span><span class="n">counts</span><span class="p">(</span><span class="o">$</span><span class="n">mouse</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="mi">1</span><span class="p">));</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>  6.809 ns (0 allocations: 0 bytes)
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -14767,7 +14307,7 @@ In that SNP position for this sample, 359 individuals are homozygous allele 1 (<
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[33]:</div>
+<div class="prompt input_prompt">In&nbsp;[78]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">maf</span><span class="p">(</span><span class="n">mouse</span><span class="p">)</span>
@@ -14783,7 +14323,7 @@ In that SNP position for this sample, 359 individuals are homozygous allele 1 (<
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[33]:</div>
+    <div class="prompt output_prompt">Out[78]:</div>
 
 
 
@@ -14834,7 +14374,7 @@ In that SNP position for this sample, 359 individuals are homozygous allele 1 (<
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[34]:</div>
+<div class="prompt input_prompt">In&nbsp;[79]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">minorallele</span><span class="p">(</span><span class="n">mouse</span><span class="p">)</span>
@@ -14850,7 +14390,7 @@ In that SNP position for this sample, 359 individuals are homozygous allele 1 (<
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[34]:</div>
+    <div class="prompt output_prompt">Out[79]:</div>
 
 
 
@@ -14901,7 +14441,7 @@ In that SNP position for this sample, 359 individuals are homozygous allele 1 (<
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[35]:</div>
+<div class="prompt input_prompt">In&nbsp;[80]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">mean</span><span class="p">(</span><span class="n">mouse</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -14917,7 +14457,7 @@ In that SNP position for this sample, 359 individuals are homozygous allele 1 (<
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[35]:</div>
+    <div class="prompt output_prompt">Out[80]:</div>
 
 
 
@@ -14935,7 +14475,7 @@ In that SNP position for this sample, 359 individuals are homozygous allele 1 (<
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[36]:</div>
+<div class="prompt input_prompt">In&nbsp;[81]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">mean</span><span class="p">(</span><span class="n">mouse</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">DOMINANT_MODEL</span><span class="p">)</span>
@@ -14951,7 +14491,7 @@ In that SNP position for this sample, 359 individuals are homozygous allele 1 (<
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[36]:</div>
+    <div class="prompt output_prompt">Out[81]:</div>
 
 
 
@@ -14969,7 +14509,7 @@ In that SNP position for this sample, 359 individuals are homozygous allele 1 (<
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[37]:</div>
+<div class="prompt input_prompt">In&nbsp;[82]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">var</span><span class="p">(</span><span class="n">mouse</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -14985,7 +14525,7 @@ In that SNP position for this sample, 359 individuals are homozygous allele 1 (<
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[37]:</div>
+    <div class="prompt output_prompt">Out[82]:</div>
 
 
 
@@ -15009,37 +14549,6 @@ In that SNP position for this sample, 359 individuals are homozygous allele 1 (<
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[38]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="nd">@btime</span><span class="p">(</span><span class="n">mean</span><span class="p">(</span><span class="o">$</span><span class="n">mouse</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="mi">1</span><span class="p">));</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>  15.307 μs (2 allocations: 79.39 KiB)
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -15050,7 +14559,7 @@ In that SNP position for this sample, 359 individuals are homozygous allele 1 (<
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[39]:</div>
+<div class="prompt input_prompt">In&nbsp;[83]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">std</span><span class="p">(</span><span class="n">mouse</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
@@ -15066,7 +14575,7 @@ In that SNP position for this sample, 359 individuals are homozygous allele 1 (<
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[39]:</div>
+    <div class="prompt output_prompt">Out[83]:</div>
 
 
 
@@ -15117,7 +14626,7 @@ In that SNP position for this sample, 359 individuals are homozygous allele 1 (<
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[40]:</div>
+<div class="prompt input_prompt">In&nbsp;[84]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">missingrate</span><span class="p">(</span><span class="n">mouse</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
@@ -15133,7 +14642,7 @@ In that SNP position for this sample, 359 individuals are homozygous allele 1 (<
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[40]:</div>
+    <div class="prompt output_prompt">Out[84]:</div>
 
 
 
@@ -15176,7 +14685,7 @@ In that SNP position for this sample, 359 individuals are homozygous allele 1 (<
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[41]:</div>
+<div class="prompt input_prompt">In&nbsp;[85]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">missingrate</span><span class="p">(</span><span class="n">mouse</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
@@ -15192,7 +14701,7 @@ In that SNP position for this sample, 359 individuals are homozygous allele 1 (<
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[41]:</div>
+    <div class="prompt output_prompt">Out[85]:</div>
 
 
 
@@ -15236,188 +14745,6 @@ In that SNP position for this sample, 359 individuals are homozygous allele 1 (<
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Location-of-the-missing-values">Location of the missing values<a class="anchor-link" href="#Location-of-the-missing-values">&#182;</a></h3><p>The positions of the missing data are evaluated by</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[42]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="n">mp</span> <span class="o">=</span> <span class="n">missingpos</span><span class="p">(</span><span class="n">mouse</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[42]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>1940×10150 SparseArrays.SparseMatrixCSC{Bool,Int32} with 33922 stored entries:
-  [702 ,     1]  =  1
-  [949 ,     1]  =  1
-  [914 ,     3]  =  1
-  [949 ,     3]  =  1
-  [1604,     3]  =  1
-  [1891,     3]  =  1
-  [81  ,     4]  =  1
-  [990 ,     4]  =  1
-  [1882,     4]  =  1
-  [81  ,     5]  =  1
-  [676 ,     5]  =  1
-  [990 ,     5]  =  1
-  ⋮
-  [1789, 10150]  =  1
-  [1791, 10150]  =  1
-  [1795, 10150]  =  1
-  [1846, 10150]  =  1
-  [1848, 10150]  =  1
-  [1851, 10150]  =  1
-  [1853, 10150]  =  1
-  [1860, 10150]  =  1
-  [1873, 10150]  =  1
-  [1886, 10150]  =  1
-  [1894, 10150]  =  1
-  [1897, 10150]  =  1
-  [1939, 10150]  =  1</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[43]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="nd">@btime</span><span class="p">(</span><span class="n">missingpos</span><span class="p">(</span><span class="o">$</span><span class="n">mouse</span><span class="p">));</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>  36.410 ms (19273 allocations: 1.80 MiB)
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>So, for example, the number of missing data values in each column can be evaluated as</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[44]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="n">sum</span><span class="p">(</span><span class="n">mp</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[44]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>1×10150 Array{Int64,2}:
- 2  0  4  3  4  1  4  1  3  3  0  4  0  …  174  173  173  162  173  174  175</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Here is a faster, but somewhat more obscure, way to calculate the same sums</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[45]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="n">view</span><span class="p">(</span><span class="n">counts</span><span class="p">(</span><span class="n">mouse</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="mi">2</span><span class="o">:</span><span class="mi">2</span><span class="p">,</span> <span class="o">:</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[45]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>1×10150 view(::Array{Int64,2}, 2:2, :) with eltype Int64:
- 2  0  4  3  4  1  4  1  3  3  0  4  0  …  174  173  173  162  173  174  175</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Genetic-relationship-matrix">Genetic relationship matrix<a class="anchor-link" href="#Genetic-relationship-matrix">&#182;</a></h2><p><code>grm</code> function computes the empirical kinship matrix using either the classical genetic relationship matrix, <code>grm(A, model=:GRM)</code>, or the method of moment method, <code>grm(A, model=:MoM)</code>, or the robust method, <code>grm(A, model=:Robust)</code>.</p>
 <p>Classical genetic relation matrix</p>
 
@@ -15426,7 +14753,7 @@ In that SNP position for this sample, 359 individuals are homozygous allele 1 (<
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[46]:</div>
+<div class="prompt input_prompt">In&nbsp;[86]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c"># grm(mouse, method=:MoM)</span>
@@ -15444,7 +14771,7 @@ In that SNP position for this sample, 359 individuals are homozygous allele 1 (<
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[46]:</div>
+    <div class="prompt output_prompt">Out[86]:</div>
 
 
 
@@ -15485,37 +14812,6 @@ In that SNP position for this sample, 359 individuals are homozygous allele 1 (<
 </div>
 
 </div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[47]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="nd">@btime</span><span class="p">(</span><span class="n">grm</span><span class="p">(</span><span class="o">$</span><span class="n">mouse</span><span class="p">,</span> <span class="n">method</span><span class="o">=:</span><span class="n">GRM</span><span class="p">));</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>  515.493 ms (25 allocations: 28.95 MiB)
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -15526,7 +14822,7 @@ In that SNP position for this sample, 359 individuals are homozygous allele 1 (<
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[48]:</div>
+<div class="prompt input_prompt">In&nbsp;[87]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">grm</span><span class="p">(</span><span class="n">mouse</span><span class="p">,</span> <span class="n">method</span><span class="o">=:</span><span class="n">GRM</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="kt">Float32</span><span class="p">)</span>
@@ -15542,7 +14838,7 @@ In that SNP position for this sample, 359 individuals are homozygous allele 1 (<
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[48]:</div>
+    <div class="prompt output_prompt">Out[87]:</div>
 
 
 
@@ -15583,37 +14879,6 @@ In that SNP position for this sample, 359 individuals are homozygous allele 1 (<
 </div>
 
 </div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[49]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="nd">@btime</span><span class="p">(</span><span class="n">grm</span><span class="p">(</span><span class="o">$</span><span class="n">mouse</span><span class="p">,</span> <span class="n">method</span><span class="o">=:</span><span class="n">GRM</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="kt">Float32</span><span class="p">));</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>  272.344 ms (26 allocations: 14.60 MiB)
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -15624,7 +14889,7 @@ In that SNP position for this sample, 359 individuals are homozygous allele 1 (<
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[50]:</div>
+<div class="prompt input_prompt">In&nbsp;[88]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c"># compute GRM excluding SNPs with MAF≤0.05 </span>
@@ -15641,7 +14906,7 @@ In that SNP position for this sample, 359 individuals are homozygous allele 1 (<
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[50]:</div>
+    <div class="prompt output_prompt">Out[88]:</div>
 
 
 
@@ -15692,7 +14957,7 @@ In that SNP position for this sample, 359 individuals are homozygous allele 1 (<
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[51]:</div>
+<div class="prompt input_prompt">In&nbsp;[89]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c"># GRM using every other SNP</span>
@@ -15709,7 +14974,7 @@ In that SNP position for this sample, 359 individuals are homozygous allele 1 (<
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[51]:</div>
+    <div class="prompt output_prompt">Out[89]:</div>
 
 
 
@@ -15760,7 +15025,7 @@ In that SNP position for this sample, 359 individuals are homozygous allele 1 (<
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[52]:</div>
+<div class="prompt input_prompt">In&nbsp;[90]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="nd">@show</span> <span class="n">rowmr</span> <span class="o">=</span> <span class="n">count</span><span class="p">(</span><span class="n">missingrate</span><span class="p">(</span><span class="n">mouse</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">.&lt;</span> <span class="mf">0.001</span><span class="p">)</span>
@@ -15801,10 +15066,12 @@ colmr = count(missingrate(mouse, 1) .&lt; 0.001) = 5726
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[53]:</div>
+<div class="prompt input_prompt">In&nbsp;[91]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="n">rowmask</span><span class="p">,</span> <span class="n">colmask</span> <span class="o">=</span>  <span class="n">SnpArrays</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">mouse</span><span class="p">,</span> <span class="mf">0.999</span><span class="p">,</span> <span class="mf">0.999</span><span class="p">)</span>
+<div class=" highlight hl-julia"><pre><span></span><span class="n">rowmask</span><span class="p">,</span> <span class="n">colmask</span> <span class="o">=</span>  <span class="n">SnpArrays</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">mouse</span><span class="p">,</span> 
+    <span class="n">min_success_rate_per_row</span> <span class="o">=</span> <span class="mf">0.999</span><span class="p">,</span> 
+    <span class="n">min_success_rate_per_col</span> <span class="o">=</span> <span class="mf">0.999</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -15817,18 +15084,15 @@ colmr = count(missingrate(mouse, 1) .&lt; 0.001) = 5726
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+    <div class="prompt output_prompt">Out[91]:</div>
 
 
-<div class="output_subarea output_text output_error">
-<pre>
-MethodError: no method matching filter(::SnpArray, ::Float64, ::Float64)
-Closest candidates are:
-  filter(::SnpArray; min_success_rate_per_row, min_success_rate_per_col, min_maf, min_hwe_pval, maxiters, verbose) at /Users/huazhou/.julia/packages/SnpArrays/pe0oE/src/filter.jl:30
 
-Stacktrace:
- [1] top-level scope at In[53]:1</pre>
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(Bool[1, 1, 1, 1, 1, 1, 1, 1, 0, 1  …  1, 1, 1, 1, 0, 1, 1, 1, 1, 1], Bool[0, 1, 0, 0, 0, 1, 0, 1, 0, 0  …  0, 0, 0, 0, 0, 0, 0, 0, 0, 0])</pre>
 </div>
+
 </div>
 
 </div>
@@ -15837,7 +15101,7 @@ Stacktrace:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[54]:</div>
+<div class="prompt input_prompt">In&nbsp;[92]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">count</span><span class="p">(</span><span class="n">rowmask</span><span class="p">),</span> <span class="n">count</span><span class="p">(</span><span class="n">colmask</span><span class="p">)</span>
@@ -15853,66 +15117,15 @@ Stacktrace:
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+    <div class="prompt output_prompt">Out[92]:</div>
 
 
-<div class="output_subarea output_text output_error">
-<pre>
-UndefVarError: rowmask not defined
 
-Stacktrace:
- [1] top-level scope at In[54]:1</pre>
-</div>
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(1856, 5726)</pre>
 </div>
 
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[55]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="nd">@btime</span><span class="p">(</span><span class="n">SnpArrays</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="o">$</span><span class="n">mouse</span><span class="p">,</span> <span class="mf">0.999</span><span class="p">,</span> <span class="mf">0.999</span><span class="p">));</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_text output_error">
-<pre>
-MethodError: no method matching filter(::SnpArray, ::Float64, ::Float64)
-Closest candidates are:
-  filter(::SnpArray; min_success_rate_per_row, min_success_rate_per_col, min_maf, min_hwe_pval, maxiters, verbose) at /Users/huazhou/.julia/packages/SnpArrays/pe0oE/src/filter.jl:30
-
-Stacktrace:
- [1] ##core#496(::SnpArray) at /Users/huazhou/.julia/packages/BenchmarkTools/7aqwe/src/execution.jl:297
- [2] ##sample#497(::BenchmarkTools.Parameters) at /Users/huazhou/.julia/packages/BenchmarkTools/7aqwe/src/execution.jl:303
- [3] #_run#14(::Bool, ::String, ::Base.Iterators.Pairs{Symbol,Integer,NTuple{4,Symbol},NamedTuple{(:samples, :evals, :gctrial, :gcsample),Tuple{Int64,Int64,Bool,Bool}}}, ::typeof(BenchmarkTools._run), ::BenchmarkTools.Benchmark{Symbol(&#34;##benchmark#495&#34;)}, ::BenchmarkTools.Parameters) at /Users/huazhou/.julia/packages/BenchmarkTools/7aqwe/src/execution.jl:331
- [4] (::getfield(BenchmarkTools, Symbol(&#34;#kw##_run&#34;)))(::NamedTuple{(:verbose, :samples, :evals, :gctrial, :gcsample),Tuple{Bool,Int64,Int64,Bool,Bool}}, ::typeof(BenchmarkTools._run), ::BenchmarkTools.Benchmark{Symbol(&#34;##benchmark#495&#34;)}, ::BenchmarkTools.Parameters) at ./none:0
- [5] (::getfield(Base, Symbol(&#34;#inner#2&#34;)){Base.Iterators.Pairs{Symbol,Integer,NTuple{5,Symbol},NamedTuple{(:verbose, :samples, :evals, :gctrial, :gcsample),Tuple{Bool,Int64,Int64,Bool,Bool}}},typeof(BenchmarkTools._run),Tuple{BenchmarkTools.Benchmark{Symbol(&#34;##benchmark#495&#34;)},BenchmarkTools.Parameters}})() at ./essentials.jl:793
- [6] #invokelatest#1 at ./essentials.jl:794 [inlined]
- [7] #invokelatest at ./none:0 [inlined]
- [8] #run_result#37 at /Users/huazhou/.julia/packages/BenchmarkTools/7aqwe/src/execution.jl:32 [inlined]
- [9] #run_result at ./none:0 [inlined]
- [10] #run#39(::Base.Iterators.Pairs{Symbol,Integer,NTuple{5,Symbol},NamedTuple{(:verbose, :samples, :evals, :gctrial, :gcsample),Tuple{Bool,Int64,Int64,Bool,Bool}}}, ::typeof(run), ::BenchmarkTools.Benchmark{Symbol(&#34;##benchmark#495&#34;)}, ::BenchmarkTools.Parameters) at /Users/huazhou/.julia/packages/BenchmarkTools/7aqwe/src/execution.jl:46
- [11] #run at ./none:0 [inlined] (repeats 2 times)
- [12] #warmup#42 at /Users/huazhou/.julia/packages/BenchmarkTools/7aqwe/src/execution.jl:79 [inlined]
- [13] warmup(::BenchmarkTools.Benchmark{Symbol(&#34;##benchmark#495&#34;)}) at /Users/huazhou/.julia/packages/BenchmarkTools/7aqwe/src/execution.jl:79
- [14] top-level scope at /Users/huazhou/.julia/packages/BenchmarkTools/7aqwe/src/execution.jl:390
- [15] top-level scope at In[55]:1</pre>
-</div>
 </div>
 
 </div>
@@ -15939,7 +15152,7 @@ Stacktrace:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[56]:</div>
+<div class="prompt input_prompt">In&nbsp;[93]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">SnpArrays</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">SnpArrays</span><span class="o">.</span><span class="n">datadir</span><span class="p">(</span><span class="s">&quot;mouse&quot;</span><span class="p">),</span> <span class="mi">1</span><span class="o">:</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="o">:</span><span class="mi">5</span><span class="p">)</span>
@@ -15955,7 +15168,7 @@ Stacktrace:
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[56]:</div>
+    <div class="prompt output_prompt">Out[93]:</div>
 
 
 
@@ -15977,7 +15190,7 @@ Stacktrace:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[57]:</div>
+<div class="prompt input_prompt">In&nbsp;[94]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">rm</span><span class="p">(</span><span class="n">SnpArrays</span><span class="o">.</span><span class="n">datadir</span><span class="p">(</span><span class="s">&quot;mouse&quot;</span><span class="p">)</span> <span class="o">*</span> <span class="s">&quot;.filtered.bed&quot;</span><span class="p">)</span>
@@ -16000,7 +15213,7 @@ Stacktrace:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[58]:</div>
+<div class="prompt input_prompt">In&nbsp;[95]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">SnpArrays</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">SnpArrays</span><span class="o">.</span><span class="n">datadir</span><span class="p">(</span><span class="s">&quot;mouse&quot;</span><span class="p">),</span> <span class="n">rowmask</span><span class="p">,</span> <span class="n">colmask</span><span class="p">)</span>
@@ -16016,49 +15229,41 @@ Stacktrace:
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+    <div class="prompt output_prompt">Out[95]:</div>
 
 
-<div class="output_subarea output_text output_error">
-<pre>
-UndefVarError: rowmask not defined
 
-Stacktrace:
- [1] top-level scope at In[58]:1</pre>
+
+<div class="output_text output_subarea output_execute_result">
+<pre>1856×5726 SnpArray:
+ 0x02  0x02  0x02  0x02  0x02  0x02  …  0x03  0x02  0x00  0x02  0x03  0x02
+ 0x02  0x02  0x03  0x02  0x03  0x03     0x00  0x03  0x03  0x03  0x03  0x00
+ 0x03  0x03  0x03  0x03  0x03  0x03     0x02  0x02  0x02  0x03  0x00  0x03
+ 0x02  0x02  0x03  0x02  0x03  0x03     0x03  0x03  0x00  0x03  0x03  0x00
+ 0x03  0x03  0x03  0x03  0x03  0x03     0x02  0x03  0x03  0x02  0x03  0x02
+ 0x02  0x02  0x02  0x02  0x02  0x02  …  0x03  0x02  0x00  0x03  0x00  0x03
+ 0x02  0x02  0x02  0x02  0x02  0x02     0x03  0x02  0x02  0x03  0x03  0x03
+ 0x02  0x02  0x03  0x02  0x03  0x03     0x00  0x03  0x03  0x00  0x03  0x00
+ 0x03  0x03  0x03  0x03  0x03  0x03     0x03  0x03  0x02  0x02  0x03  0x02
+ 0x03  0x03  0x03  0x03  0x03  0x03     0x03  0x02  0x00  0x03  0x03  0x03
+ 0x02  0x02  0x02  0x02  0x02  0x02  …  0x00  0x03  0x03  0x03  0x03  0x00
+ 0x03  0x03  0x03  0x03  0x03  0x03     0x03  0x03  0x03  0x03  0x00  0x03
+ 0x02  0x02  0x02  0x02  0x02  0x02     0x02  0x03  0x03  0x03  0x00  0x00
+    ⋮                             ⋮  ⋱     ⋮                             ⋮
+ 0x03  0x03  0x03  0x03  0x03  0x03     0x02  0x03  0x02  0x03  0x03  0x00
+ 0x03  0x03  0x03  0x03  0x03  0x03  …  0x02  0x02  0x02  0x03  0x03  0x03
+ 0x03  0x03  0x03  0x03  0x03  0x03     0x02  0x03  0x03  0x03  0x03  0x00
+ 0x02  0x02  0x03  0x02  0x03  0x03     0x00  0x03  0x03  0x03  0x03  0x00
+ 0x02  0x02  0x02  0x02  0x02  0x02     0x03  0x03  0x03  0x03  0x00  0x00
+ 0x03  0x03  0x03  0x03  0x03  0x03     0x00  0x03  0x03  0x03  0x03  0x03
+ 0x02  0x02  0x02  0x02  0x02  0x02  …  0x02  0x03  0x03  0x03  0x03  0x03
+ 0x02  0x02  0x02  0x02  0x02  0x02     0x02  0x02  0x02  0x03  0x03  0x03
+ 0x02  0x02  0x03  0x02  0x03  0x03     0x02  0x02  0x02  0x03  0x00  0x03
+ 0x02  0x02  0x03  0x02  0x03  0x03     0x00  0x03  0x03  0x03  0x03  0x03
+ 0x02  0x02  0x03  0x02  0x03  0x03     0x00  0x03  0x03  0x03  0x00  0x03
+ 0x00  0x00  0x00  0x00  0x00  0x00  …  0x03  0x03  0x03  0x03  0x03  0x03</pre>
 </div>
-</div>
 
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[59]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="p">;</span><span class="n">ls</span> <span class="o">-</span><span class="n">l</span> <span class="o">../</span><span class="n">data</span><span class="o">/</span><span class="n">mouse</span><span class="o">.</span><span class="n">filtered</span><span class="o">.</span><span class="n">bed</span> <span class="o">../</span><span class="n">data</span><span class="o">/</span><span class="n">mouse</span><span class="o">.</span><span class="n">filtered</span><span class="o">.</span><span class="n">fam</span> <span class="o">../</span><span class="n">data</span><span class="o">/</span><span class="n">mouse</span><span class="o">.</span><span class="n">filtered</span><span class="o">.</span><span class="n">bim</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>ls: ../data/mouse.filtered.bed: No such file or directory
-ls: ../data/mouse.filtered.bim: No such file or directory
-ls: ../data/mouse.filtered.fam: No such file or directory
-</pre>
-</div>
 </div>
 
 </div>
@@ -16067,7 +15272,7 @@ ls: ../data/mouse.filtered.fam: No such file or directory
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[60]:</div>
+<div class="prompt input_prompt">In&nbsp;[96]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">rm</span><span class="p">(</span><span class="n">SnpArrays</span><span class="o">.</span><span class="n">datadir</span><span class="p">(</span><span class="s">&quot;mouse&quot;</span><span class="p">)</span> <span class="o">*</span> <span class="s">&quot;.filtered.bed&quot;</span><span class="p">)</span>
@@ -16076,31 +15281,6 @@ ls: ../data/mouse.filtered.fam: No such file or directory
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_text output_error">
-<pre>
-IOError: unlink: no such file or directory (ENOENT)
-
-Stacktrace:
- [1] uv_error at ./libuv.jl:90 [inlined]
- [2] unlink(::String) at ./file.jl:730
- [3] #rm#9(::Bool, ::Bool, ::typeof(rm), ::String) at ./file.jl:253
- [4] rm(::String) at ./file.jl:245
- [5] top-level scope at In[60]:1</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -16120,7 +15300,7 @@ Stacktrace:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[61]:</div>
+<div class="prompt input_prompt">In&nbsp;[97]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="kd">const</span> <span class="n">EUR</span> <span class="o">=</span> <span class="n">SnpArray</span><span class="p">(</span><span class="n">SnpArrays</span><span class="o">.</span><span class="n">datadir</span><span class="p">(</span><span class="s">&quot;EUR_subset.bed&quot;</span><span class="p">))</span>
@@ -16136,7 +15316,18 @@ Stacktrace:
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[61]:</div>
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>WARNING: redefining constant EUR
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[97]:</div>
 
 
 
@@ -16187,13 +15378,31 @@ Stacktrace:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[62]:</div>
+<div class="prompt input_prompt">In&nbsp;[98]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="kd">const</span> <span class="n">EURbm</span> <span class="o">=</span> <span class="n">SnpBitMatrix</span><span class="p">{</span><span class="kt">Float64</span><span class="p">}(</span><span class="n">EUR</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">ADDITIVE_MODEL</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="kc">true</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">true</span><span class="p">);</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>WARNING: redefining constant EURbm
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -16209,7 +15418,7 @@ Stacktrace:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[63]:</div>
+<div class="prompt input_prompt">In&nbsp;[99]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">Base</span><span class="o">.</span><span class="n">summarysize</span><span class="p">(</span><span class="n">EUR</span><span class="p">),</span> <span class="n">Base</span><span class="o">.</span><span class="n">summarysize</span><span class="p">(</span><span class="n">EURbm</span><span class="p">)</span>
@@ -16225,7 +15434,7 @@ Stacktrace:
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[63]:</div>
+    <div class="prompt output_prompt">Out[99]:</div>
 
 
 
@@ -16250,7 +15459,7 @@ Stacktrace:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[64]:</div>
+<div class="prompt input_prompt">In&nbsp;[100]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="nd">@show</span> <span class="n">size</span><span class="p">(</span><span class="n">EURbm</span><span class="p">)</span>
@@ -16293,7 +15502,7 @@ typeof(EURbm) &lt;: AbstractMatrix = true
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[65]:</div>
+<div class="prompt input_prompt">In&nbsp;[101]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="k">using</span> <span class="n">LinearAlgebra</span>
@@ -16313,13 +15522,13 @@ typeof(EURbm) &lt;: AbstractMatrix = true
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[65]:</div>
+    <div class="prompt output_prompt">Out[101]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>1.4398902262158203e-10</pre>
+<pre>1.1685516026649065e-10</pre>
 </div>
 
 </div>
@@ -16330,7 +15539,7 @@ typeof(EURbm) &lt;: AbstractMatrix = true
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[66]:</div>
+<div class="prompt input_prompt">In&nbsp;[102]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">norm</span><span class="p">(</span><span class="n">EURbm</span><span class="o">&#39;</span> <span class="o">*</span> <span class="n">v1</span> <span class="o">-</span> <span class="n">A</span><span class="o">&#39;</span> <span class="o">*</span> <span class="n">v1</span><span class="p">)</span>
@@ -16346,13 +15555,13 @@ typeof(EURbm) &lt;: AbstractMatrix = true
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[66]:</div>
+    <div class="prompt output_prompt">Out[102]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>7.595396087149772e-12</pre>
+<pre>3.3712967680087646e-11</pre>
 </div>
 
 </div>
@@ -16360,148 +15569,6 @@ typeof(EURbm) &lt;: AbstractMatrix = true
 </div>
 </div>
 
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>In this example, the Float64 matrix fits into memory so Matrix{Float64}-vector multiplication (highly optimized BLAS) is much faster than the SnpBitMatrix-vector multiplication.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[67]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="n">out1</span> <span class="o">=</span> <span class="kt">Vector</span><span class="p">{</span><span class="kt">Float64</span><span class="p">}(</span><span class="n">undef</span><span class="p">,</span> <span class="n">size</span><span class="p">(</span><span class="n">EUR</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-<span class="n">out2</span> <span class="o">=</span> <span class="kt">Vector</span><span class="p">{</span><span class="kt">Float64</span><span class="p">}(</span><span class="n">undef</span><span class="p">,</span> <span class="n">size</span><span class="p">(</span><span class="n">EUR</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-<span class="nd">@btime</span><span class="p">(</span><span class="n">mul!</span><span class="p">(</span><span class="o">$</span><span class="n">out1</span><span class="p">,</span> <span class="o">$</span><span class="n">EURbm</span><span class="p">,</span> <span class="o">$</span><span class="n">v2</span><span class="p">));</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>  81.483 ms (0 allocations: 0 bytes)
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[68]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="nd">@btime</span><span class="p">(</span><span class="n">mul!</span><span class="p">(</span><span class="o">$</span><span class="n">out1</span><span class="p">,</span> <span class="o">$</span><span class="n">A</span><span class="p">,</span> <span class="o">$</span><span class="n">v2</span><span class="p">));</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>  8.981 ms (0 allocations: 0 bytes)
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[69]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="nd">@btime</span><span class="p">(</span><span class="n">mul!</span><span class="p">(</span><span class="o">$</span><span class="n">out2</span><span class="p">,</span> <span class="o">$</span><span class="n">transpose</span><span class="p">(</span><span class="o">$</span><span class="n">EURbm</span><span class="p">),</span> <span class="o">$</span><span class="n">v1</span><span class="p">));</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>  76.205 ms (1 allocation: 16 bytes)
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[70]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="nd">@btime</span><span class="p">(</span><span class="n">mul!</span><span class="p">(</span><span class="o">$</span><span class="n">out2</span><span class="p">,</span> <span class="o">$</span><span class="n">transpose</span><span class="p">(</span><span class="o">$</span><span class="n">A</span><span class="p">),</span> <span class="o">$</span><span class="n">v1</span><span class="p">));</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>  6.993 ms (0 allocations: 0 bytes)
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>In another test example with a ~1GB bed file, SnpBitMatrix-vector multiplication is about 3-5 fold faster than the corresponding Matrix{Float64}-vector multiplication, because the Matrix{Float64} matrix cannot fit into the memory.</p>
-
-</div>
-</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
@@ -16513,7 +15580,7 @@ typeof(EURbm) &lt;: AbstractMatrix = true
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[71]:</div>
+<div class="prompt input_prompt">In&nbsp;[103]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">EURsub</span> <span class="o">=</span> <span class="nd">@view</span> <span class="n">EUR</span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="mi">2</span><span class="o">:</span><span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="o">:</span><span class="mi">2</span><span class="o">:</span><span class="mi">100</span><span class="p">]</span>
@@ -16527,7 +15594,7 @@ typeof(EURbm) &lt;: AbstractMatrix = true
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[72]:</div>
+<div class="prompt input_prompt">In&nbsp;[104]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">Base</span><span class="o">.</span><span class="n">summarysize</span><span class="p">(</span><span class="n">EURsubbm</span><span class="p">)</span>
@@ -16543,7 +15610,7 @@ typeof(EURbm) &lt;: AbstractMatrix = true
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[72]:</div>
+    <div class="prompt output_prompt">Out[104]:</div>
 
 
 
@@ -16560,7 +15627,7 @@ typeof(EURbm) &lt;: AbstractMatrix = true
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[73]:</div>
+<div class="prompt input_prompt">In&nbsp;[105]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="nd">@show</span> <span class="n">size</span><span class="p">(</span><span class="n">EURsubbm</span><span class="p">)</span>
@@ -16595,7 +15662,7 @@ typeof(EURsubbm) &lt;: AbstractMatrix = true
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[74]:</div>
+<div class="prompt input_prompt">In&nbsp;[106]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="k">using</span> <span class="n">LinearAlgebra</span>
@@ -16615,13 +15682,13 @@ typeof(EURsubbm) &lt;: AbstractMatrix = true
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[74]:</div>
+    <div class="prompt output_prompt">Out[106]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>3.5208601346095015e-14</pre>
+<pre>6.564850227934546e-14</pre>
 </div>
 
 </div>
@@ -16632,7 +15699,7 @@ typeof(EURsubbm) &lt;: AbstractMatrix = true
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[75]:</div>
+<div class="prompt input_prompt">In&nbsp;[107]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">norm</span><span class="p">(</span><span class="n">EURsubbm</span><span class="o">&#39;</span> <span class="o">*</span> <span class="n">v1</span> <span class="o">-</span> <span class="n">A</span><span class="o">&#39;</span> <span class="o">*</span> <span class="n">v1</span><span class="p">)</span>
@@ -16648,13 +15715,13 @@ typeof(EURsubbm) &lt;: AbstractMatrix = true
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[75]:</div>
+    <div class="prompt output_prompt">Out[107]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>5.4493858333237795e-14</pre>
+<pre>1.1152125348768273e-13</pre>
 </div>
 
 </div>
@@ -16680,7 +15747,7 @@ typeof(EURsubbm) &lt;: AbstractMatrix = true
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[76]:</div>
+<div class="prompt input_prompt">In&nbsp;[108]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">EUR_data</span> <span class="o">=</span> <span class="n">SnpData</span><span class="p">(</span><span class="n">SnpArrays</span><span class="o">.</span><span class="n">datadir</span><span class="p">(</span><span class="s">&quot;EUR_subset&quot;</span><span class="p">))</span>
@@ -16696,7 +15763,7 @@ typeof(EURsubbm) &lt;: AbstractMatrix = true
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[76]:</div>
+    <div class="prompt output_prompt">Out[108]:</div>
 
 
 
@@ -16747,7 +15814,7 @@ srcfam: /Users/huazhou/.julia/packages/SnpArrays/pe0oE/src/../data/EUR_subset.fa
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[77]:</div>
+<div class="prompt input_prompt">In&nbsp;[109]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">splitted</span> <span class="o">=</span> <span class="n">SnpArrays</span><span class="o">.</span><span class="n">split_plink</span><span class="p">(</span><span class="n">SnpArrays</span><span class="o">.</span><span class="n">datadir</span><span class="p">(</span><span class="s">&quot;EUR_subset&quot;</span><span class="p">);</span> <span class="n">prefix</span><span class="o">=</span><span class="s">&quot;tmp.chr.&quot;</span><span class="p">)</span>
@@ -16763,7 +15830,7 @@ srcfam: /Users/huazhou/.julia/packages/SnpArrays/pe0oE/src/../data/EUR_subset.fa
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[77]:</div>
+    <div class="prompt output_prompt">Out[109]:</div>
 
 
 
@@ -16794,7 +15861,7 @@ srcfam: /Users/huazhou/.julia/packages/SnpArrays/pe0oE/src/../data/EUR_subset.fa
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[78]:</div>
+<div class="prompt input_prompt">In&nbsp;[110]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">piece</span> <span class="o">=</span> <span class="n">splitted</span><span class="p">[</span><span class="s">&quot;17&quot;</span><span class="p">]</span>
@@ -16810,7 +15877,7 @@ srcfam: /Users/huazhou/.julia/packages/SnpArrays/pe0oE/src/../data/EUR_subset.fa
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[78]:</div>
+    <div class="prompt output_prompt">Out[110]:</div>
 
 
 
@@ -16861,7 +15928,7 @@ srcfam: tmp.chr.17.fam
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[86]:</div>
+<div class="prompt input_prompt">In&nbsp;[111]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c"># merged = SnpArrays.merge_plink(&quot;tmp.merged&quot;, splitted) # write_plink is included here</span>
@@ -16882,7 +15949,7 @@ srcfam: tmp.chr.17.fam
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[87]:</div>
+<div class="prompt input_prompt">In&nbsp;[112]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c"># merged_from_splitted_files = merge_plink(&quot;tmp.chr&quot;; des = &quot;tmp.merged.2&quot;)</span>
@@ -16895,7 +15962,7 @@ srcfam: tmp.chr.17.fam
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[88]:</div>
+<div class="prompt input_prompt">In&nbsp;[113]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">isfile</span><span class="p">(</span><span class="s">&quot;tmp.merged.bim&quot;</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">rm</span><span class="p">(</span><span class="s">&quot;tmp.merged.bim&quot;</span><span class="p">)</span> <span class="c"># cleanup</span>
