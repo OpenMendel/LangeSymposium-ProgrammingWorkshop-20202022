@@ -18,7 +18,7 @@ This repo contains the OpenMendel tutorials presented in the programming worksho
 | 8:50-9:10 | Variance component models | Juhyun Kim |  
 | 9:10-9:30 | Haplotyping and imputation by MendelImpute.jl \[[ipynb](./04-impute/MendelImpute_Tutorial.ipynb)\]| Ben Chu |  
 | 9:30-9:50 | GWAS by IHT \[[ipynb](./05-gwas/MendelIHT_tutorial.ipynb)\] | Ben Chu |  
-| 9:50-10:10 | GWAS for ordinal trait | Chris German |  
+| 9:50-10:10 | GWAS for ordinal trait \[[ipynb](./06-ordinal/ordinalgwas.ipynb)\] \[[html](https://github.com/OpenMendel/LangeSymposium-ProgrammingWorkshop-20202022/blob/master/06-ordinal/ordinalgwas.html)\]| Chris German |  
 | 10:10-10:30 | Trait simulation | Sarah Ji |  
 
 ## Binder
