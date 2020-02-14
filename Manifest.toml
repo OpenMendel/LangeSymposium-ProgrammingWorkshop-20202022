@@ -577,6 +577,14 @@ git-tree-sha1 = "f60a33649ef8380bafe6be7d1af1eeb8a3a3ea92"
 uuid = "f269a46b-ccf7-5d73-abea-4c690281aa53"
 version = "1.0.1"
 
+[[TraitSimulation]]
+deps = ["DataFrames", "Distributions", "GLM", "LinearAlgebra", "OrdinalMultinomialModels", "Random", "SnpArrays", "SpecialFunctions", "Statistics", "StatsBase", "StatsModels", "Test"]
+git-tree-sha1 = "9a731dc507a8f91a7fce4cec0544f6578c43cbaa"
+repo-rev = "master"
+repo-url = "https://github.com/OpenMendel/TraitSimulation.jl"
+uuid = "dec3038e-29bc-11e9-2207-9f3d5855a202"
+version = "0.1.0"
+
 [[TranscodingStreams]]
 deps = ["Random", "Test"]
 git-tree-sha1 = "7c53c35547de1c5b9d46a4797cf6d8253807108c"
