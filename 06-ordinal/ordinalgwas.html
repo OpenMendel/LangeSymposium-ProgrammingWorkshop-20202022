@@ -174,7 +174,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Lange-Symposium-2020---GWAS-for-ordinal-phenotypes-with-OrdinalGWAS.jl">Lange Symposium 2020 - GWAS for ordinal phenotypes with <em>OrdinalGWAS.jl</em><a class="anchor-link" href="#Lange-Symposium-2020---GWAS-for-ordinal-phenotypes-with-OrdinalGWAS.jl">&#182;</a></h1>
+<h1 id="Lange-Symposium-2020---GWAS-for-Ordinal-Phenotypes-with-OrdinalGWAS.jl">Lange Symposium 2020 - GWAS for Ordinal Phenotypes with <em>OrdinalGWAS.jl</em><a class="anchor-link" href="#Lange-Symposium-2020---GWAS-for-Ordinal-Phenotypes-with-OrdinalGWAS.jl">&#182;</a></h1>
 </div>
 </div>
 </div>
@@ -194,9 +194,9 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Agenda">Agenda<a class="anchor-link" href="#Agenda">&#182;</a></h2><ul>
+<h2 id="Outline">Outline<a class="anchor-link" href="#Outline">&#182;</a></h2><ul>
 <li>Motivation</li>
-<li>Installation</li>
+<li>Model</li>
 <li>Basic Usage<ul>
 <li>Input files</li>
 <li>Running a simple analysis</li>
@@ -211,6 +211,7 @@ div#notebook {
 </ul>
 </li>
 <li>Additional Features in Documentation</li>
+<li>Example (if time)</li>
 </ul>
 
 </div>
@@ -261,12 +262,16 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Installation">Installation<a class="anchor-link" href="#Installation">&#182;</a></h2><p>This package requires Julia v1.0 or later and two other unregistered packages SnpArrays.jl and OrdinalMultinomialModels.jl. The package has not yet been registered and must be installed using the repository location. Start julia and use the ] key to switch to the package manager REPL</p>
-<p><strong>NOTE: We are using Binder for this tutorial, and the packages are already installed so the following do not need to be run</strong></p>
-<div class="highlight"><pre><span class="p">(</span><span class="n">v1</span><span class="o">.</span><span class="mi">3</span><span class="p">)</span> <span class="n">pkg</span><span class="o">&gt;</span> <span class="n">add</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">OpenMendel</span><span class="o">/</span><span class="n">SnpArrays</span><span class="o">.</span><span class="n">jl</span>
-<span class="p">(</span><span class="n">v1</span><span class="o">.</span><span class="mi">3</span><span class="p">)</span> <span class="n">pkg</span><span class="o">&gt;</span> <span class="n">add</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">OpenMendel</span><span class="o">/</span><span class="n">OrdinalMultinomialModels</span><span class="o">.</span><span class="n">jl</span>
-<span class="p">(</span><span class="n">v1</span><span class="o">.</span><span class="mi">3</span><span class="p">)</span> <span class="n">pkg</span><span class="o">&gt;</span> <span class="n">add</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">OpenMendel</span><span class="o">/</span><span class="n">OrdinalGWAS</span><span class="o">.</span><span class="n">jl</span>
-</pre></div>
+<h2 id="Model">Model<a class="anchor-link" href="#Model">&#182;</a></h2><p><em>OrdinalGWAS.jl</em> uses an ordered multinomial model, by default it runs the null model and then performs a score test for each SNP using the null model.</p>
+<ul>
+<li>Assume trait $Y$ takes ordinal values $j \in \{1, \ldots, J\}$.</li>
+<li>Cumulative probabilities $\alpha_{ij} = \mathbb{P}(Y_i \le j)$ are linked to covariates $\mathbf{x}_i$ via
+$$
+  g(\alpha_{ij}) = \theta_j - \mathbf{x}_i^T \boldsymbol{\beta}, \quad j = 1,\ldots, J-1,
+$$
+where $g$ is a strictly increasing link function.</li>
+<li>Intercepts $\theta_1 \le \cdots \le \theta_{J-1}$ enforces order between categories and regression coefficients $\boldsymbol{\beta}$ reflects effects of covariates.</li>
+</ul>
 
 </div>
 </div>
@@ -316,20 +321,6 @@ Platform Info:
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>This tutorial uses the Julia modules: Distributions, CSV. To add them use the package manager type</p>
-
-<pre><code>{julia}
-]add Distributions
-]add CSV</code></pre>
-
-</div>
-</div>
-</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
@@ -343,22 +334,6 @@ Platform Info:
 </div>
 </div>
 
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>If you need to change directories you can use cd(). The exact syntax depends on whether you are using a Mac or a PC (windows).</p>
-<p>For the Mac an example is:</p>
-
-<pre><code>cd("/Users/OpenMendel/LangeSymposium/OrdinalGWAS")</code></pre>
-<p>For the PC, an example is:</p>
-
-<pre><code>cd("C:\\Users\\OpenMendel\\LangeSymposium\\OrdinalGWAS")</code></pre>
-
-</div>
-</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -400,16 +375,14 @@ Platform Info:
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>9-element Array{String,1}:
+<pre>7-element Array{String,1}:
  &quot;.DS_Store&quot;            
- &quot;.Rapp.history&quot;        
  &quot;covariate.txt&quot;        
  &quot;hapmap3.bed&quot;          
  &quot;hapmap3.bim&quot;          
  &quot;hapmap3.fam&quot;          
  &quot;hapmap3.map&quot;          
- &quot;hapmap_snpsetfile.txt&quot;
- &quot;simtrait.jl&quot;          </pre>
+ &quot;hapmap_snpsetfile.txt&quot;</pre>
 </div>
 
 </div>
@@ -810,7 +783,8 @@ sex            0.424656   0.213914   1.98517    0.0480
 <div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-julia"><pre><span class="n">run</span><span class="p">(</span><span class="sb">`head ordinalgwas.pval.txt`</span><span class="p">);</span>
+<div class=" highlight hl-julia"><pre><span class="n">ENV</span><span class="p">[</span><span class="s">&quot;COLUMNS&quot;</span><span class="p">]</span><span class="o">=</span><span class="mi">120</span> <span class="c">#shows up to 10 columns for dataframe displays</span>
+<span class="n">CSV</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&quot;ordinalgwas.pval.txt&quot;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -821,20 +795,12 @@ sex            0.424656   0.213914   1.98517    0.0480
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>chr,pos,snpid,maf,hwepval,pval
-1,554484,rs10458597,0.0,1.0,1.0
-1,758311,rs12562034,0.07763975155279501,0.40987633326666817,0.004565312839540994
-1,967643,rs2710875,0.32407407407407407,4.0762491007057454e-7,3.108283828554874e-5
-1,1168108,rs11260566,0.19158878504672894,0.12856822794469086,1.2168672367668889e-5
-1,1375074,rs1312568,0.441358024691358,2.537601965061486e-19,0.008206860046175225
-1,1588771,rs35154105,0.0,1.0,1.0
-1,1789051,rs16824508,0.00462962962962965,0.9332783156468178,0.5111981332544
-1,1990452,rs2678939,0.4537037037037037,5.0769595770843126e-11,0.2997282957184783
-1,2194615,rs7553178,0.22685185185185186,0.17056143157457782,0.1713331245805063
-</pre>
+<div class="output_area"><div class="prompt output_prompt">Out[10]:</div>
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table class="data-frame"><thead><tr><th></th><th>chr</th><th>pos</th><th>snpid</th><th>maf</th><th>hwepval</th><th>pval</th></tr><tr><th></th><th>Int64</th><th>Int64</th><th>String</th><th>Float64</th><th>Float64</th><th>Float64</th></tr></thead><tbody><p>13,928 rows × 6 columns</p><tr><th>1</th><td>1</td><td>554484</td><td>rs10458597</td><td>0.0</td><td>1.0</td><td>1.0</td></tr><tr><th>2</th><td>1</td><td>758311</td><td>rs12562034</td><td>0.0776398</td><td>0.409876</td><td>0.00456531</td></tr><tr><th>3</th><td>1</td><td>967643</td><td>rs2710875</td><td>0.324074</td><td>4.07625e-7</td><td>3.10828e-5</td></tr><tr><th>4</th><td>1</td><td>1168108</td><td>rs11260566</td><td>0.191589</td><td>0.128568</td><td>1.21687e-5</td></tr><tr><th>5</th><td>1</td><td>1375074</td><td>rs1312568</td><td>0.441358</td><td>2.5376e-19</td><td>0.00820686</td></tr><tr><th>6</th><td>1</td><td>1588771</td><td>rs35154105</td><td>0.0</td><td>1.0</td><td>1.0</td></tr><tr><th>7</th><td>1</td><td>1789051</td><td>rs16824508</td><td>0.00462963</td><td>0.933278</td><td>0.511198</td></tr><tr><th>8</th><td>1</td><td>1990452</td><td>rs2678939</td><td>0.453704</td><td>5.07696e-11</td><td>0.299728</td></tr><tr><th>9</th><td>1</td><td>2194615</td><td>rs7553178</td><td>0.226852</td><td>0.170561</td><td>0.171333</td></tr><tr><th>10</th><td>1</td><td>2396747</td><td>rs13376356</td><td>0.14486</td><td>0.905308</td><td>0.532042</td></tr><tr><th>11</th><td>1</td><td>2623158</td><td>rs28753913</td><td>0.0</td><td>1.0</td><td>1.0</td></tr><tr><th>12</th><td>1</td><td>2823603</td><td>rs1563468</td><td>0.483025</td><td>4.23066e-9</td><td>0.225191</td></tr><tr><th>13</th><td>1</td><td>3025087</td><td>rs6690373</td><td>0.25387</td><td>9.23864e-8</td><td>0.701847</td></tr><tr><th>14</th><td>1</td><td>3225416</td><td>rs12043519</td><td>0.029321</td><td>0.000778802</td><td>0.00107978</td></tr><tr><th>15</th><td>1</td><td>3431124</td><td>rs12093117</td><td>0.109907</td><td>0.232693</td><td>0.427794</td></tr><tr><th>16</th><td>1</td><td>3633945</td><td>rs10910017</td><td>0.221875</td><td>0.000270888</td><td>0.913129</td></tr><tr><th>17</th><td>1</td><td>3895935</td><td>rs34770924</td><td>0.0246914</td><td>3.20726e-5</td><td>0.999021</td></tr><tr><th>18</th><td>1</td><td>4096895</td><td>rs6702633</td><td>0.475232</td><td>0.663812</td><td>0.00651631</td></tr><tr><th>19</th><td>1</td><td>4297388</td><td>rs684965</td><td>0.305556</td><td>0.213633</td><td>0.0951953</td></tr><tr><th>20</th><td>1</td><td>4498133</td><td>rs11809295</td><td>0.0993789</td><td>0.257162</td><td>0.0832435</td></tr><tr><th>21</th><td>1</td><td>4698713</td><td>rs578528</td><td>0.324074</td><td>0.616937</td><td>0.0692307</td></tr><tr><th>22</th><td>1</td><td>4899946</td><td>rs4654471</td><td>0.358025</td><td>0.181265</td><td>0.224531</td></tr><tr><th>23</th><td>1</td><td>5100369</td><td>rs6681148</td><td>0.131579</td><td>0.00845447</td><td>0.155667</td></tr><tr><th>24</th><td>1</td><td>5302730</td><td>rs10799197</td><td>0.428793</td><td>0.294742</td><td>0.669055</td></tr><tr><th>25</th><td>1</td><td>5502779</td><td>rs10796400</td><td>0.231481</td><td>0.46091</td><td>0.241525</td></tr><tr><th>26</th><td>1</td><td>5703284</td><td>rs2244632</td><td>0.394737</td><td>0.313378</td><td>0.53453</td></tr><tr><th>27</th><td>1</td><td>5904631</td><td>rs7549324</td><td>0.367284</td><td>0.517567</td><td>0.716133</td></tr><tr><th>28</th><td>1</td><td>6106513</td><td>rs2843494</td><td>0.0648148</td><td>0.740663</td><td>0.365573</td></tr><tr><th>29</th><td>1</td><td>6310159</td><td>rs4908880</td><td>0.0555556</td><td>0.28968</td><td>0.579307</td></tr><tr><th>30</th><td>1</td><td>6514524</td><td>rs932112</td><td>0.220679</td><td>0.172669</td><td>0.303095</td></tr><tr><th>&vellip;</th><td>&vellip;</td><td>&vellip;</td><td>&vellip;</td><td>&vellip;</td><td>&vellip;</td><td>&vellip;</td></tr></tbody></table>
 </div>
+
 </div>
 
 </div>
@@ -897,7 +863,7 @@ sex            0.424656   0.213914   1.98517    0.0480
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>  0.312034 seconds (639.63 k allocations: 32.737 MiB, 18.00% gc time)
+<pre>  0.219184 seconds (639.63 k allocations: 32.737 MiB, 5.43% gc time)
 </pre>
 </div>
 </div>
@@ -926,161 +892,10 @@ sex            0.424656   0.213914   1.98517    0.0480
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Link-functions">Link functions<a class="anchor-link" href="#Link-functions">&#182;</a></h2><p>The <code>link</code> keyword argument of <code>ordinalgwas</code> can take value:</p>
-<ul>
-<li><code>LogitLink()</code>, proportional odds model (default),  </li>
-<li><code>ProbitLink()</code>, ordred Probit model,  </li>
-<li><code>CloglogLink()</code>, proportional hazards model, or </li>
-<li><code>CauchyLink()</code>.</li>
-</ul>
-<p>For example, to perform GWAS using the ordred Probit model</p>
+<p>We have applied this software to the COPDGene cohort (N = 5,953, Nsnps = 630,860) and the UKBiobank cohort (N = 185,565, Nsnps =  464,137) published in <a href="https://doi.org/10.1002/gepi.22276">Genetic Epidemiology</a>. Runtimes were 3.5  minutes and 181 minutes respectively.</p>
 
 </div>
 </div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-julia"><pre><span class="n">ordinalgwas</span><span class="p">(@</span><span class="n">formula</span><span class="p">(</span><span class="n">hypertension</span> <span class="o">~</span> <span class="n">sex</span><span class="p">),</span> <span class="s">&quot;data/covariate.txt&quot;</span><span class="p">,</span> <span class="s">&quot;data/hapmap3&quot;</span><span class="p">,</span> 
-    <span class="n">link</span><span class="o">=</span><span class="n">ProbitLink</span><span class="p">(),</span> <span class="n">nullfile</span><span class="o">=</span><span class="s">&quot;opm.null.txt&quot;</span><span class="p">,</span> <span class="n">pvalfile</span><span class="o">=</span><span class="s">&quot;opm.pval.txt&quot;</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[14]:</div>
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>StatsModels.TableRegressionModel{OrdinalMultinomialModel{Int64,Float64,ProbitLink},Array{Float64,2}}
-
-hypertension ~ sex
-
-Coefficients:
-──────────────────────────────────────────────────────
-               Estimate  Std.Error   t value  Pr(&gt;|t|)
-──────────────────────────────────────────────────────
-intercept1|2  -0.866156   0.210677  -4.11129    &lt;1e-4 
-intercept2|3  -0.359878   0.205817  -1.74854    0.0813
-intercept3|4   0.247054   0.205382   1.2029     0.2299
-sex            0.251058   0.128225   1.95795    0.0511
-──────────────────────────────────────────────────────</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-julia"><pre><span class="n">run</span><span class="p">(</span><span class="sb">`head opm.pval.txt`</span><span class="p">);</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>chr,pos,snpid,maf,hwepval,pval
-1,554484,rs10458597,0.0,1.0,1.0
-1,758311,rs12562034,0.07763975155279501,0.40987633326666817,0.010076916742300138
-1,967643,rs2710875,0.32407407407407407,4.0762491007057454e-7,2.6272564941853933e-5
-1,1168108,rs11260566,0.19158878504672894,0.12856822794469086,1.089748485107844e-5
-1,1375074,rs1312568,0.441358024691358,2.537601965061486e-19,0.005102883990438149
-1,1588771,rs35154105,0.0,1.0,1.0
-1,1789051,rs16824508,0.00462962962962965,0.9332783156468178,0.48653776297859236
-1,1990452,rs2678939,0.4537037037037037,5.0769595770843126e-11,0.33231290090455434
-1,2194615,rs7553178,0.22685185185185186,0.17056143157457782,0.2591551397719743
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>The estimates in null model and p-values are slightly different from those in proportional odds moodel.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-julia"><pre><span class="n">rm</span><span class="p">(</span><span class="s">&quot;opm.null.txt&quot;</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">true</span><span class="p">)</span>
-<span class="n">rm</span><span class="p">(</span><span class="s">&quot;opm.pval.txt&quot;</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">true</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Users should always make sure that individuals in covariate file or DataFrame match those in Plink fam file.</p>
-<p>For example, following code checks that the first 2 columns of the <code>covariate.txt</code> file match the first 2 columns of the <code>hapmap3.fam</code> file exactly.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-julia"><pre><span class="n">covdf</span> <span class="o">=</span> <span class="n">CSV</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&quot;data/covariate.txt&quot;</span><span class="p">)</span>
-<span class="n">plkfam</span> <span class="o">=</span> <span class="n">CSV</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&quot;data/hapmap3.fam&quot;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">delim</span><span class="o">=</span><span class="sc">&#39; &#39;</span><span class="p">)</span>
-<span class="n">all</span><span class="p">(</span><span class="n">covdf</span><span class="p">[</span><span class="o">!</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">.==</span> <span class="n">plkfam</span><span class="p">[</span><span class="o">!</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span> <span class="o">&amp;&amp;</span> <span class="n">all</span><span class="p">(</span><span class="n">covdf</span><span class="p">[</span><span class="o">!</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">.==</span> <span class="n">plkfam</span><span class="p">[</span><span class="o">!</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[17]:</div>
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>true</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -1095,7 +910,7 @@ sex            0.251058   0.128225   1.95795    0.0511
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span class="c"># create SNP mask</span>
@@ -1115,12 +930,12 @@ sex            0.251058   0.128225   1.95795    0.0511
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>  0.377196 seconds (974.06 k allocations: 50.594 MiB, 4.89% gc time)
+<pre>  0.354116 seconds (974.12 k allocations: 51.225 MiB, 6.77% gc time)
 </pre>
 </div>
 </div>
 
-<div class="output_area"><div class="prompt output_prompt">Out[18]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[14]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -1147,10 +962,10 @@ sex            0.424656   0.213914   1.98517    0.0480
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-julia"><pre><span class="n">run</span><span class="p">(</span><span class="sb">`head commonvariant.pval.txt`</span><span class="p">);</span>
+<div class=" highlight hl-julia"><pre><span class="n">CSV</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&quot;commonvariant.pval.txt&quot;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -1161,20 +976,12 @@ sex            0.424656   0.213914   1.98517    0.0480
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>chr,pos,snpid,maf,hwepval,pval
-1,758311,rs12562034,0.07763975155279501,0.40987633326666817,0.004565312839540994
-1,967643,rs2710875,0.32407407407407407,4.0762491007057454e-7,3.108283828554874e-5
-1,1168108,rs11260566,0.19158878504672894,0.12856822794469086,1.2168672367668889e-5
-1,1375074,rs1312568,0.441358024691358,2.537601965061486e-19,0.008206860046175225
-1,1990452,rs2678939,0.4537037037037037,5.0769595770843126e-11,0.2997282957184783
-1,2194615,rs7553178,0.22685185185185186,0.17056143157457782,0.1713331245805063
-1,2396747,rs13376356,0.1448598130841121,0.905307921507814,0.5320416198875456
-1,2823603,rs1563468,0.4830246913580247,4.2306553724392545e-9,0.225191391783573
-1,3025087,rs6690373,0.2538699690402477,9.23864188719278e-8,0.7018469417717486
-</pre>
+<div class="output_area"><div class="prompt output_prompt">Out[15]:</div>
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table class="data-frame"><thead><tr><th></th><th>chr</th><th>pos</th><th>snpid</th><th>maf</th><th>hwepval</th><th>pval</th></tr><tr><th></th><th>Int64</th><th>Int64</th><th>String</th><th>Float64</th><th>Float64</th><th>Float64</th></tr></thead><tbody><p>12,085 rows × 6 columns</p><tr><th>1</th><td>1</td><td>758311</td><td>rs12562034</td><td>0.0776398</td><td>0.409876</td><td>0.00456531</td></tr><tr><th>2</th><td>1</td><td>967643</td><td>rs2710875</td><td>0.324074</td><td>4.07625e-7</td><td>3.10828e-5</td></tr><tr><th>3</th><td>1</td><td>1168108</td><td>rs11260566</td><td>0.191589</td><td>0.128568</td><td>1.21687e-5</td></tr><tr><th>4</th><td>1</td><td>1375074</td><td>rs1312568</td><td>0.441358</td><td>2.5376e-19</td><td>0.00820686</td></tr><tr><th>5</th><td>1</td><td>1990452</td><td>rs2678939</td><td>0.453704</td><td>5.07696e-11</td><td>0.299728</td></tr><tr><th>6</th><td>1</td><td>2194615</td><td>rs7553178</td><td>0.226852</td><td>0.170561</td><td>0.171333</td></tr><tr><th>7</th><td>1</td><td>2396747</td><td>rs13376356</td><td>0.14486</td><td>0.905308</td><td>0.532042</td></tr><tr><th>8</th><td>1</td><td>2823603</td><td>rs1563468</td><td>0.483025</td><td>4.23066e-9</td><td>0.225191</td></tr><tr><th>9</th><td>1</td><td>3025087</td><td>rs6690373</td><td>0.25387</td><td>9.23864e-8</td><td>0.701847</td></tr><tr><th>10</th><td>1</td><td>3431124</td><td>rs12093117</td><td>0.109907</td><td>0.232693</td><td>0.427794</td></tr><tr><th>11</th><td>1</td><td>3633945</td><td>rs10910017</td><td>0.221875</td><td>0.000270888</td><td>0.913129</td></tr><tr><th>12</th><td>1</td><td>4096895</td><td>rs6702633</td><td>0.475232</td><td>0.663812</td><td>0.00651631</td></tr><tr><th>13</th><td>1</td><td>4297388</td><td>rs684965</td><td>0.305556</td><td>0.213633</td><td>0.0951953</td></tr><tr><th>14</th><td>1</td><td>4498133</td><td>rs11809295</td><td>0.0993789</td><td>0.257162</td><td>0.0832435</td></tr><tr><th>15</th><td>1</td><td>4698713</td><td>rs578528</td><td>0.324074</td><td>0.616937</td><td>0.0692307</td></tr><tr><th>16</th><td>1</td><td>4899946</td><td>rs4654471</td><td>0.358025</td><td>0.181265</td><td>0.224531</td></tr><tr><th>17</th><td>1</td><td>5100369</td><td>rs6681148</td><td>0.131579</td><td>0.00845447</td><td>0.155667</td></tr><tr><th>18</th><td>1</td><td>5302730</td><td>rs10799197</td><td>0.428793</td><td>0.294742</td><td>0.669055</td></tr><tr><th>19</th><td>1</td><td>5502779</td><td>rs10796400</td><td>0.231481</td><td>0.46091</td><td>0.241525</td></tr><tr><th>20</th><td>1</td><td>5703284</td><td>rs2244632</td><td>0.394737</td><td>0.313378</td><td>0.53453</td></tr><tr><th>21</th><td>1</td><td>5904631</td><td>rs7549324</td><td>0.367284</td><td>0.517567</td><td>0.716133</td></tr><tr><th>22</th><td>1</td><td>6106513</td><td>rs2843494</td><td>0.0648148</td><td>0.740663</td><td>0.365573</td></tr><tr><th>23</th><td>1</td><td>6310159</td><td>rs4908880</td><td>0.0555556</td><td>0.28968</td><td>0.579307</td></tr><tr><th>24</th><td>1</td><td>6514524</td><td>rs932112</td><td>0.220679</td><td>0.172669</td><td>0.303095</td></tr><tr><th>25</th><td>1</td><td>6715827</td><td>rs441515</td><td>0.493808</td><td>0.782937</td><td>0.596866</td></tr><tr><th>26</th><td>1</td><td>6917805</td><td>rs12043429</td><td>0.0987654</td><td>0.600298</td><td>0.726598</td></tr><tr><th>27</th><td>1</td><td>7119246</td><td>rs4908600</td><td>0.156832</td><td>0.649017</td><td>0.501062</td></tr><tr><th>28</th><td>1</td><td>7319987</td><td>rs7553372</td><td>0.356037</td><td>5.28439e-9</td><td>0.122518</td></tr><tr><th>29</th><td>1</td><td>7522841</td><td>rs1193169</td><td>0.228261</td><td>0.481934</td><td>0.134259</td></tr><tr><th>30</th><td>1</td><td>7723190</td><td>rs4908691</td><td>0.371914</td><td>0.0875127</td><td>0.497583</td></tr><tr><th>&vellip;</th><td>&vellip;</td><td>&vellip;</td><td>&vellip;</td><td>&vellip;</td><td>&vellip;</td><td>&vellip;</td></tr></tbody></table>
 </div>
+
 </div>
 
 </div>
@@ -1183,7 +990,7 @@ sex            0.424656   0.213914   1.98517    0.0480
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span class="c"># extra header line in commonvariant.pval.txt</span>
@@ -1198,7 +1005,7 @@ sex            0.424656   0.213914   1.98517    0.0480
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[20]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[16]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -1213,7 +1020,7 @@ sex            0.424656   0.213914   1.98517    0.0480
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span class="c"># clean up</span>
@@ -1239,7 +1046,7 @@ sex            0.424656   0.213914   1.98517    0.0480
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[22]:</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span class="n">ordinalgwas</span><span class="p">(@</span><span class="n">formula</span><span class="p">(</span><span class="n">hypertension</span> <span class="o">~</span> <span class="n">sex</span><span class="p">),</span> <span class="s">&quot;data/covariate.txt&quot;</span><span class="p">,</span> <span class="s">&quot;data/hapmap3&quot;</span><span class="p">,</span> 
@@ -1255,7 +1062,7 @@ sex            0.424656   0.213914   1.98517    0.0480
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[22]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[18]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -1282,10 +1089,10 @@ sex            0.40068    0.221836   1.8062     0.0719
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[23]:</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-julia"><pre><span class="n">run</span><span class="p">(</span><span class="sb">`head first300.pval.txt`</span><span class="p">);</span>
+<div class=" highlight hl-julia"><pre><span class="n">CSV</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&quot;first300.pval.txt&quot;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -1296,20 +1103,12 @@ sex            0.40068    0.221836   1.8062     0.0719
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>chr,pos,snpid,maf,hwepval,pval
-1,554484,rs10458597,0.0,1.0,1.0
-1,758311,rs12562034,0.07763975155279501,0.40987633326666817,0.0035596863346564356
-1,967643,rs2710875,0.32407407407407407,4.0762491007057454e-7,0.00012360416199420001
-1,1168108,rs11260566,0.19158878504672894,0.12856822794469086,5.221295319608539e-6
-1,1375074,rs1312568,0.441358024691358,2.537601965061486e-19,0.0075823431942541215
-1,1588771,rs35154105,0.0,1.0,1.0
-1,1789051,rs16824508,0.00462962962962965,0.9332783156468178,0.504170669531489
-1,1990452,rs2678939,0.4537037037037037,5.0769595770843126e-11,0.36367896236034275
-1,2194615,rs7553178,0.22685185185185186,0.17056143157457782,0.24109032912610778
-</pre>
+<div class="output_area"><div class="prompt output_prompt">Out[19]:</div>
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table class="data-frame"><thead><tr><th></th><th>chr</th><th>pos</th><th>snpid</th><th>maf</th><th>hwepval</th><th>pval</th></tr><tr><th></th><th>Int64</th><th>Int64</th><th>String</th><th>Float64</th><th>Float64</th><th>Float64</th></tr></thead><tbody><p>13,928 rows × 6 columns</p><tr><th>1</th><td>1</td><td>554484</td><td>rs10458597</td><td>0.0</td><td>1.0</td><td>1.0</td></tr><tr><th>2</th><td>1</td><td>758311</td><td>rs12562034</td><td>0.0776398</td><td>0.409876</td><td>0.00355969</td></tr><tr><th>3</th><td>1</td><td>967643</td><td>rs2710875</td><td>0.324074</td><td>4.07625e-7</td><td>0.000123604</td></tr><tr><th>4</th><td>1</td><td>1168108</td><td>rs11260566</td><td>0.191589</td><td>0.128568</td><td>5.2213e-6</td></tr><tr><th>5</th><td>1</td><td>1375074</td><td>rs1312568</td><td>0.441358</td><td>2.5376e-19</td><td>0.00758234</td></tr><tr><th>6</th><td>1</td><td>1588771</td><td>rs35154105</td><td>0.0</td><td>1.0</td><td>1.0</td></tr><tr><th>7</th><td>1</td><td>1789051</td><td>rs16824508</td><td>0.00462963</td><td>0.933278</td><td>0.504171</td></tr><tr><th>8</th><td>1</td><td>1990452</td><td>rs2678939</td><td>0.453704</td><td>5.07696e-11</td><td>0.363679</td></tr><tr><th>9</th><td>1</td><td>2194615</td><td>rs7553178</td><td>0.226852</td><td>0.170561</td><td>0.24109</td></tr><tr><th>10</th><td>1</td><td>2396747</td><td>rs13376356</td><td>0.14486</td><td>0.905308</td><td>0.453925</td></tr><tr><th>11</th><td>1</td><td>2623158</td><td>rs28753913</td><td>0.0</td><td>1.0</td><td>1.0</td></tr><tr><th>12</th><td>1</td><td>2823603</td><td>rs1563468</td><td>0.483025</td><td>4.23066e-9</td><td>0.148556</td></tr><tr><th>13</th><td>1</td><td>3025087</td><td>rs6690373</td><td>0.25387</td><td>9.23864e-8</td><td>0.762476</td></tr><tr><th>14</th><td>1</td><td>3225416</td><td>rs12043519</td><td>0.029321</td><td>0.000778802</td><td>0.00131734</td></tr><tr><th>15</th><td>1</td><td>3431124</td><td>rs12093117</td><td>0.109907</td><td>0.232693</td><td>0.530602</td></tr><tr><th>16</th><td>1</td><td>3633945</td><td>rs10910017</td><td>0.221875</td><td>0.000270888</td><td>0.835396</td></tr><tr><th>17</th><td>1</td><td>3895935</td><td>rs34770924</td><td>0.0246914</td><td>3.20726e-5</td><td>0.96925</td></tr><tr><th>18</th><td>1</td><td>4096895</td><td>rs6702633</td><td>0.475232</td><td>0.663812</td><td>0.0367962</td></tr><tr><th>19</th><td>1</td><td>4297388</td><td>rs684965</td><td>0.305556</td><td>0.213633</td><td>0.0813781</td></tr><tr><th>20</th><td>1</td><td>4498133</td><td>rs11809295</td><td>0.0993789</td><td>0.257162</td><td>0.168299</td></tr><tr><th>21</th><td>1</td><td>4698713</td><td>rs578528</td><td>0.324074</td><td>0.616937</td><td>0.0654792</td></tr><tr><th>22</th><td>1</td><td>4899946</td><td>rs4654471</td><td>0.358025</td><td>0.181265</td><td>0.232969</td></tr><tr><th>23</th><td>1</td><td>5100369</td><td>rs6681148</td><td>0.131579</td><td>0.00845447</td><td>0.106474</td></tr><tr><th>24</th><td>1</td><td>5302730</td><td>rs10799197</td><td>0.428793</td><td>0.294742</td><td>0.693596</td></tr><tr><th>25</th><td>1</td><td>5502779</td><td>rs10796400</td><td>0.231481</td><td>0.46091</td><td>0.0755408</td></tr><tr><th>26</th><td>1</td><td>5703284</td><td>rs2244632</td><td>0.394737</td><td>0.313378</td><td>0.616338</td></tr><tr><th>27</th><td>1</td><td>5904631</td><td>rs7549324</td><td>0.367284</td><td>0.517567</td><td>0.987062</td></tr><tr><th>28</th><td>1</td><td>6106513</td><td>rs2843494</td><td>0.0648148</td><td>0.740663</td><td>0.558175</td></tr><tr><th>29</th><td>1</td><td>6310159</td><td>rs4908880</td><td>0.0555556</td><td>0.28968</td><td>0.414671</td></tr><tr><th>30</th><td>1</td><td>6514524</td><td>rs932112</td><td>0.220679</td><td>0.172669</td><td>0.215976</td></tr><tr><th>&vellip;</th><td>&vellip;</td><td>&vellip;</td><td>&vellip;</td><td>&vellip;</td><td>&vellip;</td><td>&vellip;</td></tr></tbody></table>
 </div>
+
 </div>
 
 </div>
@@ -1318,7 +1117,7 @@ sex            0.40068    0.221836   1.8062     0.0719
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[24]:</div>
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span class="c"># clean up</span>
@@ -1343,7 +1142,7 @@ sex            0.40068    0.221836   1.8062     0.0719
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[25]:</div>
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span class="p">@</span><span class="n">time</span> <span class="n">ordinalgwas</span><span class="p">(@</span><span class="n">formula</span><span class="p">(</span><span class="n">hypertension</span> <span class="o">~</span> <span class="n">sex</span><span class="p">),</span> <span class="s">&quot;data/covariate.txt&quot;</span><span class="p">,</span> <span class="s">&quot;data/hapmap3&quot;</span><span class="p">;</span> <span class="n">snpinds</span> <span class="o">=</span> <span class="mi">1</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span> 
@@ -1360,12 +1159,12 @@ sex            0.40068    0.221836   1.8062     0.0719
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>  0.933758 seconds (1.82 M allocations: 92.765 MiB, 10.13% gc time)
+<pre>  0.742670 seconds (1.82 M allocations: 92.778 MiB, 3.28% gc time)
 </pre>
 </div>
 </div>
 
-<div class="output_area"><div class="prompt output_prompt">Out[25]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[21]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -1402,10 +1201,10 @@ sex            0.424656   0.213914   1.98517    0.0480
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[26]:</div>
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-julia"><pre><span class="n">run</span><span class="p">(</span><span class="sb">`head lrt.pval.txt`</span><span class="p">);</span>
+<div class=" highlight hl-julia"><pre><span class="n">CSV</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&quot;lrt.pval.txt&quot;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -1416,20 +1215,12 @@ sex            0.424656   0.213914   1.98517    0.0480
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>chr,pos,snpid,maf,hwepval,effect,pval
-1,554484,rs10458597,0.0,1.0,0.0,1.0
-1,758311,rs12562034,0.07763975155279501,0.40987633326666817,-1.0057833719544331,0.0019185836579804134
-1,967643,rs2710875,0.32407407407407407,4.0762491007057454e-7,-0.6488560566295055,1.805050556976241e-5
-1,1168108,rs11260566,0.19158878504672894,0.12856822794469086,-0.9157225669357879,5.873384712685568e-6
-1,1375074,rs1312568,0.441358024691358,2.537601965061486e-19,-0.33181366525772593,0.008081022577832324
-1,1588771,rs35154105,0.0,1.0,0.0,1.0
-1,1789051,rs16824508,0.00462962962962965,0.9332783156468178,-0.7338026388701573,0.5169027130129711
-1,1990452,rs2678939,0.4537037037037037,5.0769595770843126e-11,-0.13586499231819726,0.29946402200912603
-1,2194615,rs7553178,0.22685185185185186,0.17056143157457782,-0.2512075640440123,0.16151069094439868
-</pre>
+<div class="output_area"><div class="prompt output_prompt">Out[22]:</div>
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table class="data-frame"><thead><tr><th></th><th>chr</th><th>pos</th><th>snpid</th><th>maf</th><th>hwepval</th><th>effect</th><th>pval</th></tr><tr><th></th><th>Int64</th><th>Int64</th><th>String</th><th>Float64</th><th>Float64</th><th>Float64</th><th>Float64</th></tr></thead><tbody><p>10 rows × 7 columns</p><tr><th>1</th><td>1</td><td>554484</td><td>rs10458597</td><td>0.0</td><td>1.0</td><td>0.0</td><td>1.0</td></tr><tr><th>2</th><td>1</td><td>758311</td><td>rs12562034</td><td>0.0776398</td><td>0.409876</td><td>-1.00578</td><td>0.00191858</td></tr><tr><th>3</th><td>1</td><td>967643</td><td>rs2710875</td><td>0.324074</td><td>4.07625e-7</td><td>-0.648856</td><td>1.80505e-5</td></tr><tr><th>4</th><td>1</td><td>1168108</td><td>rs11260566</td><td>0.191589</td><td>0.128568</td><td>-0.915723</td><td>5.87338e-6</td></tr><tr><th>5</th><td>1</td><td>1375074</td><td>rs1312568</td><td>0.441358</td><td>2.5376e-19</td><td>-0.331814</td><td>0.00808102</td></tr><tr><th>6</th><td>1</td><td>1588771</td><td>rs35154105</td><td>0.0</td><td>1.0</td><td>0.0</td><td>1.0</td></tr><tr><th>7</th><td>1</td><td>1789051</td><td>rs16824508</td><td>0.00462963</td><td>0.933278</td><td>-0.733803</td><td>0.516903</td></tr><tr><th>8</th><td>1</td><td>1990452</td><td>rs2678939</td><td>0.453704</td><td>5.07696e-11</td><td>-0.135865</td><td>0.299464</td></tr><tr><th>9</th><td>1</td><td>2194615</td><td>rs7553178</td><td>0.226852</td><td>0.170561</td><td>-0.251208</td><td>0.161511</td></tr><tr><th>10</th><td>1</td><td>2396747</td><td>rs13376356</td><td>0.14486</td><td>0.905308</td><td>0.129461</td><td>0.538734</td></tr></tbody></table>
 </div>
+
 </div>
 
 </div>
@@ -1438,7 +1229,7 @@ sex            0.424656   0.213914   1.98517    0.0480
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[27]:</div>
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span class="c"># clean up</span>
@@ -1465,7 +1256,7 @@ sex            0.424656   0.213914   1.98517    0.0480
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[28]:</div>
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span class="p">@</span><span class="n">time</span> <span class="n">ordinalgwas</span><span class="p">(@</span><span class="n">formula</span><span class="p">(</span><span class="n">hypertension</span> <span class="o">~</span> <span class="n">sex</span><span class="p">),</span> <span class="s">&quot;data/covariate.txt&quot;</span><span class="p">,</span> <span class="s">&quot;data/hapmap3&quot;</span><span class="p">,</span> 
@@ -1482,7 +1273,7 @@ sex            0.424656   0.213914   1.98517    0.0480
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>  0.313586 seconds (752.92 k allocations: 38.856 MiB)
+<pre>  0.261909 seconds (752.90 k allocations: 38.855 MiB, 6.65% gc time)
 </pre>
 </div>
 </div>
@@ -1493,10 +1284,10 @@ sex            0.424656   0.213914   1.98517    0.0480
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[29]:</div>
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-julia"><pre><span class="n">run</span><span class="p">(</span><span class="sb">`head score.pval.txt`</span><span class="p">);</span>
+<div class=" highlight hl-julia"><pre><span class="n">CSV</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&quot;score.pval.txt&quot;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -1507,20 +1298,12 @@ sex            0.424656   0.213914   1.98517    0.0480
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>chr,pos,snpid,maf,hwepval,pval
-1,554484,rs10458597,0.0,1.0,1.0
-1,758311,rs12562034,0.07763975155279501,0.40987633326666817,0.004565312839540994
-1,967643,rs2710875,0.32407407407407407,4.0762491007057454e-7,3.108283828554874e-5
-1,1168108,rs11260566,0.19158878504672894,0.12856822794469086,1.2168672367668889e-5
-1,1375074,rs1312568,0.441358024691358,2.537601965061486e-19,0.008206860046175225
-1,1588771,rs35154105,0.0,1.0,1.0
-1,1789051,rs16824508,0.00462962962962965,0.9332783156468178,0.5111981332544
-1,1990452,rs2678939,0.4537037037037037,5.0769595770843126e-11,0.2997282957184783
-1,2194615,rs7553178,0.22685185185185186,0.17056143157457782,0.1713331245805063
-</pre>
+<div class="output_area"><div class="prompt output_prompt">Out[25]:</div>
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table class="data-frame"><thead><tr><th></th><th>chr</th><th>pos</th><th>snpid</th><th>maf</th><th>hwepval</th><th>pval</th></tr><tr><th></th><th>Int64</th><th>Int64</th><th>String</th><th>Float64</th><th>Float64</th><th>Float64</th></tr></thead><tbody><p>13,928 rows × 6 columns</p><tr><th>1</th><td>1</td><td>554484</td><td>rs10458597</td><td>0.0</td><td>1.0</td><td>1.0</td></tr><tr><th>2</th><td>1</td><td>758311</td><td>rs12562034</td><td>0.0776398</td><td>0.409876</td><td>0.00456531</td></tr><tr><th>3</th><td>1</td><td>967643</td><td>rs2710875</td><td>0.324074</td><td>4.07625e-7</td><td>3.10828e-5</td></tr><tr><th>4</th><td>1</td><td>1168108</td><td>rs11260566</td><td>0.191589</td><td>0.128568</td><td>1.21687e-5</td></tr><tr><th>5</th><td>1</td><td>1375074</td><td>rs1312568</td><td>0.441358</td><td>2.5376e-19</td><td>0.00820686</td></tr><tr><th>6</th><td>1</td><td>1588771</td><td>rs35154105</td><td>0.0</td><td>1.0</td><td>1.0</td></tr><tr><th>7</th><td>1</td><td>1789051</td><td>rs16824508</td><td>0.00462963</td><td>0.933278</td><td>0.511198</td></tr><tr><th>8</th><td>1</td><td>1990452</td><td>rs2678939</td><td>0.453704</td><td>5.07696e-11</td><td>0.299728</td></tr><tr><th>9</th><td>1</td><td>2194615</td><td>rs7553178</td><td>0.226852</td><td>0.170561</td><td>0.171333</td></tr><tr><th>10</th><td>1</td><td>2396747</td><td>rs13376356</td><td>0.14486</td><td>0.905308</td><td>0.532042</td></tr><tr><th>11</th><td>1</td><td>2623158</td><td>rs28753913</td><td>0.0</td><td>1.0</td><td>1.0</td></tr><tr><th>12</th><td>1</td><td>2823603</td><td>rs1563468</td><td>0.483025</td><td>4.23066e-9</td><td>0.225191</td></tr><tr><th>13</th><td>1</td><td>3025087</td><td>rs6690373</td><td>0.25387</td><td>9.23864e-8</td><td>0.701847</td></tr><tr><th>14</th><td>1</td><td>3225416</td><td>rs12043519</td><td>0.029321</td><td>0.000778802</td><td>0.00107978</td></tr><tr><th>15</th><td>1</td><td>3431124</td><td>rs12093117</td><td>0.109907</td><td>0.232693</td><td>0.427794</td></tr><tr><th>16</th><td>1</td><td>3633945</td><td>rs10910017</td><td>0.221875</td><td>0.000270888</td><td>0.913129</td></tr><tr><th>17</th><td>1</td><td>3895935</td><td>rs34770924</td><td>0.0246914</td><td>3.20726e-5</td><td>0.999021</td></tr><tr><th>18</th><td>1</td><td>4096895</td><td>rs6702633</td><td>0.475232</td><td>0.663812</td><td>0.00651631</td></tr><tr><th>19</th><td>1</td><td>4297388</td><td>rs684965</td><td>0.305556</td><td>0.213633</td><td>0.0951953</td></tr><tr><th>20</th><td>1</td><td>4498133</td><td>rs11809295</td><td>0.0993789</td><td>0.257162</td><td>0.0832435</td></tr><tr><th>21</th><td>1</td><td>4698713</td><td>rs578528</td><td>0.324074</td><td>0.616937</td><td>0.0692307</td></tr><tr><th>22</th><td>1</td><td>4899946</td><td>rs4654471</td><td>0.358025</td><td>0.181265</td><td>0.224531</td></tr><tr><th>23</th><td>1</td><td>5100369</td><td>rs6681148</td><td>0.131579</td><td>0.00845447</td><td>0.155667</td></tr><tr><th>24</th><td>1</td><td>5302730</td><td>rs10799197</td><td>0.428793</td><td>0.294742</td><td>0.669055</td></tr><tr><th>25</th><td>1</td><td>5502779</td><td>rs10796400</td><td>0.231481</td><td>0.46091</td><td>0.241525</td></tr><tr><th>26</th><td>1</td><td>5703284</td><td>rs2244632</td><td>0.394737</td><td>0.313378</td><td>0.53453</td></tr><tr><th>27</th><td>1</td><td>5904631</td><td>rs7549324</td><td>0.367284</td><td>0.517567</td><td>0.716133</td></tr><tr><th>28</th><td>1</td><td>6106513</td><td>rs2843494</td><td>0.0648148</td><td>0.740663</td><td>0.365573</td></tr><tr><th>29</th><td>1</td><td>6310159</td><td>rs4908880</td><td>0.0555556</td><td>0.28968</td><td>0.579307</td></tr><tr><th>30</th><td>1</td><td>6514524</td><td>rs932112</td><td>0.220679</td><td>0.172669</td><td>0.303095</td></tr><tr><th>&vellip;</th><td>&vellip;</td><td>&vellip;</td><td>&vellip;</td><td>&vellip;</td><td>&vellip;</td><td>&vellip;</td></tr></tbody></table>
 </div>
+
 </div>
 
 </div>
@@ -1539,7 +1322,7 @@ sex            0.424656   0.213914   1.98517    0.0480
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[30]:</div>
+<div class="prompt input_prompt">In&nbsp;[26]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span class="n">scorepvals</span> <span class="o">=</span> <span class="n">CSV</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&quot;score.pval.txt&quot;</span><span class="p">)[</span><span class="o">!</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span> <span class="c"># p-values in 5th column</span>
@@ -1555,7 +1338,7 @@ sex            0.424656   0.213914   1.98517    0.0480
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[30]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[26]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -1590,7 +1373,7 @@ sex            0.424656   0.213914   1.98517    0.0480
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[31]:</div>
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span class="p">@</span><span class="n">time</span> <span class="n">ordinalgwas</span><span class="p">(@</span><span class="n">formula</span><span class="p">(</span><span class="n">hypertension</span> <span class="o">~</span> <span class="n">sex</span><span class="p">),</span> <span class="s">&quot;data/covariate.txt&quot;</span><span class="p">,</span> <span class="s">&quot;data/hapmap3&quot;</span><span class="p">,</span> 
@@ -1607,7 +1390,7 @@ sex            0.424656   0.213914   1.98517    0.0480
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>  0.266953 seconds (527.07 k allocations: 28.643 MiB)
+<pre>  0.278900 seconds (527.08 k allocations: 28.637 MiB, 4.83% gc time)
 </pre>
 </div>
 </div>
@@ -1618,10 +1401,10 @@ sex            0.424656   0.213914   1.98517    0.0480
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[32]:</div>
+<div class="prompt input_prompt">In&nbsp;[28]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-julia"><pre><span class="n">run</span><span class="p">(</span><span class="sb">`cat lrt.pval.txt`</span><span class="p">);</span>
+<div class=" highlight hl-julia"><pre><span class="n">CSV</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&quot;lrt.pval.txt&quot;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -1632,21 +1415,12 @@ sex            0.424656   0.213914   1.98517    0.0480
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>chr,pos,snpid,maf,hwepval,effect,pval
-1,967643,rs2710875,0.32407407407407407,4.0762491007057454e-7,-0.6488560566295055,1.805050556976241e-5
-1,1168108,rs11260566,0.19158878504672894,0.12856822794469086,-0.9157225669357879,5.873384712685568e-6
-3,36821790,rs4678553,0.23456790123456794,0.10946682163244979,0.7424952268973518,1.1303825016262592e-5
-4,11017683,rs16881446,0.27554179566563464,0.8942746118760273,-0.7870581482955515,1.1105427468799613e-5
-5,3739190,rs12521166,0.0679012345679012,0.18613647746093892,1.1468852997925316,4.781288229657399e-5
-6,7574576,rs1885466,0.17746913580246915,0.762068717898719,0.8750621092263019,7.272346896740631e-6
-6,52474721,rs2073183,0.1826625386996904,0.5077765730476698,0.7790794914858663,5.069394513906121e-5
-7,41152376,rs28880,0.3379629629629629,0.8052368892744095,-0.814633902445351,9.180126530294943e-7
-7,84223996,rs4128623,0.07870370370370372,0.021834717346756814,1.0022229316338573,6.587895464657512e-5
-23,121048059,rs1937165,0.4380804953560371,3.959609737265111e-16,0.5392313636256612,1.9754643855522616e-5
-</pre>
+<div class="output_area"><div class="prompt output_prompt">Out[28]:</div>
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table class="data-frame"><thead><tr><th></th><th>chr</th><th>pos</th><th>snpid</th><th>maf</th><th>hwepval</th><th>effect</th><th>pval</th></tr><tr><th></th><th>Int64</th><th>Int64</th><th>String</th><th>Float64</th><th>Float64</th><th>Float64</th><th>Float64</th></tr></thead><tbody><p>10 rows × 7 columns</p><tr><th>1</th><td>1</td><td>967643</td><td>rs2710875</td><td>0.324074</td><td>4.07625e-7</td><td>-0.648856</td><td>1.80505e-5</td></tr><tr><th>2</th><td>1</td><td>1168108</td><td>rs11260566</td><td>0.191589</td><td>0.128568</td><td>-0.915723</td><td>5.87338e-6</td></tr><tr><th>3</th><td>3</td><td>36821790</td><td>rs4678553</td><td>0.234568</td><td>0.109467</td><td>0.742495</td><td>1.13038e-5</td></tr><tr><th>4</th><td>4</td><td>11017683</td><td>rs16881446</td><td>0.275542</td><td>0.894275</td><td>-0.787058</td><td>1.11054e-5</td></tr><tr><th>5</th><td>5</td><td>3739190</td><td>rs12521166</td><td>0.0679012</td><td>0.186136</td><td>1.14689</td><td>4.78129e-5</td></tr><tr><th>6</th><td>6</td><td>7574576</td><td>rs1885466</td><td>0.177469</td><td>0.762069</td><td>0.875062</td><td>7.27235e-6</td></tr><tr><th>7</th><td>6</td><td>52474721</td><td>rs2073183</td><td>0.182663</td><td>0.507777</td><td>0.779079</td><td>5.06939e-5</td></tr><tr><th>8</th><td>7</td><td>41152376</td><td>rs28880</td><td>0.337963</td><td>0.805237</td><td>-0.814634</td><td>9.18013e-7</td></tr><tr><th>9</th><td>7</td><td>84223996</td><td>rs4128623</td><td>0.0787037</td><td>0.0218347</td><td>1.00222</td><td>6.5879e-5</td></tr><tr><th>10</th><td>23</td><td>121048059</td><td>rs1937165</td><td>0.43808</td><td>3.95961e-16</td><td>0.539231</td><td>1.97546e-5</td></tr></tbody></table>
 </div>
+
 </div>
 
 </div>
@@ -1655,7 +1429,7 @@ sex            0.424656   0.213914   1.98517    0.0480
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[33]:</div>
+<div class="prompt input_prompt">In&nbsp;[29]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span class="c"># clean up</span>
@@ -1674,14 +1448,14 @@ sex            0.424656   0.213914   1.98517    0.0480
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="SNP-set-testing">SNP-set testing<a class="anchor-link" href="#SNP-set-testing">&#182;</a></h2><p>In many applications, we want to test a SNP-set. The function <code>ordinalsnpsetgwas()</code> can be used to do this. Today we'll go over an example using an annotated file where each SNP has a gene annotation.</p>
+<h2 id="SNP-set-testing">SNP-set testing<a class="anchor-link" href="#SNP-set-testing">&#182;</a></h2><p>In many applications, we want to test a SNP-set (testing if SNPs have a joint effect together). The function <code>ordinalsnpsetgwas()</code> can be used to do this. The following is an example of using an annotated file where each SNP has a gene annotation.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[34]:</div>
+<div class="prompt input_prompt">In&nbsp;[30]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span class="n">run</span><span class="p">(</span><span class="sb">`head data/hapmap_snpsetfile.txt`</span><span class="p">);</span>
@@ -1727,11 +1501,241 @@ gene1 rs13376356
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[35]:</div>
+<div class="prompt input_prompt">In&nbsp;[31]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span class="n">ordinalsnpsetgwas</span><span class="p">(@</span><span class="n">formula</span><span class="p">(</span><span class="n">hypertension</span> <span class="o">~</span> <span class="n">sex</span><span class="p">),</span> <span class="s">&quot;data/covariate.txt&quot;</span><span class="p">,</span> <span class="s">&quot;data/hapmap3&quot;</span><span class="p">,</span>
     <span class="n">pvalfile</span> <span class="o">=</span> <span class="s">&quot;snpset.pval.txt&quot;</span><span class="p">,</span> <span class="n">snpset</span> <span class="o">=</span> <span class="s">&quot;data/hapmap_snpsetfile.txt&quot;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[31]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>StatsModels.TableRegressionModel{OrdinalMultinomialModel{Int64,Float64,LogitLink},Array{Float64,2}}
+
+hypertension ~ sex
+
+Coefficients:
+──────────────────────────────────────────────────────
+               Estimate  Std.Error   t value  Pr(&gt;|t|)
+──────────────────────────────────────────────────────
+intercept1|2  -1.48564    0.358891  -4.13952    &lt;1e-4 
+intercept2|3  -0.569479   0.341044  -1.66981    0.0959
+intercept3|4   0.429815   0.339642   1.26549    0.2066
+sex            0.424656   0.213914   1.98517    0.0480
+──────────────────────────────────────────────────────</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[32]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span class="n">CSV</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&quot;snpset.pval.txt&quot;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[32]:</div>
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table class="data-frame"><thead><tr><th></th><th>snpsetid</th><th>nsnps</th><th>pval</th></tr><tr><th></th><th>String</th><th>Int64</th><th>Float64</th></tr></thead><tbody><p>150 rows × 3 columns</p><tr><th>1</th><td>gene1</td><td>93</td><td>1.72134e-5</td></tr><tr><th>2</th><td>gene2</td><td>93</td><td>0.036925</td></tr><tr><th>3</th><td>gene3</td><td>93</td><td>0.747855</td></tr><tr><th>4</th><td>gene4</td><td>92</td><td>0.0276508</td></tr><tr><th>5</th><td>gene5</td><td>93</td><td>0.611958</td></tr><tr><th>6</th><td>gene6</td><td>93</td><td>0.0291846</td></tr><tr><th>7</th><td>gene7</td><td>93</td><td>0.391601</td></tr><tr><th>8</th><td>gene8</td><td>93</td><td>0.125396</td></tr><tr><th>9</th><td>gene9</td><td>93</td><td>0.708564</td></tr><tr><th>10</th><td>gene10</td><td>92</td><td>0.0665913</td></tr><tr><th>11</th><td>gene11</td><td>93</td><td>0.145549</td></tr><tr><th>12</th><td>gene12</td><td>93</td><td>0.64883</td></tr><tr><th>13</th><td>gene13</td><td>93</td><td>0.420183</td></tr><tr><th>14</th><td>gene14</td><td>93</td><td>0.266712</td></tr><tr><th>15</th><td>gene15</td><td>93</td><td>0.0364581</td></tr><tr><th>16</th><td>gene16</td><td>93</td><td>0.0641792</td></tr><tr><th>17</th><td>gene17</td><td>92</td><td>0.70697</td></tr><tr><th>18</th><td>gene18</td><td>93</td><td>0.738655</td></tr><tr><th>19</th><td>gene19</td><td>93</td><td>0.304919</td></tr><tr><th>20</th><td>gene20</td><td>93</td><td>0.349533</td></tr><tr><th>21</th><td>gene21</td><td>93</td><td>0.54087</td></tr><tr><th>22</th><td>gene22</td><td>93</td><td>0.161117</td></tr><tr><th>23</th><td>gene23</td><td>92</td><td>0.0176682</td></tr><tr><th>24</th><td>gene24</td><td>93</td><td>0.352236</td></tr><tr><th>25</th><td>gene25</td><td>93</td><td>0.346303</td></tr><tr><th>26</th><td>gene26</td><td>93</td><td>0.640547</td></tr><tr><th>27</th><td>gene27</td><td>93</td><td>0.109541</td></tr><tr><th>28</th><td>gene28</td><td>93</td><td>0.18828</td></tr><tr><th>29</th><td>gene29</td><td>93</td><td>0.28567</td></tr><tr><th>30</th><td>gene30</td><td>92</td><td>0.258806</td></tr><tr><th>&vellip;</th><td>&vellip;</td><td>&vellip;</td><td>&vellip;</td></tr></tbody></table>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[33]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span class="c"># clean up</span>
+<span class="n">rm</span><span class="p">(</span><span class="s">&quot;snpset.pval.txt&quot;</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">true</span><span class="p">)</span>
+<span class="n">rm</span><span class="p">(</span><span class="s">&quot;ordinalgwas.null.txt&quot;</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">true</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Additional-Features-Available-Not-Covered-Today">Additional Features Available Not Covered Today<a class="anchor-link" href="#Additional-Features-Available-Not-Covered-Today">&#182;</a></h2><p>The following features are also available in <em>OrdinalGWAS.jl</em>. They are covered in the documentation found <a href="https://openmendel.github.io/OrdinalGWAS.jl/latest/">here</a>.</p>
+<ul>
+<li>Additional SNP-set analysis options<ul>
+<li>Sliding window</li>
+<li>Specific set of snps</li>
+</ul>
+</li>
+<li>GxE interaction analysis</li>
+<li>Link Functions<ul>
+<li><code>LogitLink()</code>, proportional odds model (default),  </li>
+<li><code>ProbitLink()</code>, ordred Probit model,  </li>
+<li><code>CloglogLink()</code>, proportional hazards model, or </li>
+<li><code>CauchyLink()</code></li>
+</ul>
+</li>
+<li>Set of multiple plink files (i.e. by chromosome)<ul>
+<li>Running on a cluster</li>
+</ul>
+</li>
+<li>Running analysis with a Docker file</li>
+<li>Plotting<ul>
+<li>To plot the GWAS results, use the <a href="https://openmendel.github.io/MendelPlots.jl/latest/">MendelPlots.jl package</a>.</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="GxE-example-(if-time-allows)">GxE example (if time allows)<a class="anchor-link" href="#GxE-example-(if-time-allows)">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="GxE-interactions">GxE interactions<a class="anchor-link" href="#GxE-interactions">&#182;</a></h2><p>In many applications, the user may want to test the GxE interaction effect. This requires fitting the SNP in the null model and is quite slower, but the command <code>ordinalgwasGxE()</code> can be used test the interaction effect.
+To do this you must specify the environmental variable in the command, either as a symbol, such as ":age" or as a string "age".</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>For documentation of the <code>ordinalgwasGxE</code> function, type <code>?ordinalgwasGxE</code> in Julia REPL.</p>
+
+<pre><code>@docs
+?ordinalgwasGxE</code></pre>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[34]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span class="o">?</span><span class="n">ordinalgwasGxE</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>search: o</span></span>r</span></span>d</span></span>i</span></span>n</span></span>a</span></span>l</span></span>g</span></span>w</span></span>a</span></span>s</span></span>G</span></span>x</span></span>E</span> </span>o</span></span>r</span></span>d</span></span>i</span></span>n</span></span>a</span></span>l</span></span>g</span></span>w</span></span>a</span></span>s</span> </span>O</span></span>r</span></span>d</span></span>i</span></span>n</span></span>a</span></span>l</span></span>G</span></span>W</span></span>A</span></span>S</span> </span>o</span></span>r</span></span>d</span></span>i</span></span>n</span></span>a</span></span>l</span>snpset</span>g</span></span>w</span></span>a</span></span>s</span>
+
+</span></pre>
+</div>
+</div>
+
+<div class="output_area"><div class="prompt output_prompt">Out[34]:</div>
+
+<div class="output_markdown rendered_html output_subarea output_execute_result">
+
+<pre><code>ordinalgwasGxE(nullformula, covfile, plinkfile, e)
+ordinalgwasGxE(nullformula, df, plinkfile, e)
+ordinalgwasGxE(fittednullmodel, plinkfile, e)
+ordinalgwasGxE(fittednullmodel, bedfile, bimfile, bedn, e)</code></pre>
+<h1 id="Positional-arguments">Positional arguments<a class="anchor-link" href="#Positional-arguments">&#182;</a></h1><ul>
+<li><code>nullformula::FormulaTerm</code>: formula for the null model.</li>
+<li><code>covfile::AbstractString</code>: covariate file (csv) with one header line. One column    should be the ordinal phenotype coded as integers starting from 1.  For example,    ordinal phenotypes can be coded as 1, 2, 3, 4 but not 0, 1, 2, 3.</li>
+<li><code>df::DataFrame</code>: DataFrame containing response and regressors for null model.</li>
+<li><code>plinkfile::AbstractString</code>: Plink file name without the bed, fam, or bim    extensions. If <code>plinkfile==nothing</code>, only null model is fitted. If <code>plinkfile</code>    is provided, bed, bim, and fam file with same <code>plinkfile</code> prefix need to exist.    Compressed file formats such as gz and bz2 are allowed. Check all allowed formats    by <code>SnpArrays.ALLOWED_FORMAT</code>.</li>
+<li><code>e::Union{AbstractString,Symbol}</code>: Enviromental variable to be used to test the GxE interaction.</li>
+</ul>
+<p>For instance, for testing <code>sex &amp; snp</code> interaction, use <code>:sex</code> or <code>"sex"</code>.</p>
+<ul>
+<li><code>fittednullmodel::StatsModels.TableRegressionModel</code>: the fitted null model    output from <code>ordinalgwas(nullformula, covfile)</code> or <code>ordinalgwas(nullformula, df)</code>.</li>
+<li><code>bedfile::Union{AbstractString,IOStream}</code>: path to Plink bed file with full file name.</li>
+<li><code>bimfile::Union{AbstractString,IOStream}</code>: path to Plink bim file with full file name.</li>
+<li><code>bedn::Integer</code>: number of samples in bed file.</li>
+</ul>
+<h1 id="Keyword-arguments">Keyword arguments<a class="anchor-link" href="#Keyword-arguments">&#182;</a></h1><ul>
+<li><code>nullfile::Union{AbstractString, IOStream}</code>: output file for the fitted null model;    default is <code>ordinalgwas.null.txt</code>.</li>
+<li><code>pvalfile::Union{AbstractString, IOStream}</code>: output file for the gwas p-values; default is    <code>ordinalgwas.pval.txt</code>.</li>
+<li><code>covtype::Vector{DataType}</code>: type information for <code>covfile</code>. This is useful   when <code>CSV.read(covarfile)</code> has parsing errors.</li>
+<li><code>covrowinds::Union{Nothing,AbstractVector{&lt;:Integer}}</code>: sample indices for covariate file.</li>
+<li><code>test::Symbol</code>: <code>:score</code> (default) or <code>:lrt</code>.</li>
+<li><code>link::GLM.Link</code>: <code>LogitLink()</code> (default), <code>ProbitLink()</code>, <code>CauchitLink()</code>,   or <code>CloglogLink()</code>.</li>
+<li><code>snpmodel</code>: <code>ADDITIVE_MODEL</code> (default), <code>DOMINANT_MODEL</code>, or <code>RECESSIVE_MODEL</code>.</li>
+<li><code>snpinds::Union{Nothing,AbstractVector{&lt;:Integer}}</code>: SNP indices for bed file.</li>
+<li><code>bedrowinds::Union{Nothing,AbstractVector{&lt;:Integer}}</code>: sample indices for bed file.</li>
+<li><code>solver</code>: an optimization solver supported by MathProgBase. Default is    <code>NLoptSolver(algorithm=:LD_SLSQP, maxeval=4000)</code>. Another common choice is    <code>IpoptSolver(print_level=0)</code>.</li>
+<li><code>verbose::Bool</code>: default is <code>false</code>.</li>
+</ul>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The following can be used to test if there is an interaction between <code>sex</code> and the first five SNPs in the data.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[35]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span class="n">ordinalgwasGxE</span><span class="p">(@</span><span class="n">formula</span><span class="p">(</span><span class="n">hypertension</span> <span class="o">~</span> <span class="n">sex</span><span class="p">),</span> <span class="s">&quot;data/covariate.txt&quot;</span><span class="p">,</span> <span class="s">&quot;data/hapmap3&quot;</span><span class="p">,</span>
+    <span class="p">:</span><span class="n">sex</span><span class="p">,</span> <span class="n">pvalfile</span> <span class="o">=</span> <span class="s">&quot;gxe_snp.pval.txt&quot;</span><span class="p">,</span> <span class="n">snpinds</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span> <span class="n">test</span><span class="o">=</span><span class="p">:</span><span class="n">score</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -1772,7 +1776,7 @@ sex            0.424656   0.213914   1.98517    0.0480
 <div class="prompt input_prompt">In&nbsp;[36]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-julia"><pre><span class="n">run</span><span class="p">(</span><span class="sb">`head snpset.pval.txt`</span><span class="p">);</span>
+<div class=" highlight hl-julia"><pre><span class="n">CSV</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&quot;gxe_snp.pval.txt&quot;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -1783,20 +1787,12 @@ sex            0.424656   0.213914   1.98517    0.0480
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>snpsetid,nsnps,pval
-gene1,93,1.72133946991466e-5
-gene2,93,0.03692497684330217
-gene3,93,0.7478549371392197
-gene4,92,0.027650798223816195
-gene5,93,0.6119581594582347
-gene6,93,0.029184642230868463
-gene7,93,0.3916007348891039
-gene8,93,0.1253957410986018
-gene9,93,0.7085635621609013
-</pre>
+<div class="output_area"><div class="prompt output_prompt">Out[36]:</div>
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table class="data-frame"><thead><tr><th></th><th>chr</th><th>pos</th><th>snpid</th><th>maf</th><th>hwepval</th><th>snpeffectnull</th><th>pval</th></tr><tr><th></th><th>Int64</th><th>Int64</th><th>String</th><th>Float64</th><th>Float64</th><th>Float64</th><th>Float64</th></tr></thead><tbody><p>5 rows × 7 columns</p><tr><th>1</th><td>1</td><td>554484</td><td>rs10458597</td><td>0.0</td><td>1.0</td><td>0.0</td><td>1.0</td></tr><tr><th>2</th><td>1</td><td>758311</td><td>rs12562034</td><td>0.0776398</td><td>0.409876</td><td>-1.00578</td><td>0.637742</td></tr><tr><th>3</th><td>1</td><td>967643</td><td>rs2710875</td><td>0.324074</td><td>4.07625e-7</td><td>-0.648856</td><td>0.966711</td></tr><tr><th>4</th><td>1</td><td>1168108</td><td>rs11260566</td><td>0.191589</td><td>0.128568</td><td>-0.915723</td><td>0.263527</td></tr><tr><th>5</th><td>1</td><td>1375074</td><td>rs1312568</td><td>0.441358</td><td>2.5376e-19</td><td>-0.331814</td><td>0.781113</td></tr></tbody></table>
 </div>
+
 </div>
 
 </div>
@@ -1809,8 +1805,7 @@ gene9,93,0.7085635621609013
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span class="c"># clean up</span>
-<span class="n">rm</span><span class="p">(</span><span class="s">&quot;snpset.pval.txt&quot;</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">true</span><span class="p">)</span>
-<span class="n">rm</span><span class="p">(</span><span class="s">&quot;ordinalgwas.null.txt&quot;</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">true</span><span class="p">)</span>
+<span class="n">rm</span><span class="p">(</span><span class="s">&quot;gxe_snp.pval.txt&quot;</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="n">true</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -1823,138 +1818,52 @@ gene9,93,0.7085635621609013
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Additional-Features-Available-Not-Covered-Today">Additional Features Available Not Covered Today<a class="anchor-link" href="#Additional-Features-Available-Not-Covered-Today">&#182;</a></h2><p>The following features are also available in <em>OrdinalGWAS.jl</em>. They are covered in the documentation found <a href="https://openmendel.github.io/OrdinalGWAS.jl/latest/">here</a>.</p>
-<ul>
-<li>Additional SNP-set analysis options<ul>
-<li>Sliding window</li>
-<li>Specific set of snps</li>
-</ul>
-</li>
-<li>GxE interaction analysis</li>
-<li>Set of multiple plink files (i.e. by chromosome)<ul>
-<li>Running on a cluster</li>
-</ul>
-</li>
-<li>Running analysis with a Docker file</li>
-<li>Plotting<ul>
-<li>To plot the GWAS results, use the <a href="https://openmendel.github.io/MendelPlots.jl/latest/">MendelPlots.jl package</a>.</li>
-</ul>
-</li>
-</ul>
+<p>Now try to run a GxE interaction analysis for the first five snps using an LRT (returns the effect size estimate of the GxE interaction as well), saving the results to a file named <code>gxe_lrt.pval.txt</code>.</p>
 
 </div>
 </div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="If-time-allows">If time allows<a class="anchor-link" href="#If-time-allows">&#182;</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="GxE-interactions">GxE interactions<a class="anchor-link" href="#GxE-interactions">&#182;</a></h2><p>In many applications, the user may want to test the GxE interaction effect. This requires fitting the SNP in the null model and is quite slower, but the command <code>ordinalgwasGxE()</code> can be used test the interaction effect.
-To do this you must specify the environmental variable in the command, either as a symbol, such as ":age" or as a string "age".</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>For documentation of the <code>ordinalgwasGxE</code> function, type <code>?ordinalgwasGxE</code> in Julia REPL.</p>
-
-<pre><code>@docs
-ordinalgwasGxE</code></pre>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[38]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-julia"><pre><span class="n">ordinalgwasGxE</span><span class="p">(@</span><span class="n">formula</span><span class="p">(</span><span class="n">hypertension</span> <span class="o">~</span> <span class="n">sex</span><span class="p">),</span> <span class="s">&quot;data/covariate.txt&quot;</span><span class="p">,</span> <span class="s">&quot;data/hapmap3&quot;</span><span class="p">,</span>
-    <span class="p">:</span><span class="n">sex</span><span class="p">,</span> <span class="n">pvalfile</span> <span class="o">=</span> <span class="s">&quot;gxe_snp.pval.txt&quot;</span><span class="p">,</span> <span class="n">snpinds</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span> <span class="n">test</span><span class="o">=</span><span class="p">:</span><span class="n">score</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[38]:</div>
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>StatsModels.TableRegressionModel{OrdinalMultinomialModel{Int64,Float64,LogitLink},Array{Float64,2}}
-
-hypertension ~ sex
-
-Coefficients:
-──────────────────────────────────────────────────────
-               Estimate  Std.Error   t value  Pr(&gt;|t|)
-──────────────────────────────────────────────────────
-intercept1|2  -1.48564    0.358891  -4.13952    &lt;1e-4 
-intercept2|3  -0.569479   0.341044  -1.66981    0.0959
-intercept3|4   0.429815   0.339642   1.26549    0.2066
-sex            0.424656   0.213914   1.98517    0.0480
-──────────────────────────────────────────────────────</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[39]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-julia"><pre><span class="n">run</span><span class="p">(</span><span class="sb">`head gxe_snp.pval.txt`</span><span class="p">);</span>
+<div class=" highlight hl-julia"><pre><span class="c">## Your code here:</span>
+
+<span class="c">###</span>
 </pre></div>
 
 </div>
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Display the results</p>
 
-
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>chr,pos,snpid,maf,hwepval,snpeffectnull,pval
-1,554484,rs10458597,0.0,1.0,0.0,1.0
-1,758311,rs12562034,0.07763975155279501,0.40987633326666817,-1.0057833719544331,0.6377422425977491
-1,967643,rs2710875,0.32407407407407407,4.0762491007057454e-7,-0.6488560566295055,0.9667114198051628
-1,1168108,rs11260566,0.19158878504672894,0.12856822794469086,-0.9157225669357879,0.26352674694121003
-1,1375074,rs1312568,0.441358024691358,2.537601965061486e-19,-0.33181366525772593,0.7811133315582837
-</pre>
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span class="n">CSV</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&quot;gxe_snp.pval.txt&quot;</span><span class="p">)</span>
+</pre></div>
 
+</div>
 </div>
 </div>
 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[40]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span class="c"># clean up</span>
@@ -1979,7 +1888,7 @@ sex            0.424656   0.213914   1.98517    0.0480
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[41]:</div>
+<div class="prompt input_prompt">In&nbsp;[40]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span class="n">ordinalgwas</span><span class="p">(@</span><span class="n">formula</span><span class="p">(</span><span class="n">hypertension</span> <span class="o">~</span> <span class="n">sex</span><span class="p">),</span> <span class="s">&quot;data/covariate.txt&quot;</span><span class="p">,</span> <span class="s">&quot;data/hapmap3&quot;</span><span class="p">,</span> 
@@ -1993,10 +1902,10 @@ sex            0.424656   0.213914   1.98517    0.0480
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[42]:</div>
+<div class="prompt input_prompt">In&nbsp;[41]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-julia"><pre><span class="n">run</span><span class="p">(</span><span class="sb">`head GxE.pval.txt`</span><span class="p">);</span>
+<div class=" highlight hl-julia"><pre><span class="n">CSV</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&quot;GxE.pval.txt&quot;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -2007,20 +1916,12 @@ sex            0.424656   0.213914   1.98517    0.0480
 <div class="output">
 
 
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>chr,pos,snpid,maf,hwepval,pval
-1,554484,rs10458597,0.0,1.0,1.0
-1,758311,rs12562034,0.07763975155279501,0.40987633326666817,0.01744601041225423
-1,967643,rs2710875,0.32407407407407407,4.0762491007057454e-7,0.0001667073239489097
-1,1168108,rs11260566,0.19158878504672894,0.12856822794469086,4.763762457893383e-5
-1,1375074,rs1312568,0.441358024691358,2.537601965061486e-19,0.02913847124299368
-1,1588771,rs35154105,0.0,1.0,1.0
-1,1789051,rs16824508,0.00462962962962965,0.9332783156468178,0.29643631149443217
-1,1990452,rs2678939,0.4537037037037037,5.0769595770843126e-11,0.37924580479348796
-1,2194615,rs7553178,0.22685185185185186,0.17056143157457782,0.325582269932396
-</pre>
+<div class="output_area"><div class="prompt output_prompt">Out[41]:</div>
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<table class="data-frame"><thead><tr><th></th><th>chr</th><th>pos</th><th>snpid</th><th>maf</th><th>hwepval</th><th>pval</th></tr><tr><th></th><th>Int64</th><th>Int64</th><th>String</th><th>Float64</th><th>Float64</th><th>Float64</th></tr></thead><tbody><p>13,928 rows × 6 columns</p><tr><th>1</th><td>1</td><td>554484</td><td>rs10458597</td><td>0.0</td><td>1.0</td><td>1.0</td></tr><tr><th>2</th><td>1</td><td>758311</td><td>rs12562034</td><td>0.0776398</td><td>0.409876</td><td>0.017446</td></tr><tr><th>3</th><td>1</td><td>967643</td><td>rs2710875</td><td>0.324074</td><td>4.07625e-7</td><td>0.000166707</td></tr><tr><th>4</th><td>1</td><td>1168108</td><td>rs11260566</td><td>0.191589</td><td>0.128568</td><td>4.76376e-5</td></tr><tr><th>5</th><td>1</td><td>1375074</td><td>rs1312568</td><td>0.441358</td><td>2.5376e-19</td><td>0.0291385</td></tr><tr><th>6</th><td>1</td><td>1588771</td><td>rs35154105</td><td>0.0</td><td>1.0</td><td>1.0</td></tr><tr><th>7</th><td>1</td><td>1789051</td><td>rs16824508</td><td>0.00462963</td><td>0.933278</td><td>0.296436</td></tr><tr><th>8</th><td>1</td><td>1990452</td><td>rs2678939</td><td>0.453704</td><td>5.07696e-11</td><td>0.379246</td></tr><tr><th>9</th><td>1</td><td>2194615</td><td>rs7553178</td><td>0.226852</td><td>0.170561</td><td>0.325582</td></tr><tr><th>10</th><td>1</td><td>2396747</td><td>rs13376356</td><td>0.14486</td><td>0.905308</td><td>0.81664</td></tr><tr><th>11</th><td>1</td><td>2623158</td><td>rs28753913</td><td>0.0</td><td>1.0</td><td>1.0</td></tr><tr><th>12</th><td>1</td><td>2823603</td><td>rs1563468</td><td>0.483025</td><td>4.23066e-9</td><td>0.394388</td></tr><tr><th>13</th><td>1</td><td>3025087</td><td>rs6690373</td><td>0.25387</td><td>9.23864e-8</td><td>0.929342</td></tr><tr><th>14</th><td>1</td><td>3225416</td><td>rs12043519</td><td>0.029321</td><td>0.000778802</td><td>0.00458087</td></tr><tr><th>15</th><td>1</td><td>3431124</td><td>rs12093117</td><td>0.109907</td><td>0.232693</td><td>0.521578</td></tr><tr><th>16</th><td>1</td><td>3633945</td><td>rs10910017</td><td>0.221875</td><td>0.000270888</td><td>0.987983</td></tr><tr><th>17</th><td>1</td><td>3895935</td><td>rs34770924</td><td>0.0246914</td><td>3.20726e-5</td><td>0.390835</td></tr><tr><th>18</th><td>1</td><td>4096895</td><td>rs6702633</td><td>0.475232</td><td>0.663812</td><td>0.012629</td></tr><tr><th>19</th><td>1</td><td>4297388</td><td>rs684965</td><td>0.305556</td><td>0.213633</td><td>0.150915</td></tr><tr><th>20</th><td>1</td><td>4498133</td><td>rs11809295</td><td>0.0993789</td><td>0.257162</td><td>0.162402</td></tr><tr><th>21</th><td>1</td><td>4698713</td><td>rs578528</td><td>0.324074</td><td>0.616937</td><td>0.184986</td></tr><tr><th>22</th><td>1</td><td>4899946</td><td>rs4654471</td><td>0.358025</td><td>0.181265</td><td>0.281664</td></tr><tr><th>23</th><td>1</td><td>5100369</td><td>rs6681148</td><td>0.131579</td><td>0.00845447</td><td>0.312034</td></tr><tr><th>24</th><td>1</td><td>5302730</td><td>rs10799197</td><td>0.428793</td><td>0.294742</td><td>0.742085</td></tr><tr><th>25</th><td>1</td><td>5502779</td><td>rs10796400</td><td>0.231481</td><td>0.46091</td><td>0.403759</td></tr><tr><th>26</th><td>1</td><td>5703284</td><td>rs2244632</td><td>0.394737</td><td>0.313378</td><td>0.751857</td></tr><tr><th>27</th><td>1</td><td>5904631</td><td>rs7549324</td><td>0.367284</td><td>0.517567</td><td>0.47387</td></tr><tr><th>28</th><td>1</td><td>6106513</td><td>rs2843494</td><td>0.0648148</td><td>0.740663</td><td>0.629369</td></tr><tr><th>29</th><td>1</td><td>6310159</td><td>rs4908880</td><td>0.0555556</td><td>0.28968</td><td>0.523624</td></tr><tr><th>30</th><td>1</td><td>6514524</td><td>rs932112</td><td>0.220679</td><td>0.172669</td><td>0.173462</td></tr><tr><th>&vellip;</th><td>&vellip;</td><td>&vellip;</td><td>&vellip;</td><td>&vellip;</td><td>&vellip;</td><td>&vellip;</td></tr></tbody></table>
 </div>
+
 </div>
 
 </div>
@@ -2029,7 +1930,7 @@ sex            0.424656   0.213914   1.98517    0.0480
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[43]:</div>
+<div class="prompt input_prompt">In&nbsp;[42]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span class="c"># clean up</span>
