@@ -11752,48 +11752,13 @@ div#notebook {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Iterative-hard-thresholding-Tutorial">Iterative hard thresholding Tutorial<a class="anchor-link" href="#Iterative-hard-thresholding-Tutorial">&#182;</a></h1><p>This notebook showcase a few examples of the software <a href="https://github.com/OpenMendel/MendelIHT.jl">MendelIHT.jl</a>.</p>
-<h2 id="Package-installation">Package installation<a class="anchor-link" href="#Package-installation">&#182;</a></h2>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="c"># machine information for reproducibility</span>
-<span class="n">versioninfo</span><span class="p">()</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Julia Version 1.2.0
-Commit c6da87ff4b (2019-08-20 00:03 UTC)
-Platform Info:
-  OS: macOS (x86_64-apple-darwin18.6.0)
-  CPU: Intel(R) Core(TM) i9-9880H CPU @ 2.30GHz
-  WORD_SIZE: 64
-  LIBM: libopenlibm
-  LLVM: libLLVM-6.0.1 (ORCJIT, skylake)
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c">#load necessary packages, install them if you don&#39;t have it</span>
@@ -11807,6 +11772,7 @@ Platform Info:
 <span class="k">using</span> <span class="n">DelimitedFiles</span>
 <span class="k">using</span> <span class="n">Statistics</span>
 <span class="k">using</span> <span class="n">BenchmarkTools</span>
+<span class="k">using</span> <span class="n">Plots</span>
 </pre></div>
 
 </div>
@@ -11819,165 +11785,13 @@ Platform Info:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>To install OpenMendel related packages, execute the following lines</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="p">]</span><span class="n">add</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">OpenMendel</span><span class="o">/</span><span class="n">SnpArrays</span><span class="o">.</span><span class="n">jl</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre><span class="ansi-green-intense-fg ansi-bold">  Updating</span> registry at `~/.julia/registries/General`
-<span class="ansi-green-intense-fg ansi-bold">  Updating</span> git-repo `https://github.com/JuliaRegistries/General.git`
-<span class="ansi-green-intense-fg ansi-bold">  Updating</span> git-repo `https://github.com/OpenMendel/SnpArrays.jl`
-<span class="ansi-green-intense-fg ansi-bold">  Updating</span> git-repo `https://github.com/OpenMendel/SnpArrays.jl`
-<span class="ansi-green-intense-fg ansi-bold"> Resolving</span> package versions...
-<span class="ansi-green-intense-fg ansi-bold">  Updating</span> `~/.julia/environments/v1.2/Project.toml`
-<span class="ansi-black-intense-fg"> [no changes]</span>
-<span class="ansi-green-intense-fg ansi-bold">  Updating</span> `~/.julia/environments/v1.2/Manifest.toml`
-<span class="ansi-black-intense-fg"> [no changes]</span>
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="p">]</span><span class="n">add</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">OpenMendel</span><span class="o">/</span><span class="n">MendelSearch</span><span class="o">.</span><span class="n">jl</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre><span class="ansi-green-intense-fg ansi-bold">  Updating</span> git-repo `https://github.com/OpenMendel/MendelSearch.jl`
-<span class="ansi-green-intense-fg ansi-bold">  Updating</span> git-repo `https://github.com/OpenMendel/MendelSearch.jl`
-<span class="ansi-green-intense-fg ansi-bold"> Resolving</span> package versions...
-<span class="ansi-green-intense-fg ansi-bold">  Updating</span> `~/.julia/environments/v1.2/Project.toml`
-<span class="ansi-black-intense-fg"> [no changes]</span>
-<span class="ansi-green-intense-fg ansi-bold">  Updating</span> `~/.julia/environments/v1.2/Manifest.toml`
-<span class="ansi-black-intense-fg"> [no changes]</span>
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="p">]</span><span class="n">add</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">OpenMendel</span><span class="o">/</span><span class="n">MendelBase</span><span class="o">.</span><span class="n">jl</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre><span class="ansi-green-intense-fg ansi-bold">  Updating</span> git-repo `https://github.com/OpenMendel/MendelBase.jl`
-<span class="ansi-green-intense-fg ansi-bold">  Updating</span> git-repo `https://github.com/OpenMendel/MendelBase.jl`
-<span class="ansi-green-intense-fg ansi-bold"> Resolving</span> package versions...
-<span class="ansi-green-intense-fg ansi-bold">  Updating</span> `~/.julia/environments/v1.2/Project.toml`
-<span class="ansi-black-intense-fg"> [no changes]</span>
-<span class="ansi-green-intense-fg ansi-bold">  Updating</span> `~/.julia/environments/v1.2/Manifest.toml`
-<span class="ansi-black-intense-fg"> [no changes]</span>
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="p">]</span><span class="n">add</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">OpenMendel</span><span class="o">/</span><span class="n">MendelIHT</span><span class="o">.</span><span class="n">jl</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre><span class="ansi-green-intense-fg ansi-bold">  Updating</span> git-repo `https://github.com/OpenMendel/MendelIHT.jl`
-<span class="ansi-green-intense-fg ansi-bold">  Updating</span> git-repo `https://github.com/OpenMendel/MendelIHT.jl`
-<span class="ansi-green-intense-fg ansi-bold"> Resolving</span> package versions...
-<span class="ansi-green-intense-fg ansi-bold">  Updating</span> `~/.julia/environments/v1.2/Project.toml`
-<span class="ansi-black-intense-fg"> [no changes]</span>
-<span class="ansi-green-intense-fg ansi-bold">  Updating</span> `~/.julia/environments/v1.2/Manifest.toml`
-<span class="ansi-black-intense-fg"> [no changes]</span>
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="What-is-IHT?">What is IHT?<a class="anchor-link" href="#What-is-IHT?">&#182;</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Iterative hard thresholding (IHT) is a sparse approximation method that performs variable selection and parameter estimation for high dimensional datasets. IHT returns a sparse model with prespecified $k \in \mathbb{Z}_+$ (or fewer) non-zero entries. In <a href="">MendelIHT.j</a>, the objective function is:</p>
+<h1 id="What-is-IHT?">What is IHT?<a class="anchor-link" href="#What-is-IHT?">&#182;</a></h1><p>Iterative hard thresholding (IHT) is a sparse approximation method that performs variable selection and parameter estimation for high dimensional datasets. IHT returns a sparse model with prespecified $k \in \mathbb{Z}_+$ (or fewer) non-zero entries. In <a href="">MendelIHT.j</a>, the objective function is:</p>
 \begin{align}
 \text{maximize } & \quad L(\beta)\\
 \text{subject to } & \quad ||\beta||_0 \le k
-\end{align}<p>The objective is solved via:
-$$\beta_{n+1} = P_{S_k}(\beta_n - s_n \nabla L(\beta_n)),$$
+\end{align}<p><img src="iht_schematic.png" width="600"></p>
+<p>The objective is solved via <strong>projected gradient ascent</strong>:
+$$\beta_{n+1} = P_{S_k}(\beta_n + s_n \nabla L(\beta_n)),$$
 where:</p>
 <ul>
 <li>$\nabla L(\beta)$ is the score (gradient) vector of loglikelihood</li>
@@ -11986,6 +11800,21 @@ where:</p>
 <li>$P_{S_k}(v)$ projects vector $v$ to sparsity set $S_k$ by setting all but the top $k$ entries to 0. </li>
 </ul>
 <p>See <a href="https://www.biorxiv.org/content/10.1101/697755v2">our paper</a> for more details and computational tricks to do each of these efficiently.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Example:-IHT-vs-logistic-GWAS-on-UK-Biobank">Example: IHT vs logistic GWAS on UK Biobank<a class="anchor-link" href="#Example:-IHT-vs-logistic-GWAS-on-UK-Biobank">&#182;</a></h1><ul>
+<li>Data: ~200,000 samples and ~500,000 SNPs</li>
+<li>Ran 5-fold cross validated IHT for sparsity levels 1~50, distributed to 5 computers. Each completed with 24h. Total run time $<2$ days.</li>
+<li>Found 33 significant SNPs, plotted against traditional GWAS result using <a href="https://github.com/OpenMendel/MendelPlots.jl">MendelPlots.jl</a>:</li>
+</ul>
+<p><img src="manhattan.png" width="700"></p>
 
 </div>
 </div>
@@ -12046,7 +11875,10 @@ InverseSquareLink
 LogitLink
 LogLink
 ProbitLink
-SqrtLink</code></pre>
+SqrtLink
+
+</code></pre>
+<p><strong>Note:</strong> Adding your favorite distribution only requires implementation of loglikelihood, score, and expected information!</p>
 
 </div>
 </div>
@@ -12072,7 +11904,7 @@ $$x_{ij} \sim \rm Binomial(2, \rho_j)$$$$\rho_j \sim \rm Uniform(0, 0.5)$$
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c"># rows and columns</span>
@@ -12109,7 +11941,7 @@ $$x_{ij} \sim \rm Binomial(2, \rho_j)$$$$\rho_j \sim \rm Uniform(0, 0.5)$$
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">SnpArray</span><span class="p">(</span><span class="s">&quot;./data/tmp.bed&quot;</span><span class="p">)</span>
@@ -12124,7 +11956,7 @@ $$x_{ij} \sim \rm Binomial(2, \rho_j)$$$$\rho_j \sim \rm Uniform(0, 0.5)$$
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[8]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[3]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -12175,7 +12007,7 @@ $$x_{ij} \sim \rm Binomial(2, \rho_j)$$$$\rho_j \sim \rm Uniform(0, 0.5)$$
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c"># SnpBitMatrix can automatically standardizes .bed file (without extra memory) and behaves like a matrix</span>
@@ -12194,7 +12026,7 @@ $$x_{ij} \sim \rm Binomial(2, \rho_j)$$$$\rho_j \sim \rm Uniform(0, 0.5)$$
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[9]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[4]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -12248,21 +12080,21 @@ $$x_{ij} \sim \rm Binomial(2, \rho_j)$$$$\rho_j \sim \rm Uniform(0, 0.5)$$
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>In this example, our model is simulated as:</p>
-$$y_i \sim \mathbf{x}_i^T\mathbf{\beta} + \epsilon_i$$$$x_{ij} \sim \rm Binomial(2, \rho_j)$$$$\rho_j \sim \rm Uniform(0, 0.5)$$$$\epsilon_i \sim \rm N(0, 1)$$$$\beta_i \sim \rm N(0, 1)$$
+$$y_i \sim \mathbf{x}_i^T\mathbf{\beta} + \epsilon_i$$$$x_{ij} \sim \rm Binomial(2, \rho_j)$$$$\rho_j \sim \rm Uniform(0, 0.5)$$$$\epsilon_i \sim \rm N(0, 1)$$$$\beta_i \sim \rm N(0, 1) \quad (\text{for 10 different } i)$$
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c"># Define model dimensions, true model size, distribution, and link functions</span>
 <span class="n">n</span> <span class="o">=</span> <span class="mi">1000</span>
 <span class="n">p</span> <span class="o">=</span> <span class="mi">10000</span>
 <span class="n">k</span> <span class="o">=</span> <span class="mi">10</span>
-<span class="n">d</span> <span class="o">=</span> <span class="n">Normal</span>
-<span class="n">l</span> <span class="o">=</span> <span class="n">canonicallink</span><span class="p">(</span><span class="n">d</span><span class="p">())</span>
+<span class="n">dist</span> <span class="o">=</span> <span class="n">Normal</span>
+<span class="n">link</span> <span class="o">=</span> <span class="n">canonicallink</span><span class="p">(</span><span class="n">dist</span><span class="p">())</span>
 
 <span class="c"># set random seed for reproducibility</span>
 <span class="n">Random</span><span class="o">.</span><span class="n">seed!</span><span class="p">(</span><span class="mi">2020</span><span class="p">)</span>
@@ -12277,7 +12109,7 @@ $$y_i \sim \mathbf{x}_i^T\mathbf{\beta} + \epsilon_i$$$$x_{ij} \sim \rm Binomial
 <span class="n">z</span> <span class="o">=</span> <span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> 
 
 <span class="c"># simulate response y, true model b, and the correct non-0 positions of b</span>
-<span class="n">y</span><span class="p">,</span> <span class="n">true_b</span><span class="p">,</span> <span class="n">correct_position</span> <span class="o">=</span> <span class="n">simulate_random_response</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">xbm</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">l</span><span class="p">);</span>
+<span class="n">y</span><span class="p">,</span> <span class="n">true_b</span><span class="p">,</span> <span class="n">correct_position</span> <span class="o">=</span> <span class="n">simulate_random_response</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">xbm</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">dist</span><span class="p">,</span> <span class="n">link</span><span class="p">);</span>
 </pre></div>
 
 </div>
@@ -12302,13 +12134,14 @@ $$y_i \sim \mathbf{x}_i^T\mathbf{\beta} + \epsilon_i$$$$x_{ij} \sim \rm Binomial
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="n">collect</span><span class="p">(</span><span class="mi">5</span><span class="p">:</span><span class="mi">15</span><span class="p">)</span>
-<span class="n">q</span> <span class="o">=</span> <span class="mi">3</span>
+<div class=" highlight hl-julia"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="n">collect</span><span class="p">(</span><span class="mi">5</span><span class="p">:</span><span class="mi">15</span><span class="p">)</span>      <span class="c"># various sparsity levels to test (in this case 5 through 15)</span>
+<span class="n">q</span>    <span class="o">=</span> <span class="mi">3</span>                  <span class="c"># number of fold cross validation</span>
 
-<span class="p">@</span><span class="n">time</span> <span class="n">mses</span> <span class="o">=</span> <span class="n">cv_iht</span><span class="p">(</span><span class="n">d</span><span class="p">(),</span> <span class="n">l</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">parallel</span><span class="o">=</span><span class="n">false</span><span class="p">);</span> <span class="c"># don&#39;t run parallel on binder!</span>
+<span class="c"># Inputs: x, z, y = genotype matrix, other covariates, and response, 1 = group info (none)</span>
+<span class="p">@</span><span class="n">time</span> <span class="n">mses</span> <span class="o">=</span> <span class="n">cv_iht</span><span class="p">(</span><span class="n">Normal</span><span class="p">(),</span> <span class="n">IdentityLink</span><span class="p">(),</span> <span class="n">x</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">parallel</span><span class="o">=</span><span class="n">false</span><span class="p">);</span>
 </pre></div>
 
 </div>
@@ -12336,9 +12169,180 @@ Crossvalidation Results:
 	13	368.0104754338581
 	14	367.4956307418699
 	15	385.3773400406478
- 15.336045 seconds (15.66 M allocations: 847.403 MiB, 2.54% gc time)
+ 16.019377 seconds (13.17 M allocations: 719.898 MiB, 2.21% gc time)
 </pre>
 </div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-julia"><pre><span></span><span class="n">plot</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">mses</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;Mean Squared Error&quot;</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s">&quot;Sparsity level&quot;</span><span class="p">,</span> 
+        <span class="n">ylabel</span><span class="o">=</span><span class="s">&quot;Mean Squared Error&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[7]:</div>
+
+<div class="output_svg output_subarea output_execute_result">
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="600" height="400" viewBox="0 0 2400 1600">
+<defs>
+  <clipPath id="clip4400">
+    <rect x="0" y="0" width="2400" height="1600"/>
+  </clipPath>
+</defs>
+<path clip-path="url(#clip4400)" d="
+M0 1600 L2400 1600 L2400 0 L0 0  Z
+  " fill="#ffffff" fill-rule="evenodd" fill-opacity="1"/>
+<defs>
+  <clipPath id="clip4401">
+    <rect x="480" y="0" width="1681" height="1600"/>
+  </clipPath>
+</defs>
+<path clip-path="url(#clip4400)" d="
+M229.135 1425.62 L2352.76 1425.62 L2352.76 47.2441 L229.135 47.2441  Z
+  " fill="#ffffff" fill-rule="evenodd" fill-opacity="1"/>
+<defs>
+  <clipPath id="clip4402">
+    <rect x="229" y="47" width="2125" height="1379"/>
+  </clipPath>
+</defs>
+<polyline clip-path="url(#clip4402)" style="stroke:#000000; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+  489.579,1425.62 489.579,47.2441 
+  "/>
+<polyline clip-path="url(#clip4402)" style="stroke:#000000; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+  890.262,1425.62 890.262,47.2441 
+  "/>
+<polyline clip-path="url(#clip4402)" style="stroke:#000000; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+  1290.95,1425.62 1290.95,47.2441 
+  "/>
+<polyline clip-path="url(#clip4402)" style="stroke:#000000; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+  1691.63,1425.62 1691.63,47.2441 
+  "/>
+<polyline clip-path="url(#clip4402)" style="stroke:#000000; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+  2092.31,1425.62 2092.31,47.2441 
+  "/>
+<polyline clip-path="url(#clip4402)" style="stroke:#000000; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+  229.135,1285.79 2352.76,1285.79 
+  "/>
+<polyline clip-path="url(#clip4402)" style="stroke:#000000; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+  229.135,1021.44 2352.76,1021.44 
+  "/>
+<polyline clip-path="url(#clip4402)" style="stroke:#000000; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+  229.135,757.098 2352.76,757.098 
+  "/>
+<polyline clip-path="url(#clip4402)" style="stroke:#000000; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+  229.135,492.75 2352.76,492.75 
+  "/>
+<polyline clip-path="url(#clip4402)" style="stroke:#000000; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+  229.135,228.403 2352.76,228.403 
+  "/>
+<polyline clip-path="url(#clip4400)" style="stroke:#000000; stroke-width:4; stroke-opacity:1; fill:none" points="
+  229.135,1425.62 2352.76,1425.62 
+  "/>
+<polyline clip-path="url(#clip4400)" style="stroke:#000000; stroke-width:4; stroke-opacity:1; fill:none" points="
+  229.135,1425.62 229.135,47.2441 
+  "/>
+<polyline clip-path="url(#clip4400)" style="stroke:#000000; stroke-width:4; stroke-opacity:1; fill:none" points="
+  489.579,1425.62 489.579,1409.08 
+  "/>
+<polyline clip-path="url(#clip4400)" style="stroke:#000000; stroke-width:4; stroke-opacity:1; fill:none" points="
+  890.262,1425.62 890.262,1409.08 
+  "/>
+<polyline clip-path="url(#clip4400)" style="stroke:#000000; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1290.95,1425.62 1290.95,1409.08 
+  "/>
+<polyline clip-path="url(#clip4400)" style="stroke:#000000; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1691.63,1425.62 1691.63,1409.08 
+  "/>
+<polyline clip-path="url(#clip4400)" style="stroke:#000000; stroke-width:4; stroke-opacity:1; fill:none" points="
+  2092.31,1425.62 2092.31,1409.08 
+  "/>
+<polyline clip-path="url(#clip4400)" style="stroke:#000000; stroke-width:4; stroke-opacity:1; fill:none" points="
+  229.135,1285.79 254.619,1285.79 
+  "/>
+<polyline clip-path="url(#clip4400)" style="stroke:#000000; stroke-width:4; stroke-opacity:1; fill:none" points="
+  229.135,1021.44 254.619,1021.44 
+  "/>
+<polyline clip-path="url(#clip4400)" style="stroke:#000000; stroke-width:4; stroke-opacity:1; fill:none" points="
+  229.135,757.098 254.619,757.098 
+  "/>
+<polyline clip-path="url(#clip4400)" style="stroke:#000000; stroke-width:4; stroke-opacity:1; fill:none" points="
+  229.135,492.75 254.619,492.75 
+  "/>
+<polyline clip-path="url(#clip4400)" style="stroke:#000000; stroke-width:4; stroke-opacity:1; fill:none" points="
+  229.135,228.403 254.619,228.403 
+  "/>
+<g clip-path="url(#clip4400)">
+<text style="fill:#000000; fill-opacity:1; font-family:Arial,Helvetica Neue,Helvetica,sans-serif; font-size:48px; text-anchor:middle;" transform="rotate(0, 489.579, 1479.62)" x="489.579" y="1479.62">6</text>
+</g>
+<g clip-path="url(#clip4400)">
+<text style="fill:#000000; fill-opacity:1; font-family:Arial,Helvetica Neue,Helvetica,sans-serif; font-size:48px; text-anchor:middle;" transform="rotate(0, 890.262, 1479.62)" x="890.262" y="1479.62">8</text>
+</g>
+<g clip-path="url(#clip4400)">
+<text style="fill:#000000; fill-opacity:1; font-family:Arial,Helvetica Neue,Helvetica,sans-serif; font-size:48px; text-anchor:middle;" transform="rotate(0, 1290.95, 1479.62)" x="1290.95" y="1479.62">10</text>
+</g>
+<g clip-path="url(#clip4400)">
+<text style="fill:#000000; fill-opacity:1; font-family:Arial,Helvetica Neue,Helvetica,sans-serif; font-size:48px; text-anchor:middle;" transform="rotate(0, 1691.63, 1479.62)" x="1691.63" y="1479.62">12</text>
+</g>
+<g clip-path="url(#clip4400)">
+<text style="fill:#000000; fill-opacity:1; font-family:Arial,Helvetica Neue,Helvetica,sans-serif; font-size:48px; text-anchor:middle;" transform="rotate(0, 2092.31, 1479.62)" x="2092.31" y="1479.62">14</text>
+</g>
+<g clip-path="url(#clip4400)">
+<text style="fill:#000000; fill-opacity:1; font-family:Arial,Helvetica Neue,Helvetica,sans-serif; font-size:48px; text-anchor:end;" transform="rotate(0, 205.135, 1303.29)" x="205.135" y="1303.29">340</text>
+</g>
+<g clip-path="url(#clip4400)">
+<text style="fill:#000000; fill-opacity:1; font-family:Arial,Helvetica Neue,Helvetica,sans-serif; font-size:48px; text-anchor:end;" transform="rotate(0, 205.135, 1038.94)" x="205.135" y="1038.94">350</text>
+</g>
+<g clip-path="url(#clip4400)">
+<text style="fill:#000000; fill-opacity:1; font-family:Arial,Helvetica Neue,Helvetica,sans-serif; font-size:48px; text-anchor:end;" transform="rotate(0, 205.135, 774.598)" x="205.135" y="774.598">360</text>
+</g>
+<g clip-path="url(#clip4400)">
+<text style="fill:#000000; fill-opacity:1; font-family:Arial,Helvetica Neue,Helvetica,sans-serif; font-size:48px; text-anchor:end;" transform="rotate(0, 205.135, 510.25)" x="205.135" y="510.25">370</text>
+</g>
+<g clip-path="url(#clip4400)">
+<text style="fill:#000000; fill-opacity:1; font-family:Arial,Helvetica Neue,Helvetica,sans-serif; font-size:48px; text-anchor:end;" transform="rotate(0, 205.135, 245.903)" x="205.135" y="245.903">380</text>
+</g>
+<g clip-path="url(#clip4400)">
+<text style="fill:#000000; fill-opacity:1; font-family:Arial,Helvetica Neue,Helvetica,sans-serif; font-size:66px; text-anchor:middle;" transform="rotate(0, 1290.95, 1559.48)" x="1290.95" y="1559.48">Sparsity level</text>
+</g>
+<g clip-path="url(#clip4400)">
+<text style="fill:#000000; fill-opacity:1; font-family:Arial,Helvetica Neue,Helvetica,sans-serif; font-size:66px; text-anchor:middle;" transform="rotate(-90, 89.2861, 736.431)" x="89.2861" y="736.431">Mean Squared Error</text>
+</g>
+<polyline clip-path="url(#clip4402)" style="stroke:#009af9; stroke-width:20; stroke-opacity:1; fill:none" points="
+  289.238,429.473 489.579,928.679 689.921,1386.61 890.262,1223.84 1090.6,872.977 1290.95,864.748 1491.29,570.616 1691.63,383.653 1891.97,545.343 2092.31,558.953 
+  2292.65,86.2547 
+  "/>
+<path clip-path="url(#clip4400)" d="
+M1604.71 251.724 L2280.76 251.724 L2280.76 130.764 L1604.71 130.764  Z
+  " fill="#ffffff" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip4400)" style="stroke:#000000; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1604.71,251.724 2280.76,251.724 2280.76,130.764 1604.71,130.764 1604.71,251.724 
+  "/>
+<polyline clip-path="url(#clip4400)" style="stroke:#009af9; stroke-width:20; stroke-opacity:1; fill:none" points="
+  1628.71,191.244 1772.71,191.244 
+  "/>
+<g clip-path="url(#clip4400)">
+<text style="fill:#000000; fill-opacity:1; font-family:Arial,Helvetica Neue,Helvetica,sans-serif; font-size:48px; text-anchor:start;" transform="rotate(0, 1796.71, 208.744)" x="1796.71" y="208.744">Mean Squared Error</text>
+</g>
+</svg>
+
+</div>
+
 </div>
 
 </div>
@@ -12356,11 +12360,11 @@ Crossvalidation Results:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="n">best_k</span> <span class="o">=</span> <span class="n">path</span><span class="p">[</span><span class="n">argmin</span><span class="p">(</span><span class="n">mses</span><span class="p">)]</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">L0_reg</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">xbm</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">best_k</span><span class="p">,</span> <span class="n">d</span><span class="p">(),</span> <span class="n">l</span><span class="p">)</span>
+<div class=" highlight hl-julia"><pre><span></span><span class="n">best_k</span> <span class="o">=</span> <span class="n">path</span><span class="p">[</span><span class="n">argmin</span><span class="p">(</span><span class="n">mses</span><span class="p">)]</span>                                        <span class="c"># k = 7 minimizes MSE</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">L0_reg</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">xbm</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">best_k</span><span class="p">,</span> <span class="n">Normal</span><span class="p">(),</span> <span class="n">IdentityLink</span><span class="p">())</span> <span class="c"># run IHT on full data</span>
 </pre></div>
 
 </div>
@@ -12371,14 +12375,14 @@ Crossvalidation Results:
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[12]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[8]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
 <pre>
 IHT estimated 7 nonzero SNP predictors and 0 non-genetic predictors.
 
-Compute time (sec):     0.26702284812927246
+Compute time (sec):     0.2799830436706543
 Final loglikelihood:    -1409.8966823858416
 Iterations:             5
 
@@ -12418,7 +12422,7 @@ Selected nongenetic predictors:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">compare_model</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span>
@@ -12434,7 +12438,7 @@ Selected nongenetic predictors:
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[13]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[9]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <table class="data-frame"><thead><tr><th></th><th>true_β</th><th>estimated_β</th></tr><tr><th></th><th>Float64</th><th>Float64</th></tr></thead><tbody><p>10 rows × 2 columns</p><tr><th>1</th><td>0.290051</td><td>0.240557</td></tr><tr><th>2</th><td>0.113896</td><td>0.0</td></tr><tr><th>3</th><td>-1.09083</td><td>-1.10532</td></tr><tr><th>4</th><td>0.0326341</td><td>0.0</td></tr><tr><th>5</th><td>1.25615</td><td>1.19246</td></tr><tr><th>6</th><td>1.5655</td><td>1.63064</td></tr><tr><th>7</th><td>-0.0616128</td><td>0.0</td></tr><tr><th>8</th><td>0.240515</td><td>0.222044</td></tr><tr><th>9</th><td>-0.420895</td><td>-0.4526</td></tr><tr><th>10</th><td>-0.893621</td><td>-0.890789</td></tr></tbody></table>
@@ -12469,7 +12473,7 @@ Selected nongenetic predictors:
 <h2 id="Simulation:-IHT-on-extensive-LD-blocks">Simulation: IHT on extensive LD blocks<a class="anchor-link" href="#Simulation:-IHT-on-extensive-LD-blocks">&#182;</a></h2><p>In this example, we simulated:</p>
 <ul>
 <li>10,000 SNPs, each belonging to 1 of 500 disjoint groups. Each group contains 20 SNPs</li>
-<li>$j = 5$ distinct groups are each assigned $1,2,...,5$ causal SNPs with effect sizes randomly chosen from $\{−0.2,0.2\}$. </li>
+<li>$j = 5$ groups are each assigned $1,2,...,5$ causal SNPs with effect sizes randomly chosen from $\{−0.2,0.2\}$. </li>
 <li>Within group correlation: $\rho = 0.95$</li>
 </ul>
 <p><strong>We assume perfect group information</strong>. That is, the selected groups containing 1∼5 causative SNPs are assigned maximum within-group sparsity $\lambda_g = 1,2,...,5$. The remaining groups are assigned $\lambda_g = 1$ (i.e. only 1 active predictor are allowed).</p>
@@ -12479,14 +12483,14 @@ Selected nongenetic predictors:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="c"># define problem size</span>
-<span class="n">d</span> <span class="o">=</span> <span class="n">NegativeBinomial</span>
-<span class="n">l</span> <span class="o">=</span> <span class="n">LogLink</span><span class="p">()</span>
 <span class="n">n</span> <span class="o">=</span> <span class="mi">1000</span>
 <span class="n">p</span> <span class="o">=</span> <span class="mi">10000</span>
+<span class="n">dist</span> <span class="o">=</span> <span class="n">NegativeBinomial</span>
+<span class="n">link</span> <span class="o">=</span> <span class="n">LogLink</span><span class="p">()</span>
 <span class="n">block_size</span> <span class="o">=</span> <span class="mi">20</span>                  <span class="c">#simulation parameter</span>
 <span class="n">num_blocks</span> <span class="o">=</span> <span class="kt">Int</span><span class="p">(</span><span class="n">p</span> <span class="o">/</span> <span class="n">block_size</span><span class="p">)</span> <span class="c">#simulation parameter</span>
 
@@ -12530,10 +12534,10 @@ Selected nongenetic predictors:
 
 <span class="c"># simulate phenotype</span>
 <span class="n">r</span> <span class="o">=</span> <span class="mi">10</span> <span class="c">#nuisance parameter</span>
-<span class="n">μ</span> <span class="o">=</span> <span class="n">GLM</span><span class="o">.</span><span class="n">linkinv</span><span class="o">.</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">x_float</span> <span class="o">*</span> <span class="n">true_b</span><span class="p">)</span>
+<span class="n">μ</span> <span class="o">=</span> <span class="n">GLM</span><span class="o">.</span><span class="n">linkinv</span><span class="o">.</span><span class="p">(</span><span class="n">link</span><span class="p">,</span> <span class="n">x_float</span> <span class="o">*</span> <span class="n">true_b</span><span class="p">)</span>
 <span class="n">clamp!</span><span class="p">(</span><span class="n">μ</span><span class="p">,</span> <span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
 <span class="n">prob</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">./</span> <span class="p">(</span><span class="mi">1</span> <span class="o">.+</span> <span class="n">μ</span> <span class="o">./</span> <span class="n">r</span><span class="p">)</span>
-<span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="n">rand</span><span class="p">(</span><span class="n">d</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="n">prob</span><span class="p">]</span> <span class="c">#number of failures before r success occurs</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="n">rand</span><span class="p">(</span><span class="n">dist</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="n">prob</span><span class="p">]</span> <span class="c">#number of failures before r success occurs</span>
 <span class="n">y</span> <span class="o">=</span> <span class="kt">Float64</span><span class="o">.</span><span class="p">(</span><span class="n">y</span><span class="p">);</span>
 </pre></div>
 
@@ -12553,11 +12557,16 @@ Selected nongenetic predictors:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="n">k</span> <span class="o">=</span> <span class="mi">15</span>
-<span class="n">ungrouped_IHT</span> <span class="o">=</span> <span class="n">L0_reg</span><span class="p">(</span><span class="n">x_float</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">d</span><span class="p">(),</span> <span class="n">l</span><span class="p">)</span> <span class="c"># 1 means 1 active group = entire dataset</span>
+<div class=" highlight hl-julia"><pre><span></span><span class="c"># x_float = genotype matrix in floating point numbers</span>
+<span class="c"># z       = other covariates</span>
+<span class="c"># y       = response vector</span>
+
+<span class="n">j</span> <span class="o">=</span> <span class="mi">1</span>      <span class="c"># 1 active group = entire dataset</span>
+<span class="n">k</span> <span class="o">=</span> <span class="mi">15</span>     <span class="c"># 15 active predictors</span>
+<span class="n">ungrouped_IHT</span> <span class="o">=</span> <span class="n">L0_reg</span><span class="p">(</span><span class="n">x_float</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">NegativeBinomial</span><span class="p">(),</span> <span class="n">LogLink</span><span class="p">())</span>
 </pre></div>
 
 </div>
@@ -12568,37 +12577,37 @@ Selected nongenetic predictors:
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[15]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[11]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
 <pre>
 IHT estimated 15 nonzero SNP predictors and 0 non-genetic predictors.
 
-Compute time (sec):     0.27208900451660156
-Final loglikelihood:    -1506.9803043373497
-Iterations:             56
+Compute time (sec):     0.29418396949768066
+Final loglikelihood:    -1500.8061573506045
+Iterations:             51
 
 Selected genetic predictors:
 15×2 DataFrame
 │ Row │ Position │ Estimated_β │
 │     │ <span class="ansi-black-intense-fg">Int64</span>    │ <span class="ansi-black-intense-fg">Float64</span>     │
 ├─────┼──────────┼─────────────┤
-│ 1   │ 4476     │ -0.12189    │
-│ 2   │ 4477     │ -0.12189    │
-│ 3   │ 4509     │ -0.173135   │
-│ 4   │ 4516     │ -0.159284   │
-│ 5   │ 5382     │ -0.173063   │
-│ 6   │ 5384     │ -0.0968715  │
-│ 7   │ 5385     │ -0.0968715  │
-│ 8   │ 5386     │ -0.0968715  │
-│ 9   │ 7442     │ 0.194584    │
-│ 10  │ 7443     │ 0.194584    │
-│ 11  │ 7446     │ 0.337898    │
-│ 12  │ 8531     │ 0.195654    │
-│ 13  │ 8532     │ 0.195654    │
-│ 14  │ 8535     │ 0.161302    │
-│ 15  │ 8536     │ 0.151602    │
+│ 1   │ 4475     │ -0.109171   │
+│ 2   │ 4476     │ -0.109171   │
+│ 3   │ 4509     │ -0.184747   │
+│ 4   │ 4517     │ -0.147883   │
+│ 5   │ 5382     │ -0.167469   │
+│ 6   │ 5383     │ -0.167469   │
+│ 7   │ 5397     │ 0.265338    │
+│ 8   │ 7442     │ 0.201632    │
+│ 9   │ 7443     │ 0.201632    │
+│ 10  │ 7446     │ 0.20714     │
+│ 11  │ 7447     │ 0.139236    │
+│ 12  │ 8531     │ 0.185672    │
+│ 13  │ 8532     │ 0.185672    │
+│ 14  │ 8535     │ 0.153515    │
+│ 15  │ 8536     │ 0.162791    │
 
 Selected nongenetic predictors:
 0×2 DataFrame
@@ -12622,18 +12631,24 @@ Selected nongenetic predictors:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="c"># specify maximum number of active groups</span>
-<span class="n">J</span> <span class="o">=</span> <span class="mi">5</span> 
+<div class=" highlight hl-julia"><pre><span></span><span class="c"># x_float = genotype matrix in floating point numbers</span>
+<span class="c"># z       = other covariates</span>
+<span class="c"># y       = response vector</span>
+<span class="c"># g       = group membership vector (simulated above)</span>
 
-<span class="c"># specify within-group sparsity for each group</span>
+<span class="n">j</span> <span class="o">=</span> <span class="mi">5</span>                           <span class="c"># maximum number of active groups</span>
+<span class="n">dist</span> <span class="o">=</span> <span class="n">NegativeBinomial</span><span class="p">()</span>       <span class="c"># distribution</span>
+<span class="n">link</span> <span class="o">=</span> <span class="n">LogLink</span><span class="p">()</span>                <span class="c"># link function</span>
+
+<span class="c"># within-group sparsity for each group</span>
 <span class="n">max_group_snps</span> <span class="o">=</span> <span class="n">ones</span><span class="p">(</span><span class="kt">Int</span><span class="p">,</span> <span class="n">num_blocks</span><span class="p">)</span> 
 <span class="n">max_group_snps</span><span class="p">[</span><span class="n">true_groups</span><span class="p">]</span> <span class="o">.=</span> <span class="n">collect</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="mi">5</span><span class="p">)</span>
 
 <span class="c"># run grouped IHT</span>
-<span class="n">grouped_IHT</span> <span class="o">=</span> <span class="n">L0_reg</span><span class="p">(</span><span class="n">x_float</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">J</span><span class="p">,</span> <span class="n">max_group_snps</span><span class="p">,</span> <span class="n">d</span><span class="p">(),</span> <span class="n">l</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">false</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="n">g</span><span class="p">)</span>
+<span class="n">grouped_IHT</span> <span class="o">=</span> <span class="n">L0_reg</span><span class="p">(</span><span class="n">x_float</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">max_group_snps</span><span class="p">,</span> <span class="n">NegativeBinomial</span><span class="p">(),</span> <span class="n">LogLink</span><span class="p">(),</span> <span class="n">group</span><span class="o">=</span><span class="n">g</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12644,15 +12659,15 @@ Selected nongenetic predictors:
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[16]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[12]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
 <pre>
 IHT estimated 15 nonzero SNP predictors and 0 non-genetic predictors.
 
-Compute time (sec):     0.3959381580352783
-Final loglikelihood:    -1490.9710283926524
+Compute time (sec):     0.39250993728637695
+Final loglikelihood:    -1490.9710283926527
 Iterations:             48
 
 Selected genetic predictors:
@@ -12698,7 +12713,7 @@ Selected nongenetic predictors:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-julia"><pre><span></span><span class="n">compare_model</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span>
@@ -12715,10 +12730,10 @@ Selected nongenetic predictors:
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[17]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[13]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
-<table class="data-frame"><thead><tr><th></th><th>correct_positions</th><th>ungrouped_IHT_positions</th><th>grouped_IHT_positions</th></tr><tr><th></th><th>Int64</th><th>Int64</th><th>Int64</th></tr></thead><tbody><p>15 rows × 3 columns</p><tr><th>1</th><td>4477</td><td>4476</td><td>4475</td></tr><tr><th>2</th><td>4510</td><td>4477</td><td>4509</td></tr><tr><th>3</th><td>4517</td><td>4509</td><td>4517</td></tr><tr><th>4</th><td>5381</td><td>4516</td><td>5381</td></tr><tr><th>5</th><td>5385</td><td>5382</td><td>5382</td></tr><tr><th>6</th><td>5397</td><td>5384</td><td>5397</td></tr><tr><th>7</th><td>7443</td><td>5385</td><td>7442</td></tr><tr><th>8</th><td>7444</td><td>5386</td><td>7443</td></tr><tr><th>9</th><td>7446</td><td>7442</td><td>7446</td></tr><tr><th>10</th><td>7452</td><td>7443</td><td>7450</td></tr><tr><th>11</th><td>8526</td><td>7446</td><td>8526</td></tr><tr><th>12</th><td>8531</td><td>8531</td><td>8531</td></tr><tr><th>13</th><td>8532</td><td>8532</td><td>8534</td></tr><tr><th>14</th><td>8534</td><td>8535</td><td>8536</td></tr><tr><th>15</th><td>8536</td><td>8536</td><td>8540</td></tr></tbody></table>
+<table class="data-frame"><thead><tr><th></th><th>correct_positions</th><th>ungrouped_IHT_positions</th><th>grouped_IHT_positions</th></tr><tr><th></th><th>Int64</th><th>Int64</th><th>Int64</th></tr></thead><tbody><p>15 rows × 3 columns</p><tr><th>1</th><td>4477</td><td>4475</td><td>4475</td></tr><tr><th>2</th><td>4510</td><td>4476</td><td>4509</td></tr><tr><th>3</th><td>4517</td><td>4509</td><td>4517</td></tr><tr><th>4</th><td>5381</td><td>4517</td><td>5381</td></tr><tr><th>5</th><td>5385</td><td>5382</td><td>5382</td></tr><tr><th>6</th><td>5397</td><td>5383</td><td>5397</td></tr><tr><th>7</th><td>7443</td><td>5397</td><td>7442</td></tr><tr><th>8</th><td>7444</td><td>7442</td><td>7443</td></tr><tr><th>9</th><td>7446</td><td>7443</td><td>7446</td></tr><tr><th>10</th><td>7452</td><td>7446</td><td>7450</td></tr><tr><th>11</th><td>8526</td><td>7447</td><td>8526</td></tr><tr><th>12</th><td>8531</td><td>8531</td><td>8531</td></tr><tr><th>13</th><td>8532</td><td>8532</td><td>8534</td></tr><tr><th>14</th><td>8534</td><td>8535</td><td>8536</td></tr><tr><th>15</th><td>8536</td><td>8536</td><td>8540</td></tr></tbody></table>
 </div>
 
 </div>
@@ -12738,11 +12753,10 @@ Selected nongenetic predictors:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-julia"><pre><span></span><span class="c">#check result</span>
-<span class="n">correct_position</span> <span class="o">=</span> <span class="n">findall</span><span class="p">(</span><span class="o">!</span><span class="n">iszero</span><span class="p">,</span> <span class="n">true_b</span><span class="p">)</span>
+<div class=" highlight hl-julia"><pre><span></span><span class="n">correct_position</span> <span class="o">=</span> <span class="n">findall</span><span class="p">(</span><span class="o">!</span><span class="n">iszero</span><span class="p">,</span> <span class="n">true_b</span><span class="p">)</span>
 <span class="n">compare_model</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span>
     <span class="n">position</span> <span class="o">=</span> <span class="n">correct_position</span><span class="p">,</span>
     <span class="n">correct_β</span> <span class="o">=</span> <span class="n">true_b</span><span class="p">[</span><span class="n">correct_position</span><span class="p">],</span>
@@ -12758,10 +12772,10 @@ Selected nongenetic predictors:
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[18]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[14]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
-<table class="data-frame"><thead><tr><th></th><th>position</th><th>correct_β</th><th>ungrouped_IHT_β</th><th>grouped_IHT_β</th></tr><tr><th></th><th>Int64</th><th>Float64</th><th>Float64</th><th>Float64</th></tr></thead><tbody><p>15 rows × 4 columns</p><tr><th>1</th><td>4477</td><td>-0.2</td><td>-0.12189</td><td>0.0</td></tr><tr><th>2</th><td>4510</td><td>-0.2</td><td>0.0</td><td>0.0</td></tr><tr><th>3</th><td>4517</td><td>-0.2</td><td>0.0</td><td>-0.155094</td></tr><tr><th>4</th><td>5381</td><td>-0.2</td><td>0.0</td><td>-0.16722</td></tr><tr><th>5</th><td>5385</td><td>-0.2</td><td>-0.0968715</td><td>0.0</td></tr><tr><th>6</th><td>5397</td><td>0.2</td><td>0.0</td><td>0.267128</td></tr><tr><th>7</th><td>7443</td><td>0.2</td><td>0.194584</td><td>0.176729</td></tr><tr><th>8</th><td>7444</td><td>0.2</td><td>0.0</td><td>0.0</td></tr><tr><th>9</th><td>7446</td><td>0.2</td><td>0.337898</td><td>0.288789</td></tr><tr><th>10</th><td>7452</td><td>0.2</td><td>0.0</td><td>0.0</td></tr><tr><th>11</th><td>8526</td><td>-0.2</td><td>0.0</td><td>-0.196314</td></tr><tr><th>12</th><td>8531</td><td>0.2</td><td>0.195654</td><td>0.48662</td></tr><tr><th>13</th><td>8532</td><td>0.2</td><td>0.195654</td><td>0.0</td></tr><tr><th>14</th><td>8534</td><td>0.2</td><td>0.0</td><td>0.0427654</td></tr><tr><th>15</th><td>8536</td><td>0.2</td><td>0.151602</td><td>0.233248</td></tr></tbody></table>
+<table class="data-frame"><thead><tr><th></th><th>position</th><th>correct_β</th><th>ungrouped_IHT_β</th><th>grouped_IHT_β</th></tr><tr><th></th><th>Int64</th><th>Float64</th><th>Float64</th><th>Float64</th></tr></thead><tbody><p>15 rows × 4 columns</p><tr><th>1</th><td>4477</td><td>-0.2</td><td>0.0</td><td>0.0</td></tr><tr><th>2</th><td>4510</td><td>-0.2</td><td>0.0</td><td>0.0</td></tr><tr><th>3</th><td>4517</td><td>-0.2</td><td>-0.147883</td><td>-0.155094</td></tr><tr><th>4</th><td>5381</td><td>-0.2</td><td>0.0</td><td>-0.16722</td></tr><tr><th>5</th><td>5385</td><td>-0.2</td><td>0.0</td><td>0.0</td></tr><tr><th>6</th><td>5397</td><td>0.2</td><td>0.265338</td><td>0.267128</td></tr><tr><th>7</th><td>7443</td><td>0.2</td><td>0.201632</td><td>0.176729</td></tr><tr><th>8</th><td>7444</td><td>0.2</td><td>0.0</td><td>0.0</td></tr><tr><th>9</th><td>7446</td><td>0.2</td><td>0.20714</td><td>0.288789</td></tr><tr><th>10</th><td>7452</td><td>0.2</td><td>0.0</td><td>0.0</td></tr><tr><th>11</th><td>8526</td><td>-0.2</td><td>0.0</td><td>-0.196314</td></tr><tr><th>12</th><td>8531</td><td>0.2</td><td>0.185672</td><td>0.48662</td></tr><tr><th>13</th><td>8532</td><td>0.2</td><td>0.185672</td><td>0.0</td></tr><tr><th>14</th><td>8534</td><td>0.2</td><td>0.0</td><td>0.0427654</td></tr><tr><th>15</th><td>8536</td><td>0.2</td><td>0.162791</td><td>0.233248</td></tr></tbody></table>
 </div>
 
 </div>
@@ -12787,7 +12801,6 @@ Selected nongenetic predictors:
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="More-examples:">More examples:<a class="anchor-link" href="#More-examples:">&#182;</a></h2><p>Please visit our <a href="https://openmendel.github.io/MendelIHT.jl/latest/">documentation</a>.</p>
 <h2 id="Other-functionalities">Other functionalities<a class="anchor-link" href="#Other-functionalities">&#182;</a></h2><ul>
-<li>Analyze large GWAS datasets intuitively.</li>
 <li>Built-in support for <a href="https://www.cog-genomics.org/plink/1.9/input#bed">PLINK binary files</a> via <a href="https://github.com/OpenMendel/SnpArrays.jl">SnpArrays.jl</a> and <a href="https://en.wikipedia.org/wiki/Variant_Call_Format">VCF files</a> via <a href="https://github.com/OpenMendel/VCFTools.jl">VCFTools.jl</a>.</li>
 <li>Out-of-the-box parallel computing routines for <code>q-fold</code> cross-validation.</li>
 <li>Fits a variety of generalized linear models with any choice of link function.</li>
@@ -12798,7 +12811,6 @@ Selected nongenetic predictors:
 <li>Ability to enforce within and between group sparsity. </li>
 <li>Naive genotype imputation. </li>
 <li>Estimates nuisance parameter for negative binomial regression using Newton or MM algorithm. </li>
-<li>Excellent flexibility to handle different data structures and complements well with other Julia packages.</li>
 </ul>
 
 </div>
