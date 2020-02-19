@@ -14,7 +14,7 @@ This repo contains the OpenMendel tutorials presented in the programming worksho
 
 | Time | Topic | Presenter |  
 |:-----------|:------------|:------------|  
-| 8:30-8:50 | Import genotype data by SnpArrays.jl \[[ipynb](./01-snparrays/SnpArraysTutorial.ipynb)\] \[[html](https://openmendel.github.io/LangeSymposium-ProgrammingWorkshop-20202022/01-snparrays/SnpArraysTutorial.html)\] and VCFTools.jl | Hua Zhou |  
+| 8:30-8:50 | Import genotype data by SnpArrays.jl \[[ipynb](./01-snparrays/SnpArraysTutorial.ipynb)\] \[[html](https://openmendel.github.io/LangeSymposium-ProgrammingWorkshop-20202022/01-snparrays/SnpArraysTutorial.html)\] and VCFTools.jl \[[ipynb](./02-vcftools/vcftools.ipynb)\] \[[html](https://openmendel.github.io/LangeSymposium-ProgrammingWorkshop-20202022/02-vcftools/vcftools.html)\] | Hua Zhou |  
 | 8:50-9:10 | Variance component models | Juhyun Kim |  
 | 9:10-9:30 | GWAS by IHT \[[ipynb](./05-gwas/MendelIHT_tutorial.ipynb)\]\[[html](https://openmendel.github.io/LangeSymposium-ProgrammingWorkshop-20202022/05-gwas/MendelIHT_tutorial.html)\] | Ben Chu |  
 | 9:30-09:50 | GWAS for ordinal trait \[[ipynb](./06-ordinal/ordinalgwas.ipynb)\] \[[html](https://openmendel.github.io/LangeSymposium-ProgrammingWorkshop-20202022/06-ordinal/ordinalgwas.html)\]| Chris German |  
