@@ -26,6 +26,10 @@ This repo contains the OpenMendel tutorials presented in the programming worksho
 To try the Jupyter notebook in cloud, click the Binder icon below:  
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/OpenMendel/LangeSymposium-ProgrammingWorkshop-20202022/master)
 
+## Wifi
+
+`Eduroam` or `UCLA_WEB`. `UCLA_WEB` does not need password. `Eduroam` needs authentication by your institute. For example, UCLA affiliates can log in `Eduroam` by `joebruin@ucla.edu`  and the UCLA password. 
+
 ## Run Jupyter notebooks on your own laptop
 
 This is **not** recommended during this workshop, since your software environment (OS, Julia version, package versions, etc.) may be quite different from that assumed by the Jupyter notebooks. In case you want to run Jupyter notebooks on your own machine, simply `git clone https://github.com/OpenMendel/LangeSymposium-ProgrammingWorkshop-20202022.git` to sync the most recent course materials to your computer and install all needed Julia packages.
