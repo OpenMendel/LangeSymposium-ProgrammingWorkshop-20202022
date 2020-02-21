@@ -51,12 +51,15 @@ Click Binder link below and run Jupyter notebooks.
 
 ## Binder
 
-To try the Jupyter notebook in cloud, click the Binder icon below:  
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/OpenMendel/LangeSymposium-ProgrammingWorkshop-20202022/master){:target="_blank"}
+To try the Jupyter notebook in clouds, click the Binder icon below:  
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/OpenMendel/LangeSymposium-ProgrammingWorkshop-20202022/master)
 
 ## Wifi
 
-Use `Eduroam` or `UCLA_WEB`. `UCLA_WEB` does not need password. `Eduroam` needs authentication by your institute. For example, UCLA affiliates can log in `Eduroam` by `[joebruin]@ucla.edu`  and the UCLA password. 
+Use `Eduroam` or `UCLA_WEB`. 
+
+- `UCLA_WEB` does not need password.  
+- `Eduroam` needs authentication by your institute. For example, UCLA affiliates can log in `Eduroam` by `[joebruin]@ucla.edu`  and the UCLA password. 
 
 ## Run Jupyter notebooks on your own laptop
 
