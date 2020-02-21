@@ -10,6 +10,11 @@ This repo contains the OpenMendel tutorials presented in the programming worksho
 * Juhyun Kim, doctoral student, Biostatistics, UCLA  
 * Hua Zhou, Associate Professor, Biostatistics, UCLA  
 
+## How to run tutorials?
+
+To try the Jupyter notebooks in cloud, click the Binder icon below:  
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/OpenMendel/LangeSymposium-ProgrammingWorkshop-20202022/master)
+
 ## What is OpenMendel
 
 - **Mendel**: comprehensive genetic analysis software by Ken Lange and Eric Sobel. 
@@ -34,10 +39,6 @@ This repo contains the OpenMendel tutorials presented in the programming worksho
 
     - and many more  
 
-## How to run tutorials?
-
-Click Binder link below and run Jupyter notebooks.
-
 ## Syllabus
 
 | Time | Topic | Presenter |  
@@ -48,11 +49,6 @@ Click Binder link below and run Jupyter notebooks.
 | 9:30-09:50 | GWAS for ordinal trait \[[ipynb](./06-ordinal/ordinalgwas.ipynb)\] \[[html](https://openmendel.github.io/LangeSymposium-ProgrammingWorkshop-20202022/06-ordinal/ordinalgwas.html)\]| Chris German |  
 | 09:50-10:10 | Trait simulation | Sarah Ji |  
 | 10:10-10:30 | Extra time |  |  
-
-## Binder
-
-To try the Jupyter notebook in clouds, click the Binder icon below:  
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/OpenMendel/LangeSymposium-ProgrammingWorkshop-20202022/master)
 
 ## Wifi
 
