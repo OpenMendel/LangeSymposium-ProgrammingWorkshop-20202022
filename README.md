@@ -10,6 +10,34 @@ This repo contains the OpenMendel tutorials presented in the programming worksho
 * Juhyun Kim, doctoral student, Biostatistics, UCLA  
 * Hua Zhou, Associate Professor, Biostatistics, UCLA  
 
+## What is OpenMendel
+
+- Mendel: comprehensive genetic analysis software by Ken Lange and Eric Sobel. 
+
+- Julia: _Walk Like Python; Run Like C._
+
+- Ken's vision: **Julia + Mendel = OpenMendel**.
+
+## How to contribute?
+
+- Browse existing OpenMendel packages: <https://github.com/OpenMendel>.
+
+- Ask questions, file bug reports, and request new features by GitHub **Issues**.  
+
+- Get credit for you code contribution via GitHub **Fork** and **Pull Requests**. 
+
+- Want project ideas? Talk to any of us or come to OpenMendel meetings (every Wed in winter quarter).  
+
+    - BGEN.jl   
+
+    - enhancement to variance component models packages  
+
+    - and many more  
+
+## How to run tutorials?
+
+Click Binder link below and run Jupyter notebooks.
+
 ## Syllabus
 
 | Time | Topic | Presenter |  
@@ -24,7 +52,7 @@ This repo contains the OpenMendel tutorials presented in the programming worksho
 ## Binder
 
 To try the Jupyter notebook in cloud, click the Binder icon below:  
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/OpenMendel/LangeSymposium-ProgrammingWorkshop-20202022/master)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/OpenMendel/LangeSymposium-ProgrammingWorkshop-20202022/master){:target="_blank"}
 
 ## Wifi
 
@@ -33,4 +61,3 @@ To try the Jupyter notebook in cloud, click the Binder icon below:
 ## Run Jupyter notebooks on your own laptop
 
 This is **not** recommended during this workshop, since your software environment (OS, Julia version, package versions, etc.) may be quite different from that assumed by the Jupyter notebooks. In case you want to run Jupyter notebooks on your own machine, simply `git clone https://github.com/OpenMendel/LangeSymposium-ProgrammingWorkshop-20202022.git` to sync the most recent course materials to your computer and install all needed Julia packages.
-
