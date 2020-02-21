@@ -17,7 +17,7 @@ To try the Jupyter notebooks in cloud, click the Binder icon below:
 
 ## What is OpenMendel
 
-- **Mendel**: comprehensive genetic analysis software by Ken Lange and Eric Sobel. 
+- **Mendel**: comprehensive genetic analysis software by Ken Lange, Eric Sobel, Janet Sinsheimer, and  generations of students.   
 
 - **Julia**: _Walk Like Python; Run Like C._
 
