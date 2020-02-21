@@ -12,9 +12,9 @@ This repo contains the OpenMendel tutorials presented in the programming worksho
 
 ## What is OpenMendel
 
-- Mendel: comprehensive genetic analysis software by Ken Lange and Eric Sobel. 
+- **Mendel**: comprehensive genetic analysis software by Ken Lange and Eric Sobel. 
 
-- Julia: _Walk Like Python; Run Like C._
+- **Julia**: _Walk Like Python; Run Like C._
 
 - Ken's vision: **Julia + Mendel = OpenMendel**.
 
@@ -56,7 +56,7 @@ To try the Jupyter notebook in cloud, click the Binder icon below:
 
 ## Wifi
 
-`Eduroam` or `UCLA_WEB`. `UCLA_WEB` does not need password. `Eduroam` needs authentication by your institute. For example, UCLA affiliates can log in `Eduroam` by `joebruin@ucla.edu`  and the UCLA password. 
+Use `Eduroam` or `UCLA_WEB`. `UCLA_WEB` does not need password. `Eduroam` needs authentication by your institute. For example, UCLA affiliates can log in `Eduroam` by `[joebruin]@ucla.edu`  and the UCLA password. 
 
 ## Run Jupyter notebooks on your own laptop
 
