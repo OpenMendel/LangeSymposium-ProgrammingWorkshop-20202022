@@ -20,7 +20,7 @@ This repo contains the OpenMendel tutorials presented in the programming worksho
 
 ## How to contribute?
 
-- Browse existing OpenMendel packages: <https://github.com/OpenMendel>.
+- Browse existing OpenMendel packages: <https://github.com/OpenMendel>. Don't forget to star them 😄
 
 - Ask questions, file bug reports, and request new features by GitHub **Issues**.  
 
