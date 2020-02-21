@@ -11775,7 +11775,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Trait-Simulation-Tutorial">Trait Simulation Tutorial<a class="anchor-link" href="#Trait-Simulation-Tutorial">&#182;</a></h1><p>Authors: Sarah Ji, Janet Sinsheimer, Kenneth Lange</p>
+<h1 id="Trait-Simulation-Tutorial">Trait Simulation Tutorial<a class="anchor-link" href="#Trait-Simulation-Tutorial">&#182;</a></h1><p>Authors: Sarah Ji, Janet Sinsheimer, Kenneth Lange, Hua Zhou</p>
 <p>In this notebook we show how to use the <code>TraitSimulation.jl</code> package we illustrate how TraitSimulation.jl can easily simulate traits from genotype data, all within the OpenMendel universe. Operating within this universe brings potential advantages over the available software(s) when needed for downstream analysis or study design.</p>
 <p>Using just a few calls on the command line to the appropriate packages within the OpenMendel, we demonstrate in three easy examples the utilities of the TraitSimulation.jl package.</p>
 <h2 id="Background">Background<a class="anchor-link" href="#Background">&#182;</a></h2><p>There is a lack of software available to geneticists who wish to calculate power and sample sizes in designing a study on genetics data. Typically, the study power depends on assumptions about the underlying disease model.  Many power calculating software tools operate as a black box and do not allow for customization.  To develop custom tests, researchers can develop their own simulation procedures to carry out power calculations.  One limitation with many existing methods for simulating traits conditional on genotypes is that these methods are limited to normally distributed traits and to fixed effects.</p>
@@ -12091,15 +12091,16 @@ For users who wish to identify by name, which locus to include, first subset the
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Example-1:-Standard-Models">Example 1: Standard Models<a class="anchor-link" href="#Example-1:-Standard-Models">&#182;</a></h1><p>In this example we first demonstrate how to use the GLM.jl package to simulate a trait from unrelated individuals. We then show how to use our TraitSimulation.jl package to simulate a trait from families.</p>
+<h1 id="Example-1:-Standard-Models">Example 1: Standard Models<a class="anchor-link" href="#Example-1:-Standard-Models">&#182;</a></h1><p>In this example we first demonstrate how to use the GLM.jl package to simulate a trait from unrelated individuals. We then show how to use our TraitSimulation.jl package to efficiently simulate a trait from families under the linear mixed model framework.</p>
 <p>The notebook is organized as follows:</p>
 <p>For the first example, we show how to simulate traits from standard models users in the genetics community will recognize.</p>
 <p>Users can specify to simulate phenotypes from unrelateds or families with user-specified Generalized Linear Models (GLMs) or Variance Component Models (VCMs), respectively. Researchers who feel more comfortable viewing the latter as a Linear Mixed Model(LMM) an additive genetic variance component and environmental variance component, we welcome you to do so.</p>
 <p>$$ 1 . \text{GLM}: Y_{n \times 1} \sim Poisson(g^{-1}({X \beta})) $$</p>
-<p>$$ 2 . \text{VCM}: Y_{n \times p} \sim \text{MatrixNormal}(\mathbf{M}_{n \times p} = XB, \Omega_{np \times np} = \Sigma_A \otimes \Phi + \Sigma_E \otimes I_n)$$</p>
+<p>$$ 2 . \text{VCM}: Y_{n \times d} \sim \text{MatrixNormal}(\mathbf{M}_{n \times d} = XB, \Omega_{nd \times nd} = \Sigma_A \otimes 2\hat{\Phi}_{GRM} + \Sigma_E \otimes I_n),$$</p>
+<p>where we can calculate the estimated empirical kinship matrix $2*\hat{\Phi}_{GRM}$ using <a href="https://openmendel.github.io/SnpArrays.jl/latest/#Genetic-relationship-matrix-1">SnpArrays.jl</a>.</p>
 <p>We show in the next example, models with additional variance components can also be specified, as long as they are sensible (positive semi definite).</p>
 <h2 id="GLM-Traits-from-Unrelated-Individuals">GLM Traits from Unrelated Individuals<a class="anchor-link" href="#GLM-Traits-from-Unrelated-Individuals">&#182;</a></h2><p>$$
-    Y \sim Poisson(\mu = X\beta)
+    Y_{n \times 1} \sim Poisson(\mu_{n \times 1} = X\beta)
 $$</p>
 <p>Here we specify the fixed effects and the phenotype distribution, and output for ten simulations per person.</p>
 
@@ -12185,7 +12186,7 @@ $$</p>
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Rare-Variant-VCM-Related-Individuals">Rare Variant VCM Related Individuals<a class="anchor-link" href="#Rare-Variant-VCM-Related-Individuals">&#182;</a></h2><p>In this example we show how to generate data so that the related individuals have correlated trait values even after we account for the effect of a snp, a combination of snps or other fixed effects. We simulate data under a linear mixed model so that we can model residual dependency among individuals.</p>
 <p>$$
-Y \sim \text{Normal}(\mathbf{\mu}_{n \times 1} = X\beta, \Sigma_{n \times n} = \sigma_A \times 2\Phi + \sigma_E \times I_n)
+Y \sim \text{Normal}(\mathbf{\mu}_{n \times 1} = X\beta, \Sigma_{n \times n} = \sigma_A \times 2\hat{\Phi}_{GRM} + \sigma_E \times I_n)
 $$</p>
 <p>This example is meant to simulate data in a scenario in which a number of rare mutations in a single gene can change a trait value. We model the residual variation among relatives with the additive genetic variance component and we include 20 rare variants in the mean portion of the model, defined as loci with minor allele frequencies greater than 0.002 but less than 0.02.</p>
 <p>Specifically we are generating a single normal trait controlling for family structure with residual heritabiity of 67%, and effect sizes for the variants generated as a function of the minor allele frequencies. The rarer the variant the greater its effect size.</p>
@@ -12398,10 +12399,24 @@ $$</p>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Example-2:-Multiple-Traits,-Multiple-Variance-Components?-Easy.">Example 2: Multiple Traits, Multiple Variance Components? Easy.<a class="anchor-link" href="#Example-2:-Multiple-Traits,-Multiple-Variance-Components?-Easy.">&#182;</a></h1><p>This example extends the linear mixed model in the previous example to demo how to efficiently account for any number of other random effects, in addition to the additive genetic and environmental variance components. In this example we show alternative ways to specify the simulation parameters for the VCM/LMM and benchmark it against the available MatrixNormal distribution in Julia package, Distributions.jl.</p>
-<p>$$Y_{n \times p} \sim \text{MatrixNormal}(\mathbf{M}_{n \times p} = XB, \Omega_{np \times np} = \Sigma_A \otimes V_A + \Sigma_E \otimes V_E)$$</p>
-<p>Say that you have the the classical setting in genetics, two variance components, one for the additive genetic variance and one for the environmental variance.</p>
-<p>Users can specify their covariance structures as follows. We note that this form can also accompany more than 2 variance components.</p>
+<h1 id="Example-2:-Multiple-Traits,-Multiple-Variance-Components?-Easy.">Example 2: Multiple Traits, Multiple Variance Components? Easy.<a class="anchor-link" href="#Example-2:-Multiple-Traits,-Multiple-Variance-Components?-Easy.">&#182;</a></h1><p>We can extend the mixed model for a single trait in the previous example to demo how to efficiently simulate multiple traits, while accounting for any number of other random effects in addition to the additive genetic and environmental variance components. In particular, we note the alternative ways users can specify simulation parameters under the VCM.</p>
+<h2 id="VCM-Parameter-Specification:">VCM Parameter Specification:<a class="anchor-link" href="#VCM-Parameter-Specification:">&#182;</a></h2><p>$\textbf{Option 1:}$ Say that you have the the classical setting in genetics, two variance components, one for the additive genetic variance and one for the environmental variance. For simulating $d$ correlated traits for $n$ related people under the VCM, users can specify their covariance structures as follows.</p>
+<p>$$Y_{n \times d} \sim \text{MatrixNormal}(\mathbf{M}_{n \times d} = XB, \Omega_{nd \times nd} = \Sigma_A \otimes V_A + \Sigma_E \otimes V_E)$$</p>
+<p>$\textbf{Option 2:}$ Say we have $m \geq 2$ variance components for $d$ correlated traits of $n$ related people under the VCM. For this model we want to specify the following:</p>
+<p>$$Y_{n \times d} \sim \text{MatrixNormal}(\mathbf{M}_{n \times d} = XB, \Omega_{nd \times nd} = \Sigma_1 \otimes V_1 + \cdots + \Sigma_m \otimes V_m)
+$$</p>
+<p>Although $\textbf{Option 1}$ can also specify $m \geq 2$ variance components, $\textbf{Option 2}$ allows the model <strong>data</strong> can be inputed under the standard <a href="https://github.com/OpenMendel/VarianceComponentModels.jl/">VarianceComponentModels.jl</a> framework as follows:</p>
+<ul>
+<li><code>Y</code>: <code>n x d</code> response matrix </li>
+<li><code>X</code>: <code>n x p</code> covariate matrix </li>
+<li><code>V=(V1,...,Vm)</code>: a tuple of <code>m</code> <code>n x n</code> covariance matrices</li>
+</ul>
+<p>and <strong>parameters</strong> are</p>
+<ul>
+<li><code>B</code>: <code>p x d</code> mean parameter matrix</li>
+<li><code>Σ=(Σ1,...,Σm)</code>: a tuple of <code>m</code> <code>d x d</code> variance components. </li>
+</ul>
+<p>Due to time constraints, I encourage for those interested, to look at <a href="https://github.com/OpenMendel/TraitSimulation.jl/blob/master/docs/benchmarking_VCM.ipynb">This Example</a> where we demonstrate the simlation of $d = 2$ traits with $m = 10$ variance components, and benchmark it against the available method using the MatrixNormal distribution in Julia package, <a href="https://juliastats.org/Distributions.jl/latest/matrix/#Distributions.MatrixNormal">Distributions.jl</a>.</p>
 
 </div>
 </div>
@@ -12839,7 +12854,7 @@ $$</p>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Simulate-Ordered-Multinomial-Logistic">Simulate Ordered Multinomial Logistic<a class="anchor-link" href="#Simulate-Ordered-Multinomial-Logistic">&#182;</a></h3><p>Specific to the Ordered Multinomial Logistic model is the option to transform the multinomial outcome (i.e 1, 2, 3, 4) into a binary outcome for logistic regression.</p>
-<p>Although by default is the multinomial simulation above, the user can simulate from the transformed logistic outcome for example by specifying arguments: <code>Logistic = true</code> and <code>threshold = 2</code> the value to use as a cutoff for identifying cases and controls. (i.e if y &gt; 2 =&gt; y_logit == 1). We note if you specify <code>Logistic = true</code> and do not provide a threshold value, the function will throw an error to remind you to specify one.</p>
+<p>Although by default is the multinomial simulation above, the user can simulate from the transformed logistic outcome for example by specifying arguments: <code>Logistic = true</code> and <code>threshold = 2</code> the value to use as a cutoff for identifying cases and controls. <strong>(i.e if y &gt; 2 =&gt; y_logit == 1).</strong> We note if you specify <code>Logistic = true</code> and do not provide a threshold value, the function will throw an error to remind you to specify one.</p>
 
 </div>
 </div>
@@ -12996,6 +13011,15 @@ $$</p>
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>For each effect size in $\gamma_s,$ in each column we have the p-values obtained from testing the significance of the causal locus <code>nsim = 100</code> times under the ordinal multinomial model, <code>Ordinal_Model</code> and the <code>randomseed = 1234</code>.</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[27]:</div>
@@ -13112,151 +13136,151 @@ $$</p>
 <?xml version="1.0" encoding="utf-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="600" height="400" viewBox="0 0 2400 1600">
 <defs>
-  <clipPath id="clip5600">
+  <clipPath id="clip7300">
     <rect x="0" y="0" width="2400" height="1600"/>
   </clipPath>
 </defs>
-<path clip-path="url(#clip5600)" d="
+<path clip-path="url(#clip7300)" d="
 M0 1600 L2400 1600 L2400 0 L0 0  Z
   " fill="#ffffff" fill-rule="evenodd" fill-opacity="1"/>
 <defs>
-  <clipPath id="clip5601">
+  <clipPath id="clip7301">
     <rect x="480" y="0" width="1681" height="1600"/>
   </clipPath>
 </defs>
-<path clip-path="url(#clip5600)" d="
+<path clip-path="url(#clip7300)" d="
 M180.66 1425.62 L2352.76 1425.62 L2352.76 121.675 L180.66 121.675  Z
   " fill="#ffffff" fill-rule="evenodd" fill-opacity="1"/>
 <defs>
-  <clipPath id="clip5602">
+  <clipPath id="clip7302">
     <rect x="180" y="121" width="2173" height="1305"/>
   </clipPath>
 </defs>
-<polyline clip-path="url(#clip5602)" style="stroke:#000000; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+<polyline clip-path="url(#clip7302)" style="stroke:#000000; stroke-width:2; stroke-opacity:0.1; fill:none" points="
   242.135,1425.62 242.135,121.675 
   "/>
-<polyline clip-path="url(#clip5602)" style="stroke:#000000; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+<polyline clip-path="url(#clip7302)" style="stroke:#000000; stroke-width:2; stroke-opacity:0.1; fill:none" points="
   651.964,1425.62 651.964,121.675 
   "/>
-<polyline clip-path="url(#clip5602)" style="stroke:#000000; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+<polyline clip-path="url(#clip7302)" style="stroke:#000000; stroke-width:2; stroke-opacity:0.1; fill:none" points="
   1061.79,1425.62 1061.79,121.675 
   "/>
-<polyline clip-path="url(#clip5602)" style="stroke:#000000; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+<polyline clip-path="url(#clip7302)" style="stroke:#000000; stroke-width:2; stroke-opacity:0.1; fill:none" points="
   1471.62,1425.62 1471.62,121.675 
   "/>
-<polyline clip-path="url(#clip5602)" style="stroke:#000000; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+<polyline clip-path="url(#clip7302)" style="stroke:#000000; stroke-width:2; stroke-opacity:0.1; fill:none" points="
   1881.45,1425.62 1881.45,121.675 
   "/>
-<polyline clip-path="url(#clip5602)" style="stroke:#000000; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+<polyline clip-path="url(#clip7302)" style="stroke:#000000; stroke-width:2; stroke-opacity:0.1; fill:none" points="
   2291.28,1425.62 2291.28,121.675 
   "/>
-<polyline clip-path="url(#clip5602)" style="stroke:#000000; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+<polyline clip-path="url(#clip7302)" style="stroke:#000000; stroke-width:2; stroke-opacity:0.1; fill:none" points="
   180.66,1388.71 2352.76,1388.71 
   "/>
-<polyline clip-path="url(#clip5602)" style="stroke:#000000; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+<polyline clip-path="url(#clip7302)" style="stroke:#000000; stroke-width:2; stroke-opacity:0.1; fill:none" points="
   180.66,1081.18 2352.76,1081.18 
   "/>
-<polyline clip-path="url(#clip5602)" style="stroke:#000000; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+<polyline clip-path="url(#clip7302)" style="stroke:#000000; stroke-width:2; stroke-opacity:0.1; fill:none" points="
   180.66,773.647 2352.76,773.647 
   "/>
-<polyline clip-path="url(#clip5602)" style="stroke:#000000; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+<polyline clip-path="url(#clip7302)" style="stroke:#000000; stroke-width:2; stroke-opacity:0.1; fill:none" points="
   180.66,466.113 2352.76,466.113 
   "/>
-<polyline clip-path="url(#clip5602)" style="stroke:#000000; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+<polyline clip-path="url(#clip7302)" style="stroke:#000000; stroke-width:2; stroke-opacity:0.1; fill:none" points="
   180.66,158.579 2352.76,158.579 
   "/>
-<polyline clip-path="url(#clip5600)" style="stroke:#000000; stroke-width:4; stroke-opacity:1; fill:none" points="
+<polyline clip-path="url(#clip7300)" style="stroke:#000000; stroke-width:4; stroke-opacity:1; fill:none" points="
   180.66,1425.62 2352.76,1425.62 
   "/>
-<polyline clip-path="url(#clip5600)" style="stroke:#000000; stroke-width:4; stroke-opacity:1; fill:none" points="
+<polyline clip-path="url(#clip7300)" style="stroke:#000000; stroke-width:4; stroke-opacity:1; fill:none" points="
   180.66,1425.62 180.66,121.675 
   "/>
-<polyline clip-path="url(#clip5600)" style="stroke:#000000; stroke-width:4; stroke-opacity:1; fill:none" points="
+<polyline clip-path="url(#clip7300)" style="stroke:#000000; stroke-width:4; stroke-opacity:1; fill:none" points="
   242.135,1425.62 242.135,1409.97 
   "/>
-<polyline clip-path="url(#clip5600)" style="stroke:#000000; stroke-width:4; stroke-opacity:1; fill:none" points="
+<polyline clip-path="url(#clip7300)" style="stroke:#000000; stroke-width:4; stroke-opacity:1; fill:none" points="
   651.964,1425.62 651.964,1409.97 
   "/>
-<polyline clip-path="url(#clip5600)" style="stroke:#000000; stroke-width:4; stroke-opacity:1; fill:none" points="
+<polyline clip-path="url(#clip7300)" style="stroke:#000000; stroke-width:4; stroke-opacity:1; fill:none" points="
   1061.79,1425.62 1061.79,1409.97 
   "/>
-<polyline clip-path="url(#clip5600)" style="stroke:#000000; stroke-width:4; stroke-opacity:1; fill:none" points="
+<polyline clip-path="url(#clip7300)" style="stroke:#000000; stroke-width:4; stroke-opacity:1; fill:none" points="
   1471.62,1425.62 1471.62,1409.97 
   "/>
-<polyline clip-path="url(#clip5600)" style="stroke:#000000; stroke-width:4; stroke-opacity:1; fill:none" points="
+<polyline clip-path="url(#clip7300)" style="stroke:#000000; stroke-width:4; stroke-opacity:1; fill:none" points="
   1881.45,1425.62 1881.45,1409.97 
   "/>
-<polyline clip-path="url(#clip5600)" style="stroke:#000000; stroke-width:4; stroke-opacity:1; fill:none" points="
+<polyline clip-path="url(#clip7300)" style="stroke:#000000; stroke-width:4; stroke-opacity:1; fill:none" points="
   2291.28,1425.62 2291.28,1409.97 
   "/>
-<polyline clip-path="url(#clip5600)" style="stroke:#000000; stroke-width:4; stroke-opacity:1; fill:none" points="
+<polyline clip-path="url(#clip7300)" style="stroke:#000000; stroke-width:4; stroke-opacity:1; fill:none" points="
   180.66,1388.71 206.725,1388.71 
   "/>
-<polyline clip-path="url(#clip5600)" style="stroke:#000000; stroke-width:4; stroke-opacity:1; fill:none" points="
+<polyline clip-path="url(#clip7300)" style="stroke:#000000; stroke-width:4; stroke-opacity:1; fill:none" points="
   180.66,1081.18 206.725,1081.18 
   "/>
-<polyline clip-path="url(#clip5600)" style="stroke:#000000; stroke-width:4; stroke-opacity:1; fill:none" points="
+<polyline clip-path="url(#clip7300)" style="stroke:#000000; stroke-width:4; stroke-opacity:1; fill:none" points="
   180.66,773.647 206.725,773.647 
   "/>
-<polyline clip-path="url(#clip5600)" style="stroke:#000000; stroke-width:4; stroke-opacity:1; fill:none" points="
+<polyline clip-path="url(#clip7300)" style="stroke:#000000; stroke-width:4; stroke-opacity:1; fill:none" points="
   180.66,466.113 206.725,466.113 
   "/>
-<polyline clip-path="url(#clip5600)" style="stroke:#000000; stroke-width:4; stroke-opacity:1; fill:none" points="
+<polyline clip-path="url(#clip7300)" style="stroke:#000000; stroke-width:4; stroke-opacity:1; fill:none" points="
   180.66,158.579 206.725,158.579 
   "/>
-<g clip-path="url(#clip5600)">
+<g clip-path="url(#clip7300)">
 <text style="fill:#000000; fill-opacity:1; font-family:Arial,Helvetica Neue,Helvetica,sans-serif; font-size:48px; text-anchor:middle;" transform="rotate(0, 242.135, 1479.62)" x="242.135" y="1479.62">0.0</text>
 </g>
-<g clip-path="url(#clip5600)">
+<g clip-path="url(#clip7300)">
 <text style="fill:#000000; fill-opacity:1; font-family:Arial,Helvetica Neue,Helvetica,sans-serif; font-size:48px; text-anchor:middle;" transform="rotate(0, 651.964, 1479.62)" x="651.964" y="1479.62">0.1</text>
 </g>
-<g clip-path="url(#clip5600)">
+<g clip-path="url(#clip7300)">
 <text style="fill:#000000; fill-opacity:1; font-family:Arial,Helvetica Neue,Helvetica,sans-serif; font-size:48px; text-anchor:middle;" transform="rotate(0, 1061.79, 1479.62)" x="1061.79" y="1479.62">0.2</text>
 </g>
-<g clip-path="url(#clip5600)">
+<g clip-path="url(#clip7300)">
 <text style="fill:#000000; fill-opacity:1; font-family:Arial,Helvetica Neue,Helvetica,sans-serif; font-size:48px; text-anchor:middle;" transform="rotate(0, 1471.62, 1479.62)" x="1471.62" y="1479.62">0.3</text>
 </g>
-<g clip-path="url(#clip5600)">
+<g clip-path="url(#clip7300)">
 <text style="fill:#000000; fill-opacity:1; font-family:Arial,Helvetica Neue,Helvetica,sans-serif; font-size:48px; text-anchor:middle;" transform="rotate(0, 1881.45, 1479.62)" x="1881.45" y="1479.62">0.4</text>
 </g>
-<g clip-path="url(#clip5600)">
+<g clip-path="url(#clip7300)">
 <text style="fill:#000000; fill-opacity:1; font-family:Arial,Helvetica Neue,Helvetica,sans-serif; font-size:48px; text-anchor:middle;" transform="rotate(0, 2291.28, 1479.62)" x="2291.28" y="1479.62">0.5</text>
 </g>
-<g clip-path="url(#clip5600)">
+<g clip-path="url(#clip7300)">
 <text style="fill:#000000; fill-opacity:1; font-family:Arial,Helvetica Neue,Helvetica,sans-serif; font-size:48px; text-anchor:end;" transform="rotate(0, 156.66, 1406.21)" x="156.66" y="1406.21">0.00</text>
 </g>
-<g clip-path="url(#clip5600)">
+<g clip-path="url(#clip7300)">
 <text style="fill:#000000; fill-opacity:1; font-family:Arial,Helvetica Neue,Helvetica,sans-serif; font-size:48px; text-anchor:end;" transform="rotate(0, 156.66, 1098.68)" x="156.66" y="1098.68">0.25</text>
 </g>
-<g clip-path="url(#clip5600)">
+<g clip-path="url(#clip7300)">
 <text style="fill:#000000; fill-opacity:1; font-family:Arial,Helvetica Neue,Helvetica,sans-serif; font-size:48px; text-anchor:end;" transform="rotate(0, 156.66, 791.147)" x="156.66" y="791.147">0.50</text>
 </g>
-<g clip-path="url(#clip5600)">
+<g clip-path="url(#clip7300)">
 <text style="fill:#000000; fill-opacity:1; font-family:Arial,Helvetica Neue,Helvetica,sans-serif; font-size:48px; text-anchor:end;" transform="rotate(0, 156.66, 483.613)" x="156.66" y="483.613">0.75</text>
 </g>
-<g clip-path="url(#clip5600)">
+<g clip-path="url(#clip7300)">
 <text style="fill:#000000; fill-opacity:1; font-family:Arial,Helvetica Neue,Helvetica,sans-serif; font-size:48px; text-anchor:end;" transform="rotate(0, 156.66, 176.079)" x="156.66" y="176.079">1.00</text>
 </g>
-<g clip-path="url(#clip5600)">
+<g clip-path="url(#clip7300)">
 <text style="fill:#000000; fill-opacity:1; font-family:Arial,Helvetica Neue,Helvetica,sans-serif; font-size:84px; text-anchor:middle;" transform="rotate(0, 1266.71, 73.2)" x="1266.71" y="73.2">Multinomial Power</text>
 </g>
-<g clip-path="url(#clip5600)">
+<g clip-path="url(#clip7300)">
 <text style="fill:#000000; fill-opacity:1; font-family:Arial,Helvetica Neue,Helvetica,sans-serif; font-size:66px; text-anchor:middle;" transform="rotate(0, 1266.71, 1559.48)" x="1266.71" y="1559.48">Detectable Effect Size</text>
 </g>
-<polyline clip-path="url(#clip5602)" style="stroke:#009af9; stroke-width:12; stroke-opacity:1; fill:none" points="
+<polyline clip-path="url(#clip7302)" style="stroke:#009af9; stroke-width:12; stroke-opacity:1; fill:none" points="
   242.135,1388.71 447.049,1388.71 651.964,1388.71 856.879,1302.61 1061.79,1154.99 1266.71,810.551 1471.62,466.113 1676.54,220.086 1881.45,158.579 2086.37,158.579 
   2291.28,158.579 
   "/>
-<path clip-path="url(#clip5600)" d="
+<path clip-path="url(#clip7300)" d="
 M1464.07 326.155 L2280.76 326.155 L2280.76 205.195 L1464.07 205.195  Z
   " fill="#ffffff" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip5600)" style="stroke:#000000; stroke-width:4; stroke-opacity:1; fill:none" points="
+<polyline clip-path="url(#clip7300)" style="stroke:#000000; stroke-width:4; stroke-opacity:1; fill:none" points="
   1464.07,326.155 2280.76,326.155 2280.76,205.195 1464.07,205.195 1464.07,326.155 
   "/>
-<polyline clip-path="url(#clip5600)" style="stroke:#009af9; stroke-width:12; stroke-opacity:1; fill:none" points="
+<polyline clip-path="url(#clip7300)" style="stroke:#009af9; stroke-width:12; stroke-opacity:1; fill:none" points="
   1488.07,265.675 1632.07,265.675 
   "/>
-<g clip-path="url(#clip5600)">
+<g clip-path="url(#clip7300)">
 <text style="fill:#000000; fill-opacity:1; font-family:Arial,Helvetica Neue,Helvetica,sans-serif; font-size:48px; text-anchor:start;" transform="rotate(0, 1656.07, 283.175)" x="1656.07" y="283.175">maf = [0.2], alpha = 5.0e-6</text>
 </g>
 </svg>
