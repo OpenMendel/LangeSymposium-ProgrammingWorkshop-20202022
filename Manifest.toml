@@ -271,6 +271,11 @@ git-tree-sha1 = "16ff9dc8d84feb67faeaba42c21ad261578bcbbf"
 uuid = "497a8b3b-efae-58df-a0af-a86822472b78"
 version = "0.9.11"
 
+[[ElasticArrays]]
+git-tree-sha1 = "5b5b7cb8cba44bcf337b8af0a1f3e57c89468660"
+uuid = "fdbdab4c-e67f-52f5-8c3f-e7b388dad3d4"
+version = "1.0.0"
+
 [[ExprTools]]
 git-tree-sha1 = "08c1f74d9ad03acf0ee84c12c9e665ab1a9a6e33"
 uuid = "e2ba6199-217a-4e67-a87a-7c52f15ade04"
@@ -386,6 +391,11 @@ deps = ["Colors", "LinearAlgebra", "NaNMath"]
 git-tree-sha1 = "a9ca650f074942cadb98d59198f93b9adc11d1ea"
 uuid = "a2bd30eb-e257-5431-a919-1863eab51364"
 version = "1.0.1"
+
+[[GroupSlices]]
+git-tree-sha1 = "4de31f97ac545bf533eef17109725dfc68e29d64"
+uuid = "d853e229-7c7c-56e9-b6be-9a1acc5f13d9"
+version = "0.0.3"
 
 [[HTTP]]
 deps = ["Base64", "Dates", "IniFile", "MbedTLS", "Sockets"]
@@ -527,9 +537,9 @@ uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
 
 [[MathOptInterface]]
 deps = ["BenchmarkTools", "CodecBzip2", "CodecZlib", "JSON", "JSONSchema", "LinearAlgebra", "MutableArithmetics", "OrderedCollections", "SparseArrays", "Test", "Unicode"]
-git-tree-sha1 = "793416d916e8fb1d16cdd016dabe8df87c636198"
+git-tree-sha1 = "b6ed13ad3e125a2a44c031136eee2e22abb534db"
 uuid = "b8f27783-ece8-5eb3-8dc8-9495eed66fee"
-version = "0.9.10"
+version = "0.9.11"
 
 [[MathProgBase]]
 deps = ["LinearAlgebra", "SparseArrays"]
@@ -562,6 +572,14 @@ repo-url = "https://github.com/OpenMendel/MendelIHT.jl"
 uuid = "921c7187-1484-5754-b919-5d3ed9ac03c4"
 version = "0.0.0"
 
+[[MendelImpute]]
+deps = ["Documenter", "ElasticArrays", "GeneticVariation", "GroupSlices", "LinearAlgebra", "StatsBase", "VCFTools"]
+git-tree-sha1 = "07f2c46ec9f63166580fc4abeab0449663d909eb"
+repo-rev = "master"
+repo-url = "https://github.com/biona001/MendelImpute"
+uuid = "e47305d1-6a61-5370-bc5d-77554d143183"
+version = "0.0.0"
+
 [[MendelPlots]]
 deps = ["Cairo", "Colors", "Compose", "DataFrames", "Distributions", "Gadfly", "Reexport", "Statistics", "TextParse"]
 git-tree-sha1 = "0a723d2234f9142f9a2e1d1736b53f63114af2ce"
@@ -587,9 +605,9 @@ version = "0.7.1"
 
 [[MutableArithmetics]]
 deps = ["LinearAlgebra", "SparseArrays", "Test"]
-git-tree-sha1 = "12d31f26620590e85730f34228107cedd6448774"
+git-tree-sha1 = "e028134a24f45c5d2c2cbd98bfd4c9fa50cf7752"
 uuid = "d8a4904e-b15c-11e9-3269-09a3773c0cb0"
-version = "0.2.3"
+version = "0.2.6"
 
 [[NLSolversBase]]
 deps = ["DiffResults", "Distributed", "FiniteDiff", "ForwardDiff"]
@@ -938,7 +956,7 @@ uuid = "4ec0a83e-493e-50e2-b9ac-8f72acf5a8f5"
 
 [[VCFTools]]
 deps = ["CodecZlib", "Dates", "DelimitedFiles", "Distributions", "GeneticVariation", "HypothesisTests", "ProgressMeter"]
-git-tree-sha1 = "494a8ffde42dad2e71c2647a57988211e89143c4"
+git-tree-sha1 = "622f77b36ef716de71eb70162c19b38d2ba830be"
 repo-rev = "master"
 repo-url = "https://github.com/OpenMendel/VCFTools.jl"
 uuid = "a620830f-fdd7-5ebc-8d26-3621ab35fbfe"
